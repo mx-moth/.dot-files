@@ -21,7 +21,6 @@ syntax on
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-set background=dark
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -35,30 +34,62 @@ if has("autocmd")
   filetype plugin indent on
 endif
 
-" The following are commented out as they cause vim to behave a lot
-" differently from regular Vi. They are highly recommended though.
-set showcmd		" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
+set showcmd			" Show (partial) command in status line.
+set tabpagemax=30
+
+" Save marks and stuff
+set viminfo+='100,f1
+
+" Bash style tab completion
+set wildmode=longest:full
+set wildmenu
+
+" Search settings
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set incsearch		" Incremental search
-set number
-set tabpagemax=20
-"set autowrite		" Automatically save before commands like :next and :make
-"set hidden             " Hide buffers when they are abandoned
-"set mouse=a		" Enable mouse usage (all modes)
-
-
-colorscheme torte
-set tabstop=4
-set shiftwidth=4
 set hlsearch
-set incsearch
 
-set smartindent
-set autoindent
+" Appearance settings
+set background=dark
+colorscheme torte
+set number
+set showmatch		" Show matching brackets.
+set showfulltag
 
+" Indentation settings
+set tabstop=4       " I like four space tabs for indenting
+set shiftwidth=4    " I like four space tabs for indenting
+set smartindent     " Syntax aware indenting
+set autoindent      " Auto indent
+set lbr             " Put line breaks at word ends, not in the middle of characters
+
+" Custom filetype mappings
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
 
+" Save folds and other information
+au BufWinLeave * mkview
+au BufWinEnter * silent loadview
+
+" Enable modeline (Vim settings in a file)
+set modeline
+
+" Default file type
 set fileformat=unix
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Remap VIM 0
+map 0 ^
+
+"Move a line or selection of text using Crtl+[jk] or Comamnd+[jk] on mac
+nmap <silent> <C-j> mz:m+<CR>`z
+nmap <silent> <C-k> mz:m-2<CR>`z
+nmap <silent> <C-down> mz:m+<CR>`z
+nmap <silent> <C-up> mz:m-2<CR>`z
+vmap <silent> <C-j> :m'>+<CR>`<my`>mzgv`yo`z
+vmap <silent> <C-k> :m'<-2<CR>`>my`<mzgv`yo`z
+vmap <silent> <C-down> :m'>+<CR>`<my`>mzgv`yo`z
+vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z

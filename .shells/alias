@@ -1,0 +1,9 @@
+#!/bin/bash
+
+alias vi='vim -p'
+alias tabnew='vim -p'
+alias ls='ls -hF --color=auto'
+alias xclip='xclip -selection "clipboard"'
+
+alias move='mv -i'
+alias copy='cp -i'

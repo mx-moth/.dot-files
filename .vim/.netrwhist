@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/var/vhosts/cheds/httpdocs/app/config'
-let g:netrw_dirhist_2='/var/vhosts/cheds/httpdocs/app/models/behaviors'
-let g:netrw_dirhist_3='/var/vhosts/cheds/httpdocs/app/models/datasources'
-let g:netrw_dirhist_4='/var/vhosts/cheds/httpdocs/app/controllers/components'
-let g:netrw_dirhist_5='/home/tim'

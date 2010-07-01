@@ -5,8 +5,13 @@ export EDITOR='/usr/bin/vim'
 export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
 umask 022
 
-alias vi='vim -p'
-alias ls='ls -hF --color'
+# Include the alias' file
+. ~/.shells/alias
+
+# Include custom scripts
+for file in ~/.shells/scripts/* ; do
+	. $file
+done
 
 # You may uncomment the following lines if you want 'ls' to be colorized:
 # export LS_OPTIONS='--color=auto'
