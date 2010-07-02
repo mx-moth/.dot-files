@@ -64,13 +64,17 @@ set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of characters
 
-" Custom filetype mappings
+" Custom filetype settings
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
+au BufNewFile,BufRead *.php call s:php_init()
 
-" Save folds and other information
-au BufWinLeave * mkview
-au BufWinEnter * silent loadview
+function! s:php_init()
+	set foldmethod=manual|EnableFastPHPFolds
+	map <F5> <Esc>:EnableFastPHPFolds<Cr>
+	map <F6> <Esc>:EnablePHPFolds<Cr>
+	map <F7> <Esc>:DisablePHPFolds<Cr>
+endfunction
 
 " Enable modeline (Vim settings in a file)
 set modeline
