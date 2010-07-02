@@ -1,3 +1,1 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/vhosts/ecan/httpdocs/app/webroot/js/ckeditor/_source/core'
+.vim/view/*
