@@ -69,6 +69,9 @@ au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
 au BufNewFile,BufRead *.php call s:php_init()
 
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+
 function! s:php_init()
 	set foldmethod=manual|EnableFastPHPFolds
 	map <F5> <Esc>:EnableFastPHPFolds<Cr>
