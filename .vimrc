@@ -68,6 +68,7 @@ set lbr             " Put line breaks at word ends, not in the middle of charact
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
 au BufNewFile,BufRead *.php call s:php_init()
+autocmd BufNewFile,BufRead *.csv setf csv
 
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
