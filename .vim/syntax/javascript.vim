@@ -43,11 +43,14 @@ if !exists("javascript_ignore_javaScriptdoc")
   "syntax include @javaHtml <sfile>:p:h/html.vim
   "unlet b:current_syntax
 
-  syntax region javaScriptDocComment    matchgroup=javaScriptComment start="/\*\*\s*$"  end="\*/" contains=javaScriptDocTags,javaScriptCommentTodo,javaScriptCvsTag,@javaScriptHtml,@Spell fold
-  syntax match  javaScriptDocTags       contained "@\(param\|argument\|requires\|exception\|throws\|type\|class\|extends\|see\|link\|member\|module\|method\|title\|namespace\|optional\|default\|base\|file\)\>" nextgroup=javaScriptDocParam,javaScriptDocSeeTag skipwhite
-  syntax match  javaScriptDocTags       contained "@\(beta\|deprecated\|description\|fileoverview\|author\|license\|version\|returns\=\|constructor\|private\|protected\|final\|ignore\|addon\|exec\)\>"
+  syntax region javaScriptDocComment    matchgroup=javaScriptComment start="/\*\*\s*$"  end="\*/" contains=javaScriptDocAtTag,javaScriptCommentTodo,javaScriptCvsTag,@javaScriptHtml,@Spell fold
+  syntax match  javaScriptDocAtTag      contained "@" nextgroup=javaScriptDocTags
+  syntax match  javaScriptDocTags       contained "\(param\|argument\|requires\|exception\|throws\|type\|class\|extends\|see\|link\|member\|module\|method\|title\|namespace\|optional\|default\|base\|file\)\>" nextgroup=javaScriptDocSeeTag,javaScriptDocParam,javaScriptDocTypeParam skipwhite
+  syntax match  javaScriptDocTags       contained "\(beta\|deprecated\|description\|fileoverview\|author\|license\|version\|returns\=\|constructor\|private\|protected\|final\|ignore\|addon\|exec\)\>"
+  
   syntax match  javaScriptDocParam      contained "\%(#\|\w\|\.\|:\|\/\)\+"
-  syntax region javaScriptDocSeeTag     contained matchgroup=javaScriptDocSeeTag start="{" end="}" contains=javaScriptDocTags
+  syntax match  javaScriptDocTypeParam  contained "{\%(#\|\w\|\.\|:\|\/\)\+}" nextgroup=javaScriptDocParam skipwhite
+  syntax region javaScriptDocSeeTag     contained matchgroup=javaScriptDocSeeTag start="{@" end="}" contains=javaScriptDocTags
 
   syntax case match
 endif   "" JSDoc end
@@ -188,9 +191,11 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptDocComment           Comment
   HiLink javaScriptCommentTodo          Todo
   HiLink javaScriptCvsTag               Function
+  HiLink javaScriptDocAtTag             Special
   HiLink javaScriptDocTags              Special
   HiLink javaScriptDocSeeTag            Function
   HiLink javaScriptDocParam             Function
+  HiLink javaScriptDocTypeParam         Type
   HiLink javaScriptStringS              String
   HiLink javaScriptStringD              String
   HiLink javaScriptRegexpString         String

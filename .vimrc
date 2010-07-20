@@ -82,8 +82,15 @@ endfunction
 " Enable modeline (Vim settings in a file)
 set modeline
 
+" enable per-directory .vimrc files
+set exrc
+set secure
+
 " Default file type
 set fileformat=unix
+
+" Man page plugin
+runtime ftplugin/man.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
