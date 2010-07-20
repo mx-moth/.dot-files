@@ -5,6 +5,8 @@ export EDITOR='/usr/bin/vim'
 export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
 export LESS='FRSX'
 export SMARTGIT_JAVA_HOME='/usr/lib/jvm/java-6-sun/'
+export GREP_OPTIONS="--exclude-dir=\.svn"
+export ACK_OPTIONS="--pager=less"
 umask 022
 
 # Include the alias' file
