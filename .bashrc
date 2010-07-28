@@ -12,6 +12,13 @@ umask 022
 # Include the alias' file
 . ~/.shells/alias
 
+if [ -f "/etc/bash_completion.d/git" ] ; then
+	. "/etc/bash_completion.d/git"
+	export GIT_PS1_SHOWDIRTYSTATE=true
+	export GIT_PS1_SHOWUNTRACKEDFILES=true
+	export PS1='\[[1m\][\u@\h \W\[[0;33m\]$(__git_ps1 " (%s)")\[[0;1m\]]\[[32m\]\$\[[0m\] '
+fi
+
 # Include custom scripts
 for file in ~/.shells/scripts/* ; do
 	. $file
