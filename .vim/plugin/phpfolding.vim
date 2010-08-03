@@ -569,9 +569,12 @@ function! PHPFoldText() " {{{
 		let lines = " " . lines
 	endif
 
-	" Append an (a) if there is PhpDoc in the fold (a for API)
+    " Append phpDocIncludedPostfix and the first line if there is PhpDoc in the fold (a for API)
 	if currentLine != v:foldstart
-		let lineString = lineString . " " . g:phpDocIncludedPostfix . " "
+               let line = getline(v:foldstart + 1)
+               let line = substitute(line, '^\s*\*\?\s*', '', 'g')
+               let line = substitute(line, '^\(.\{60\}\)\(.\+\)', '\1 ...', 'g')
+               let lineString = lineString . " " . g:phpDocIncludedPostfix . " " . line . " "
 	endif	
 
 	" Return the foldtext
