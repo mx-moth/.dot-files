@@ -53,9 +53,11 @@ set hlsearch
 " Appearance settings
 set background=dark
 colorscheme torte
+highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 set number
 set showmatch		" Show matching brackets.
 set showfulltag
+set foldcolumn=3
 
 " Indentation settings
 set tabstop=4       " I like four space tabs for indenting
@@ -79,6 +81,8 @@ function! s:php_init()
 	map <F6> <Esc>:EnablePHPFolds<Cr>
 	map <F7> <Esc>:DisablePHPFolds<Cr>
 endfunction
+
+autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
 
 " Enable modeline (Vim settings in a file)
 set modeline

@@ -513,6 +513,9 @@ function! PHPFoldText() " {{{
 	let currentLine = v:foldstart
 	let lines = (v:foldend - v:foldstart + 1)
 	let lineString = getline(currentLine)
+	let isFunction = 0
+	let isVariable = 0
+
 	" See if we folded a marker
 	if strridx(lineString, "{{{") != -1 " }}}
 		" Is there text after the fold opener?
@@ -552,32 +555,59 @@ function! PHPFoldText() " {{{
 			let currentLine = currentLine + 1
 		endwhile
 		let lineString = getline(currentLine)
+		let isFunction = 1
+	else
+		let isFunction = 1
 	endif
-	
+
+	if match(lineString, '\<var\>') != -1
+		let isVariable = 1
+		let isFunction = 0
+	endif
+
 	" Some common replaces...
-	" if currentLine != v:foldend
-		let lineString = substitute(lineString, '/\*\|\*/\d\=', '', 'g')
-		let lineString = substitute(lineString, '^\s*\*\?\s*', '', 'g')
-		let lineString = substitute(lineString, '{$', '', 'g')
-		let lineString = substitute(lineString, '($', '(..);', 'g')
-	" endif
+	let lineString = substitute(lineString, '/\*\|\*/\d\=', '', 'g')
+	let lineString = substitute(lineString, '{$', '{..}', 'g')
+	let lineString = substitute(lineString, '($', '(..);', 'g')
+	let lineString = substitute(lineString, '^\s*\*\?\s*', '', 'g')
+
+	if isFunction == 1
+		let lineString = substitute(lineString, '\<function\>\s\+', '', 'g')
+		let lineString = substitute(lineString, '\(\$[a-zA-Z0-9_]\+\)[^,)]*', '\1', 'g')
+	endif
+
+	if isVariable == 1
+		let lineString = substitute(lineString, '\<var\>\s\+', '', 'g')
+		
+	endif
+
+	if isFunction == 1 || isVariable == 1
+		if match(lineString, '\<\(private\|protected\|public\)\>') != -1
+			let lineString = substitute(lineString, '\<private\>\s\+', '- ', 'g')
+			let lineString = substitute(lineString, '\<protected\>\s\+', '# ', 'g')
+			let lineString = substitute(lineString, '\<public\>\s\+', '+ ', 'g')
+		else
+			let lineString = '+ ' . lineString
+		endif
+	endif
+
+	" Remove all spaces and *s at the start
+	" let lineString = substitute(lineString, '\s\s\+', ' ', 'g')
 
 	" Emulates printf("%3d", lines)..
-	if lines < 10
-		let lines = "  " . lines
-	elseif lines < 100
-		let lines = " " . lines
-	endif
+	let lines = ' ' . repeat(' ', 4 - len(lines)) . lines
+	let lineString = lineString . repeat(' ', 40 - len(lineString)) . " "
 
     " Append phpDocIncludedPostfix and the first line if there is PhpDoc in the fold (a for API)
 	if currentLine != v:foldstart
-               let line = getline(v:foldstart + 1)
-               let line = substitute(line, '^\s*\*\?\s*', '', 'g')
-               let line = substitute(line, '^\(.\{60\}\)\(.\+\)', '\1 ...', 'g')
-               let lineString = lineString . " " . g:phpDocIncludedPostfix . " " . line . " "
+		let line = getline(v:foldstart + 1)
+		let line = substitute(line, '^\s*\*\?\s*', '', 'g')
+		let line = substitute(line, '^\(.\{60\}\)\(.\+\)', '\1 ...', 'g')
+		let lineString = lineString . g:phpDocIncludedPostfix . " " . line . " "
 	endif	
 
 	" Return the foldtext
+	let v:folddashes = " -"
 	return "+--".lines." lines: " . lineString
 endfunction
 " }}}
