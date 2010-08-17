@@ -1,0 +1,9 @@
+[user]
+	name = maelstrom
+	email = heap.tim@gmail.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[cola]
+	tabwidth = 4
