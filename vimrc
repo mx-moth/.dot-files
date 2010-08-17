@@ -67,6 +67,7 @@ set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of characters
 
 " Custom filetype settings
+au BufNewFile,BufRead *.cjs setfiletype javascript
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
 au BufNewFile,BufRead *.php call s:php_init()
