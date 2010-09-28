@@ -64,7 +64,7 @@ syntax region  javaScriptStringS        start=+'+  skip=+\\\\\|\\$'+  end=+'+  c
 syntax region  javaScriptRegexpString   start=+/\(\*\|/\)\@!+ skip=+\\\\\|\\/+ end=+/[gim]\{,3}+ contains=javaScriptSpecial,@htmlPreproc oneline
 syntax match   javaScriptNumber         /\<-\=\d\+L\=\>\|\<0[xX]\x\+\>/
 syntax match   javaScriptFloat          /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
-syntax match   javaScriptLabel          /\(?\s*\)\@<!\<\w\+\(\s*:\)\@=/
+syntax match   javaScriptLabel          /\(?\s*\)\@<!\<[[:alnum:]$_-]\+\(\s*:\)\@=/
 
 "" JavaScript Prototype
 syntax keyword javaScriptPrototype      prototype
