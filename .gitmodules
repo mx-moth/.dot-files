@@ -1,0 +1,3 @@
+[submodule "vim/bundle/vim-sparkup"]
+	path = vim/bundle/vim-sparkup
+	url = https://github.com/bingaman/vim-sparkup.git
