@@ -121,15 +121,7 @@ vmap <silent> <C-down> :m'>+<CR>`<my`>mzgv`yo`z
 vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
 
 
-" Remap the tab key to do autocompletion or indentation depending on the
-" context (from http://www.vim.org/tips/tip.php?tip_id=102)
-function! InsertTabWrapper()
-	let col = col('.') - 1
-	if !col || getline('.')[col - 1] !~ '\k'
-		return "\<tab>"
-	else
-		return "\<c-p>"
-	endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+" Remap ctrl+space to do autocompletion
+inoremap <C-@> <c-p>
+
+command -nargs=0 WM :w | :!make
