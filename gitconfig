@@ -7,3 +7,10 @@
 	branch = auto
 [cola]
 	tabwidth = 4
+[format]
+	pretty = %Cblue%h%Creset %ar %Cgreen%an%Creset %s%C(yellow)%d
+[alias]
+	hist = log --pretty=format:\"%Cblue%h%Creset %ar %Cgreen%an%Creset %s%C(yellow)%d\" --graph --date=short
+[alias]
+[merge]
+	log = true
