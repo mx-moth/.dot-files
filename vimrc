@@ -56,6 +56,11 @@ set smartcase		" Do smart case matching
 set incsearch		" Incremental search
 set hlsearch
 
+set laststatus=2
+set statusline=%<%f%=\ [%1*%M%*%n%R%H]%{fugitive#statusline()}\ %-19(%3l,%02c%03V%)%O'%02b'
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+
 " Appearance settings
 set background=dark
 colorscheme torte
