@@ -1,32 +1,12 @@
-" All system-wide defaults are set in $VIMRUNTIME/debian.vim (usually just
-" /usr/share/vim/vimcurrent/debian.vim) and sourced by the call to :runtime
-" you can find below.  If you wish to change any of those settings, you should
-" do it in this file (/etc/vim/vimrc), since debian.vim will be overwritten
-" everytime an upgrade of the vim packages is performed.  It is recommended to
-" make changes after sourcing debian.vim since it alters the value of the
-" 'compatible' option.
-
 " Load pathogen bundle loader
 filetype off 
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 
-" This line should not be removed as it ensures that various options are
-" properly set to work with the Vim-related packages available in Debian.
-" runtime! debian.vim
-
-" Uncomment the next line to make Vim more Vi-compatible
-" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
-" options, so any other options should be set AFTER setting 'compatible'.
-" set compatible
-
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
 syntax on
-
-" If using a dark background within the editing area and syntax highlighting
-" turn on this option as well
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
@@ -57,7 +37,6 @@ set incsearch		" Incremental search
 set hlsearch
 
 set laststatus=2
-set statusline=%<%f%=\ [%1*%M%*%n%R%H]%{fugitive#statusline()}\ %-19(%3l,%02c%03V%)%O'%02b'
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 
@@ -84,6 +63,7 @@ au BufNewFile,BufRead *.pl setfiletype prolog
 au BufNewFile,BufRead *.php call s:php_init()
 autocmd BufNewFile,BufRead *.csv setf csv
 
+" Enable XML syntax folding
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 
@@ -125,8 +105,12 @@ vmap <silent> <C-k> :m'<-2<CR>`>my`<mzgv`yo`z
 vmap <silent> <C-down> :m'>+<CR>`<my`>mzgv`yo`z
 vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
 
-
-" Remap ctrl+space to do autocompletion
-inoremap <C-@> <c-p>
+" Nul (aka. Ctrl-Space) does dicky things. Lets stop that.
+imap <Nul> <Nop>
 
 command -nargs=0 WM :w | :!make
+
+" Supertab options
+let g:SuperTabDefaultCompletionType="context"
+let g:SuperTabContextDefaultCompletionType="<c-p>"
+let g:SnipMateSuperTab=0
