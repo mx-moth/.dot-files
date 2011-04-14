@@ -1,0 +1,35 @@
+snippet vhost
+	<VirtualHost *:80>
+
+		ServerAdmin ${3:`system("echo $USER")`}@ionata.com.au
+
+		ServerName ${1:`Filename()`}.`system("hostname")`
+		ServerAlias $1.localhost
+
+		DocumentRoot /var/vhosts/${2:$1}/httpdocs
+
+		<Directory />
+			Options FollowSymLinks
+			AllowOverride None
+		</Directory>
+
+		<Directory /var/vhosts/$2/httpdocs>
+			${4}
+			Order allow,deny
+			allow from all
+		</Directory>
+
+		LogLevel warn
+		ErrorLog /var/log/apache2/$1.error.log
+		CustomLog /var/log/apache2/$1.access.log combined
+		${5}
+	</VirtualHost>
+
+snippet rerule
+	RewriteRule ${1:Pattern} ${2:Substitution}
+
+snippet recond
+	RewriteCond ${1:TestString} ${2:CondPattern}
+
+snippet redirect
+	Redirect ${1:/} http://${2:example.com$1}
