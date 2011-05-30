@@ -8,6 +8,7 @@ export SMARTGIT_JAVA_HOME='/usr/lib/jvm/java-6-sun/'
 export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export MANPATH=$MANPATH':/home/tim/.local/share/man/'
+export TZ='Australia/Hobart'
 umask 002
 
 # Include the alias' file
