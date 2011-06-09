@@ -9,6 +9,7 @@ export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export MANPATH=$MANPATH':/home/tim/.local/share/man/'
 export TZ='Australia/Hobart'
+export NODE_PATH=/usr/local/lib/node_modules
 umask 002
 
 # Include the alias' file
@@ -30,3 +31,15 @@ fi
 for file in ~/.shells/scripts/* ; do
 	. $file
 done
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+run_scripts()
+{
+    for script in $1/*; do
+        [ -x "$script" ] || continue
+        . $script
+    done
+}
+
+run_scripts $HOME/.bashrc.d
