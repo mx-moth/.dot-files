@@ -1,3 +1,5 @@
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
 " Load pathogen bundle loader
 filetype off 
 call pathogen#helptags()
@@ -14,21 +16,23 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
+" Have Vim load indentation rules and plugins according to the detected filetype.
 if has("autocmd")
   filetype plugin indent on
 endif
 
-set showcmd			" Show (partial) command in status line.
+" Show (partial) command in status line.
+set showcmd
+
+" Open a maximum of 30 tabs on start up
 set tabpagemax=30
 
 " Save marks and stuff
 set viminfo+='100,f1
 
 " Bash style tab completion
-set wildmode=longest:full
 set wildmenu
+set wildmode=longest:full
 
 " Search settings
 set ignorecase		" Do case insensitive matching
@@ -36,6 +40,8 @@ set smartcase		" Do smart case matching
 set incsearch		" Incremental search
 set hlsearch
 
+" Improved status line: always visible, shows [+] modification, read only
+" status, git branch, etc.
 set laststatus=2
 set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
@@ -44,10 +50,11 @@ hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 set background=dark
 colorscheme torte
 highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
-set number
+set number          " Numbers in the margin
 set showmatch		" Show matching brackets.
-set showfulltag
-set foldcolumn=3
+set foldcolumn=3    " Fold column is three bits wide
+
+set showfulltag     " Auto-complete things?
 
 " Indentation settings
 set tabstop=4       " I like four space tabs for indenting
@@ -55,6 +62,7 @@ set shiftwidth=4    " I like four space tabs for indenting
 set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of characters
+set scrolloff=10
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
