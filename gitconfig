@@ -11,6 +11,7 @@
 	pretty = %Cblue%h%Creset %ar %Cgreen%an%Creset %s%C(yellow)%d
 [alias]
 	hist = log --graph --date=short --all
+	sync = !git pull --rebase && git push
 [alias]
 [merge]
 	log = true
