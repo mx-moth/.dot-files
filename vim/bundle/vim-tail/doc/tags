@@ -1,0 +1,10 @@
+'Tail_Height'	tail.txt	/*'Tail_Height'*
+:STail	tail.txt	/*:STail*
+:TabTail	tail.txt	/*:TabTail*
+:Tail	tail.txt	/*:Tail*
+:vim-tail.zsh	tail.txt	/*:vim-tail.zsh*
+Tail.txt	tail.txt	/*Tail.txt*
+tail-about	tail.txt	/*tail-about*
+tail-commands	tail.txt	/*tail-commands*
+tail-configure	tail.txt	/*tail-configure*
+tail-mappings	tail.txt	/*tail-mappings*

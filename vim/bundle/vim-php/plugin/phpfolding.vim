@@ -573,7 +573,7 @@ function! PHPFoldText() " {{{
 
 	if isFunction == 1
 		let lineString = substitute(lineString, '\<function\>\s\+', '', 'g')
-		let lineString = substitute(lineString, '\(\$[a-zA-Z0-9_]\+\)[^,)]*', '\1', 'g')
+		let lineString = substitute(lineString, '\(\$[a-zA-Z0-9_]\+\)[^,]*\(,\|)\s*{\)', '\1\2', 'g')
 	endif
 
 	if isVariable == 1

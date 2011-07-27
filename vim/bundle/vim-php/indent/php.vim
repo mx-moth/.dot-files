@@ -664,7 +664,7 @@ let s:blockstart = '\%(\%(\%(}\s*\)\=else\%(\s\+\)\=\)\=if\>\|else\>\|while\>\|s
 " associated setting file...
 let s:autoresetoptions = 0
 if ! s:autoresetoptions
-    "au BufWinEnter,Syntax	*.php,*.php\d,*.phtml,*.ctp,*.inc	call ResetPhpOptions()
+    au BufWinEnter,Syntax	*.php,*.php\d,*.phtml,*.ctp,*.inc	call ResetPhpOptions()
     let s:autoresetoptions = 1
 endif
 
@@ -1273,4 +1273,3 @@ function! GetPhpIndent()
     return ind
 endfunction
 
-" vim: set ts=8 sw=4 sts=4:

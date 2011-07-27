@@ -48,7 +48,7 @@ hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 
 " Appearance settings
 set background=dark
-colorscheme torte
+colorscheme my
 highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 set number          " Numbers in the margin
 set showmatch		" Show matching brackets.
@@ -69,6 +69,7 @@ au BufNewFile,BufRead *.cjs setfiletype javascript
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
 au BufNewFile,BufRead *.php call s:php_init()
+au BufNewFile,BufRead *.json setfiletype json
 autocmd BufNewFile,BufRead *.csv setf csv
 
 " Enable XML syntax folding
@@ -122,3 +123,18 @@ command -nargs=0 WM :w | :!make
 let g:SuperTabDefaultCompletionType="context"
 let g:SuperTabContextDefaultCompletionType="<c-p>"
 let g:SnipMateSuperTab=0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Automatically mkdir for files in non-existant directories
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup BWCCreateDir
+	au!
+	autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h")) | execute "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Automatically chmod +x for files starting with #! .../bin/
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod +x  | endif | endif
+
+

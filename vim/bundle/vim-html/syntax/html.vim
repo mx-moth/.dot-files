@@ -52,6 +52,10 @@ syn keyword htmlTagName contained input isindex kbd li link map menu
 syn keyword htmlTagName contained meta ol option param pre p samp span
 syn keyword htmlTagName contained select small strike sub sup
 syn keyword htmlTagName contained table td textarea th tr tt ul var xmp
+syn keyword htmlTagName contained article aside canvas details figcaption figure
+syn keyword htmlTagName contained footer header hgroup menu nav section summary
+syn keyword htmlTagName contained time mark audio video {
+
 syn match htmlTagName contained "\<\(b\|i\|u\|h[1-6]\|em\|strong\|head\|body\|title\)\>"
 
 " new html 4.0 tags
