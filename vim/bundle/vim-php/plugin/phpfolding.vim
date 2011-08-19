@@ -602,7 +602,7 @@ function! PHPFoldText() " {{{
 	if currentLine != v:foldstart
 		let line = getline(v:foldstart + 1)
 		let line = substitute(line, '^\s*\*\?\s*', '', 'g')
-		let line = substitute(line, '^\(.\{60\}\)\(.\+\)', '\1 ...', 'g')
+		" let line = substitute(line, '^\(.\{60\}\)\(.\+\)', '\1 ...', 'g')
 		let lineString = lineString . g:phpDocIncludedPostfix . " " . line . " "
 	endif	
 

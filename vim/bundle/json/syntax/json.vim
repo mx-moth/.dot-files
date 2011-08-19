@@ -1,12 +1,10 @@
 " Vim syntax file
 " Language:	JSON
-" Maintainer:	Jeroen Ruigrok van der Werven <asmodai@in-nomine.org>
-" Last Change:	2009-06-16
+" Maintainer:	Tim Heap <heap.tim@gmail.com>
+" Last Change:	2011-08-16
 " Version:      0.4
 
 " Syntax setup
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
 
 if !exists("main_syntax")
 	if version < 600

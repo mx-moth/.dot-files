@@ -67,6 +67,16 @@ syntax match   javaScriptNumber         /\<-\=\d\+L\=\>\|\<0[xX]\x\+\>/
 syntax match   javaScriptFloat          /\<-\=\%(\d\+\.\d\+\|\d\+\.\|\.\d\+\)\%([eE][+-]\=\d\+\)\=\>/
 syntax match   javaScriptLabel          /\(?\s*\)\@<!\<[[:alnum:]$_-]\+\(\s*:\)\@=/
 
+" Operator
+syn match javaScriptOperator "[-=+%^&|*!.~?:]" contained display
+syn match javaScriptOperator "[-+*/%^&|.]="  contained display
+syn match javaScriptOperator "/[^*/]"me=e-1  contained display
+syn match javaScriptOperator "&&\|\<and\>" contained display
+syn match javaScriptOperator "||\|\<x\=or\>" contained display
+syn match javaScriptBracket "[(){}[\]]" display
+syn match javaScriptRelation "[!=<>]=" contained display
+syn match javaScriptRelation "[<>]"  contained display
+
 "" JavaScript Prototype
 syntax keyword javaScriptPrototype      prototype
 
@@ -92,15 +102,9 @@ syntax keyword javaScriptFutureKeys     abstract enum int short boolean export i
 
 "" Code blocks
 syntax cluster javaScriptAll       contains=javaScriptComment,javaScriptLineComment,javaScriptDocComment,javaScriptStringD,javaScriptStringS,javaScriptRegexpString,javaScriptNumber,javaScriptFloat,javaScriptLabel,javaScriptSource,javaScriptType,javaScriptOperator,javaScriptBoolean,javaScriptNull,javaScriptFunction,javaScriptConditional,javaScriptRepeat,javaScriptBranch,javaScriptStatement,javaScriptClass,javaScriptExceptions,javaScriptFutureKeysjavaScriptDotNotation
-syntax region  javaScriptBracket   matchgroup=javaScriptBracket start="\[" matchgroup=javaScriptBracket end="\]" transparent contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock
-syntax region  javaScriptParen     matchgroup=javaScriptParen   start="("  matchgroup=javaScriptParen end=")"  transparent contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrC,javaScriptParen,javaScriptBracket,javaScriptBlock
-syntax region  javaScriptBlock     matchgroup=javaScriptBlock   start="{"  matchgroup=javaScriptBlock end="}"  transparent contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock
-
-"" catch errors caused by wrong parenthesis
-syntax match   javaScriptParensError    contained ")\|}\|\]"
-syntax match   javaScriptParensErrA     contained "\]"
-syntax match   javaScriptParensErrB     contained ")"
-syntax match   javaScriptParensErrC     contained "}"
+syntax region  javaScriptBracket   matchgroup=javaScriptBracket start="\["he=e matchgroup=javaScriptBracket end="\]" transparent contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock
+syntax region  javaScriptParen     matchgroup=javaScriptParen   start="("he=e  matchgroup=javaScriptParen end=")" transparent contains=@javaScriptAll,javaScriptParen,javaScriptBracket,javaScriptBlock
+syntax region  javaScriptBlock     matchgroup=javaScriptBlock   start="{"he=e  matchgroup=javaScriptBlock end="}" transparent contains=@javaScriptAll,javaScriptParen,javaScriptBracket,javaScriptBlock
 
 if main_syntax == "javascript"
   syntax sync clear
@@ -113,7 +117,7 @@ if exists("b:javascript_fold")
     syntax match   javaScriptFunction       /\<function\>/ nextgroup=javaScriptFuncName skipwhite
     syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
     syntax region  javaScriptFuncName       contained matchgroup=javaScriptFuncName start=/\%(\$\|\w\)*\s*(/ end=/)/ contains=javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
-    syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" contains=@javaScriptAll,javaScriptParensErrA,javaScriptParensErrB,javaScriptParen,javaScriptBracket,javaScriptBlock fold
+    syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" transparent contains=@javaScriptAll,javaScriptParen,javaScriptBracket,javaScriptBlock fold
 
     if &l:filetype=='javascript' && !&diff
       " Fold setting
@@ -167,12 +171,11 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptClass        		Identifier
 
   HiLink javaScriptError                Error
-  HiLink javaScriptParensError          Error
-  HiLink javaScriptParensErrA           Error
-  HiLink javaScriptParensErrB           Error
-  HiLink javaScriptParensErrC           Error
 
   HiLink javaScriptOperator             Operator
+  HiLink javaScriptBracket              Operator
+  HiLink javaScriptParen              Operator
+  HiLink javaScriptBlock              Operator
   HiLink javaScriptType                 Type
   HiLink javaScriptNull                 Type
   HiLink javaScriptNumber               Number
@@ -192,8 +195,8 @@ endif
 " Define the htmlJavaScript for HTML syntax html.vim
 "syntax clear htmlJavaScript
 "syntax clear javaScriptExpression
-syntax cluster  htmlJavaScript contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock,javaScriptParenError
-syntax cluster  javaScriptExpression contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock,javaScriptParenError,@htmlPreproc
+syntax cluster  htmlJavaScript contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock
+syntax cluster  javaScriptExpression contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock,@htmlPreproc
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
