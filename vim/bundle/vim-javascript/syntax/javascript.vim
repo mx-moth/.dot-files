@@ -114,10 +114,12 @@ endif
 
 "" Fold control
 if exists("b:javascript_fold")
-    syntax match   javaScriptFunction       /\<function\>/ nextgroup=javaScriptFuncName skipwhite
+	"syntax match   javaScriptFunction       /\<function\>/ nextgroup=javaScriptFuncName skipwhite
+	syntax match   javaScriptFunction       /\<function\>/ nextgroup=javaScriptFuncBlock skipwhite
     syntax match   javaScriptOpAssign       /=\@<!=/ nextgroup=javaScriptFuncBlock skipwhite skipempty
-    syntax region  javaScriptFuncName       contained matchgroup=javaScriptFuncName start=/\%(\$\|\w\)*\s*(/ end=/)/ contains=javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
-    syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{" end="}" transparent contains=@javaScriptAll,javaScriptParen,javaScriptBracket,javaScriptBlock fold
+    
+	" syntax region  javaScriptFuncName       contained matchgroup=javaScriptFuncName start=/\%(\$\|\w\)*\s*(/he=e end=/)/hs=s,hle=e contains=javaScriptLineComment,javaScriptComment nextgroup=javaScriptFuncBlock skipwhite skipempty
+    syntax region  javaScriptFuncBlock      contained matchgroup=javaScriptFuncBlock start="{"he=e end="}" transparent contains=@javaScriptAll,javaScriptParen,javaScriptBracket,javaScriptBlock fold
 
     if &l:filetype=='javascript' && !&diff
       " Fold setting
@@ -167,7 +169,9 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptRepeat               Repeat
 
   HiLink javaScriptStatement            Statement
-  HiLink javaScriptFunction             Function
+  HiLink javaScriptFunction             Operator
+  HiLink javaScriptFuncBlock            Operator
+  HiLink javaScriptFuncName             Function
   HiLink javaScriptClass        		Identifier
 
   HiLink javaScriptError                Error

@@ -79,8 +79,6 @@ au FileType xml setlocal foldmethod=syntax
 function! s:php_init()
 	set foldmethod=manual|EnableFastPHPFolds
 	map <F5> <Esc>:EnableFastPHPFolds<Cr>
-	map <F6> <Esc>:EnablePHPFolds<Cr>
-	map <F7> <Esc>:DisablePHPFolds<Cr>
 endfunction
 
 autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
@@ -117,7 +115,7 @@ vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
 " Nul (aka. Ctrl-Space) does dicky things. Lets stop that.
 imap <Nul> <Nop>
 
-command -nargs=0 WM :w | :!make
+command! -nargs=0 WM :w | :!make
 
 " Supertab options
 let g:SuperTabDefaultCompletionType="context"
@@ -135,6 +133,4 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically chmod +x for files starting with #! .../bin/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | silent !chmod +x  | endif | endif
-
-
+au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute "silent !chmod +x " . shellescape(expand('%:h'), 1) | endif | endif

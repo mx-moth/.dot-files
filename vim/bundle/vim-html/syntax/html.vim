@@ -251,7 +251,7 @@ if version >= 508 || !exists("did_html_syn_inits")
     HtmlHiLink htmlItalicBold              htmlBoldItalic
     HtmlHiLink htmlItalicBoldUnderline     htmlBoldUnderlineItalic
     HtmlHiLink htmlItalicUnderlineBold     htmlBoldUnderlineItalic
-    HtmlHiLink htmlLink                    Underlined
+    HtmlHiLink htmlLink                    htmlBold
     if !exists("html_my_rendering")
       hi def htmlBold                term=bold cterm=bold gui=bold
       hi def htmlBoldUnderline       term=bold,underline cterm=bold,underline gui=bold,underline

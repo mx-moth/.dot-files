@@ -47,6 +47,32 @@ highlight Error ctermbg=red ctermfg=black cterm=bold
 
 highlight TODO 	ctermfg=black ctermbg=LightBlue cterm=NONE
 
+highlight DiffAdd ctermbg=22 ctermfg=white
+highlight DiffDelete ctermbg=52 ctermfg=white
+highlight DiffChange ctermbg=17 ctermfg=white
+
+highlight DiffAdded ctermbg=22 ctermfg=white
+highlight DiffRemoved ctermbg=52 ctermfg=white
+highlight DiffChanged ctermbg=17 ctermfg=white
+
+" highlight DiffText	ctermfg=grey
+" highlight diffAdded	ctermfg=grey
+" highlight diffBDiffer	ctermfg=grey
+" highlight diffChanged	ctermfg=grey
+" highlight diffComment	ctermfg=grey
+" highlight diffCommon	ctermfg=grey
+" highlight diffDiffer	ctermfg=grey
+" highlight diffFile	ctermfg=grey
+" highlight diffIdentical	ctermfg=grey
+" highlight diffIsA	ctermfg=grey
+" highlight diffLine	ctermfg=grey
+" highlight diffNewFile	ctermfg=grey
+" highlight diffNoEOL	ctermfg=grey
+" highlight diffOldFile	ctermfg=grey
+" highlight diffOnly	ctermfg=grey
+" highlight diffRemoved	ctermfg=grey
+" highlight diffSubname	ctermfg=grey
+
 " Available classes:
 " * PreProc Include Define Macro PreCondit
 " * StorageClass Structure Typedef
