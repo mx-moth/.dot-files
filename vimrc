@@ -117,11 +117,6 @@ imap <Nul> <Nop>
 
 command! -nargs=0 WM :w | :!make
 
-" Supertab options
-let g:SuperTabDefaultCompletionType="context"
-let g:SuperTabContextDefaultCompletionType="<c-p>"
-let g:SnipMateSuperTab=0
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically mkdir for files in non-existant directories
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
