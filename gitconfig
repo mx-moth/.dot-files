@@ -10,8 +10,13 @@
 [format]
 	pretty = %Cblue%h%Creset %ar %Cgreen%an%Creset %s%C(yellow)%d
 [alias]
-	hist = log --graph --date=short --all
+	hist = log --graph --date=short --all --date-order
 	sync = !git pull --rebase && git push
+	wdiff = diff --color-words
 [alias]
 [merge]
 	log = true
+[core]
+	excludesfile = /home/tim/.gitignore_global
+[rebase]
+	autosquash = on
