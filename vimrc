@@ -155,3 +155,8 @@ au BufNewFile,BufRead *.less set makeprg="lessc --no-color % #<.css"
 au BufNewFile,BufRead *.less set errorformat=%m\ on\ line\ %l\ in\ %f,%m\ in\ %f
 au BufWritePost *.less call s:compile_less()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Objective-C settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType objc set foldmethod=syntax foldnestmax=1
+
