@@ -23,6 +23,7 @@ export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export TZ='Australia/Hobart'
 export NODE_PATH=$HOME/local/lib/node_modules
+export PYTHONSTARTUP=~/.pythonrc
 umask 002
 
 # Program alias'
@@ -34,7 +35,7 @@ if [ -f "/etc/bash_completion" ] ; then
 	. "/etc/bash_completion"
 fi
 
-export PS1='\[\e[1m\][\u@\h \W{}]\[\e[32m\]\$\[\e[0m\] '
+export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
 # Use git style prompt if we have the git completion function
 # See http://stackoverflow.com/questions/1007538/check-if-a-function-exists-from-a-bash-script for an explination of the if ... then
 if type -t __git_ps1 | grep -q "^function$" ; then
@@ -45,7 +46,6 @@ fi
 
 run_scripts() {
     for script in $1/*; do
-        [ -x "$script" ] || continue
         . $script
     done
 }
