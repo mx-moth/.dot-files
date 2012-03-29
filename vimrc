@@ -160,3 +160,11 @@ au BufWritePost *.less call s:compile_less()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType objc set foldmethod=syntax foldnestmax=1
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+au BufNewFile,BufRead *.py set expandtab
+let g:pyindent_open_paren = '&sw'
+let g:pyindent_nested_paren = '&sw'
+let g:pyindent_continue = '&sw'
