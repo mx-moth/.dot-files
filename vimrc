@@ -135,3 +135,23 @@ endfunction
 au BufNewFile,BufRead *.php call s:php_init()
 autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Automatically compile less files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:compile_less()
+	let l:less = expand('%:p')
+	let l:css = substitute(l:less, "\\<less\\>", "css", "g")
+	let l:errorfile = tempname()
+	silent execute "!lessc --no-color " . shellescape(l:less, 1) . " > " . shellescape(l:css, 1) . " 2> " shellescape(l:errorfile, 1)
+	redraw
+	if v:shell_error
+		echo v:shell_error
+		execute "botright pedit " . l:errorfile
+	else
+		pclose
+	endif
+endfunction
+au BufNewFile,BufRead *.less set makeprg="lessc --no-color % #<.css"
+au BufNewFile,BufRead *.less set errorformat=%m\ on\ line\ %l\ in\ %f,%m\ in\ %f
+au BufWritePost *.less call s:compile_less()
+
