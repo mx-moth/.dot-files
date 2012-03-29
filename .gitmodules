@@ -19,3 +19,12 @@
 [submodule "vim/bundle/unimpaired"]
 	path = vim/bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "vim/bundle/cocoa"]
+	path = vim/bundle/cocoa
+	url = https://github.com/msanders/cocoa.vim.git
+[submodule "vim/bundle/less"]
+	path = vim/bundle/less
+	url = https://github.com/groenewege/vim-less.git
+[submodule "vim/bundle/argtextobject"]
+	path = vim/bundle/argtextobject
+	url = https://github.com/inkarkat/argtextobj.vim.git

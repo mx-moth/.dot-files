@@ -402,23 +402,23 @@ syn cluster phpClTop  contains=@phpClFunction,phpFoldFunction,phpFoldClass,phpFo
 " Php Region
 if exists("php_parent_error_open")
   if exists("php_noShortTags")
-    syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop
+    syn region   phpRegion  matchgroup=PreProc start="<?php" end="?>" contains=@phpClTop
   else
-    syn region   phpRegion  matchgroup=Delimiter start="<?\(php\)\=" end="?>" contains=@phpClTop
+    syn region   phpRegion  matchgroup=PreProc start="<?\(php\)\=" end="?>" contains=@phpClTop
   endif
-  syn region   phpRegionSc  matchgroup=Delimiter start=+<script language="php">+ end=+</script>+  contains=@phpClTop
+  syn region   phpRegionSc  matchgroup=PreProc start=+<script language="php">+ end=+</script>+  contains=@phpClTop
   if exists("php_asp_tags")
-    syn region   phpRegionAsp matchgroup=Delimiter start="<%\(=\)\=" end="%>" contains=@phpClTop
+    syn region   phpRegionAsp matchgroup=PreProc start="<%\(=\)\=" end="%>" contains=@phpClTop
   endif
 else
   if exists("php_noShortTags")
-    syn region   phpRegion  matchgroup=Delimiter start="<?php" end="?>" contains=@phpClTop keepend
+    syn region   phpRegion  matchgroup=PreProc start="<?php" end="?>" contains=@phpClTop keepend
   else
-    syn region   phpRegion  matchgroup=Delimiter start="<?\(php\)\=" end="?>" contains=@phpClTop keepend
+    syn region   phpRegion  matchgroup=PreProc start="<?\(php\)\=" end="?>" contains=@phpClTop keepend
   endif
-  syn region   phpRegionSc  matchgroup=Delimiter start=+<script language="php">+ end=+</script>+  contains=@phpClTop keepend
+  syn region   phpRegionSc  matchgroup=PreProc start=+<script language="php">+ end=+</script>+  contains=@phpClTop keepend
   if exists("php_asp_tags")
-    syn region   phpRegionAsp matchgroup=Delimiter start="<%\(=\)\=" end="%>" contains=@phpClTop keepend
+    syn region   phpRegionAsp matchgroup=PreProc start="<%\(=\)\=" end="%>" contains=@phpClTop keepend
   endif
 endif
 
