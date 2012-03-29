@@ -68,20 +68,12 @@ set scrolloff=10
 au BufNewFile,BufRead *.cjs setfiletype javascript
 au BufNewFile,BufRead *.thtml setfiletype php
 au BufNewFile,BufRead *.pl setfiletype prolog
-au BufNewFile,BufRead *.php call s:php_init()
 au BufNewFile,BufRead *.json setfiletype json
 autocmd BufNewFile,BufRead *.csv setf csv
 
 " Enable XML syntax folding
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
-
-function! s:php_init()
-	set foldmethod=manual|EnableFastPHPFolds
-	map <F5> <Esc>:EnableFastPHPFolds<Cr>
-endfunction
-
-autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
 
 " Enable modeline (Vim settings in a file)
 set modeline
@@ -129,3 +121,17 @@ augroup END
 " => Automatically chmod +x for files starting with #! .../bin/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute "silent !chmod +x " . shellescape(expand('%:h'), 1) | endif | endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PHP specific settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tie in with the PHP syntax file and folding helper
+function! s:php_init()
+	set foldmethod=manual|EnableFastPHPFolds
+	map <F6> <Esc>:EnableFastPHPFolds<Cr>
+endfunction
+
+" Use the PHP doc
+au BufNewFile,BufRead *.php call s:php_init()
+autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
+
