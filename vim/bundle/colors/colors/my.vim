@@ -42,6 +42,7 @@ highlight TypeDef	ctermfg=yellow cterm=NONE
 highlight Structure	ctermfg=yellow
 
 highlight Special ctermfg=brown
+highlight PreProc ctermfg=brown
 
 highlight Error ctermbg=red ctermfg=black cterm=bold
 
