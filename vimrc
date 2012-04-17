@@ -64,6 +64,8 @@ set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of characters
 set scrolloff=10
 
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
 au BufNewFile,BufRead *.thtml setfiletype php
