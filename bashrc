@@ -35,6 +35,9 @@ if [ -f "/etc/bash_completion" ] ; then
 	. "/etc/bash_completion"
 fi
 
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
 export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
 # Use git style prompt if we have the git completion function
 # See http://stackoverflow.com/questions/1007538/check-if-a-function-exists-from-a-bash-script for an explination of the if ... then
