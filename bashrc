@@ -35,8 +35,10 @@ if [ -f "/etc/bash_completion" ] ; then
 	. "/etc/bash_completion"
 fi
 
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+if echo "$-" | grep -q 'i' ; then
+	bind '"\e[A": history-search-backward'
+	bind '"\e[B": history-search-forward'
+fi
 
 export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
 # Use git style prompt if we have the git completion function
