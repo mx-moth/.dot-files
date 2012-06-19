@@ -143,18 +143,17 @@ autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
 function! s:compile_less()
 	let l:less = expand('%:p')
 	let l:css = substitute(l:less, "\\<less\\>", "css", "g")
-	let l:errorfile = tempname()
-	silent execute "!lessc --no-color " . shellescape(l:less, 1) . " > " . shellescape(l:css, 1) . " 2> " shellescape(l:errorfile, 1)
-	redraw
+	let l:outfile = tempname()
+	let l:errorfile = "/dev/null"
+	let l:cmd = printf("!lessc --no-color %s > %s 2> %s",shellescape(l:less, 1),shellescape(l:outfile, 1),shellescape(l:errorfile, 1))
+	silent execute l:cmd
+
 	if v:shell_error
-		echo v:shell_error
-		execute "botright pedit " . l:errorfile
+		call delete(l:outfile)
 	else
-		pclose
+		call rename(l:outfile, l:css)
 	endif
 endfunction
-au BufNewFile,BufRead *.less set makeprg="lessc --no-color % #<.css"
-au BufNewFile,BufRead *.less set errorformat=%m\ on\ line\ %l\ in\ %f,%m\ in\ %f
 au BufWritePost *.less call s:compile_less()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
