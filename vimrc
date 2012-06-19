@@ -1,7 +1,7 @@
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 " Load pathogen bundle loader
-filetype off 
+filetype off
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
@@ -13,12 +13,12 @@ syntax on
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Have Vim load indentation rules and plugins according to the detected filetype.
 if has("autocmd")
-  filetype plugin indent on
+	filetype plugin indent on
 endif
 
 " Show (partial) command in status line.
@@ -35,9 +35,9 @@ set wildmenu
 set wildmode=longest:full
 
 " Search settings
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set incsearch		" Incremental search
+set ignorecase      " Do case insensitive matching
+set smartcase       " Do smart case matching
+set incsearch       " Incremental search
 set hlsearch
 
 " Improved status line: always visible, shows [+] modification, read only
@@ -51,7 +51,7 @@ set background=dark
 colorscheme my
 highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 set number          " Numbers in the margin
-set showmatch		" Show matching brackets.
+set showmatch       " Show matching brackets.
 set foldcolumn=3    " Fold column is three bits wide
 
 set showfulltag     " Auto-complete things?
