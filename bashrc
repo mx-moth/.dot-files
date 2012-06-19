@@ -10,6 +10,11 @@ for i in $HOME/local/*; do
 	[ -d $i/lib/pkgconfig ] && PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
 	[ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
+
+if [ -d $HOME/.cabal/bin ] ; then
+	PATH="${HOME}/.cabal/bin:${PATH}"
+fi
+
 export PATH
 export CPATH
 export LD_LIBRARY_PATH
