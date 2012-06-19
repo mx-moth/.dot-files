@@ -28,3 +28,6 @@
 [submodule "vim/bundle/argtextobject"]
 	path = vim/bundle/argtextobject
 	url = https://github.com/inkarkat/argtextobj.vim.git
+[submodule "vim/bundle/css3"]
+	path = vim/bundle/css3
+	url = https://github.com/hail2u/vim-css3-syntax.git
