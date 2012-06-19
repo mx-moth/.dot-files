@@ -87,4 +87,16 @@ if executable("lessc")
 	call s:DefineLinter("less", "lessc --no-color %s /dev/null 2> %s", ['%m in %f:%l:%c'])
 endif
 
+if executable("pylint")
+	call s:DefineLinter('python', "pylint %s > %s 2>/dev/null", [
+	\	"%t:  %l,%c: %m",
+	\	"%t: %l,%c: %m",
+	\	"%t:%l,%c: %m",
+	\])
+endif
+
+if executable("pyflakes")
+	call s:DefineLinter('python', "pyflakes %s > %s", ["%f:%l: %m"])
+endif
+
 au BufWritePost * call s:RunLinter()
