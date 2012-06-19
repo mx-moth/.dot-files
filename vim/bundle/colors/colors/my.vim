@@ -56,6 +56,8 @@ highlight DiffAdded ctermbg=22 ctermfg=white
 highlight DiffRemoved ctermbg=52 ctermfg=white
 highlight DiffChanged ctermbg=17 ctermfg=white
 
+highlight SpecialKey ctermfg=DarkBlue
+
 " highlight DiffText	ctermfg=grey
 " highlight diffAdded	ctermfg=grey
 " highlight diffBDiffer	ctermfg=grey
