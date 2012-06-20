@@ -17,6 +17,6 @@
 [merge]
 	log = true
 [core]
-	excludesfile = /home/tim/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [rebase]
 	autosquash = on
