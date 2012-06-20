@@ -112,6 +112,31 @@ imap <Nul> <Nop>
 command! -nargs=0 WM :w | :!make
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Open multiple files in tabs/windows in one command
+" 
+" Usage:
+"   :Etabs module/*.py
+"   :Ewindows client.h client.cpp
+"   :Evwindows logs/error.log logs/debug.log
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
+command! -complete=file -nargs=+ Ewindows call s:ETW('new', <f-args>)
+command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
+
+function! s:ETW(what, ...)
+  for f1 in a:000
+    let files = glob(f1)
+    if files == ''
+      execute a:what . ' ' . escape(f1, '\ "')
+    else
+      for f2 in split(files, "\n")
+        execute a:what . ' ' . escape(f2, '\ "')
+      endfor
+    endif
+  endfor
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically mkdir for files in non-existant directories
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup BWCCreateDir
