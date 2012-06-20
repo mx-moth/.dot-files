@@ -31,3 +31,6 @@
 [submodule "vim/bundle/css3"]
 	path = vim/bundle/css3
 	url = https://github.com/hail2u/vim-css3-syntax.git
+[submodule "vim/bundle/ctrlp"]
+	path = vim/bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim

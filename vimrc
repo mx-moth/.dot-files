@@ -194,3 +194,12 @@ au BufNewFile,BufRead *.py set expandtab
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ctrl+p settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:ctrlp_custom_ignore = {
+	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv$',
+	\ 'file': '\.pyc$\|\.so$\|\.class$',
+	\ }
