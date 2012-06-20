@@ -21,7 +21,7 @@
 	url = https://github.com/tpope/vim-unimpaired.git
 [submodule "vim/bundle/cocoa"]
 	path = vim/bundle/cocoa
-	url = https://github.com/msanders/cocoa.vim.git
+	url = https://github.com/fomichev/cocoa.vim
 [submodule "vim/bundle/less"]
 	path = vim/bundle/less
 	url = https://github.com/groenewege/vim-less.git
