@@ -10,13 +10,20 @@ filetype plugin indent on
 " line enables syntax highlighting by default.
 syntax on
 
-" Uncomment the following to have Vim jump to the last position when
-" reopening a file
+" Uncomment the following to have Vim jump to the last position when reopening a
+" file
 if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	function! s:JumpToLastLine()
+		if line("'\"") > 1 && line("'\"") <= line("$")
+			execute "normal! g'\""
+		endif
+	endfunction
+
+	au BufReadPost * call s:JumpToLastLine()
 endif
 
-" Have Vim load indentation rules and plugins according to the detected filetype.
+" Have Vim load indentation rules and plugins according to the detected
+" filetype.
 if has("autocmd")
 	filetype plugin indent on
 endif
@@ -61,7 +68,7 @@ set tabstop=4       " I like four space tabs for indenting
 set shiftwidth=4    " I like four space tabs for indenting
 set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
-set lbr             " Put line breaks at word ends, not in the middle of characters
+set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=10
 
 set listchars=tab:▷\ ,extends:❯,precedes:❮,trail:␣
@@ -90,9 +97,10 @@ set fileformat=unix
 " Man page plugin
 runtime ftplugin/man.vim
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Remap VIM 0
 map 0 ^
 
@@ -109,49 +117,67 @@ vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
 " Nul (aka. Ctrl-Space) does dicky things. Lets stop that.
 imap <Nul> <Nop>
 
+" :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open multiple files in tabs/windows in one command
 " 
 " Usage:
 "   :Etabs module/*.py
 "   :Ewindows client.h client.cpp
 "   :Evwindows logs/error.log logs/debug.log
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
 command! -complete=file -nargs=+ Ewindows call s:ETW('new', <f-args>)
 command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
 
 function! s:ETW(what, ...)
-  for f1 in a:000
-    let files = glob(f1)
-    if files == ''
-      execute a:what . ' ' . escape(f1, '\ "')
-    else
-      for f2 in split(files, "\n")
-        execute a:what . ' ' . escape(f2, '\ "')
-      endfor
-    endif
-  endfor
+	for f1 in a:000
+		let files = glob(f1)
+		if files == ''
+			execute a:what . ' ' . escape(f1, '\ "')
+		else
+			for f2 in split(files, "\n")
+				execute a:what . ' ' . escape(f2, '\ "')
+			endfor
+		endif
+	endfor
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically mkdir for files in non-existant directories
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:CheckDirectoryExists()
+	if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h"))
+		silent! execute "!mkdir -p ".shellescape(expand('%:h'), 1)
+		redraw!
+	endif
+endfunction
+
 augroup BWCCreateDir
 	au!
-	autocmd BufWritePre * if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h")) | execute "silent! !mkdir -p ".shellescape(expand('%:h'), 1) | redraw! | endif
+	autocmd BufWritePre * call s:CheckDirectoryExists()
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Automatically chmod +x for files starting with #! .../bin/
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufWritePost * if getline(1) =~ "^#!" | if getline(1) =~ "/bin/" | execute "silent !chmod +x " . shellescape(expand('%:h'), 1) | endif | endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Automatically chmod +x for files starting with #! .../bin/
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:AutoChmodX()
+	if getline(1) =~ "^#!"
+		execute "silent !chmod +x " . shellescape(expand('%:h'), 1)
+	endif
+endfunction
+
+au BufWritePost * call s:AutoChmodX()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PHP specific settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tie in with the PHP syntax file and folding helper
 function! s:php_init()
 	set foldmethod=manual|EnableFastPHPFolds
@@ -162,15 +188,20 @@ endfunction
 au BufNewFile,BufRead *.php call s:php_init()
 autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically compile less files
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:compile_less()
 	let l:less = expand('%:p')
 	let l:css = substitute(l:less, "\\<less\\>", "css", "g")
 	let l:outfile = tempname()
 	let l:errorfile = "/dev/null"
-	let l:cmd = printf("!lessc --no-color %s > %s 2> %s",shellescape(l:less, 1),shellescape(l:outfile, 1),shellescape(l:errorfile, 1))
+	let l:cmd = printf("!lessc --no-color %s > %s 2> %s",
+	\	shellescape(l:less, 1),
+	\	shellescape(l:outfile, 1),
+	\	shellescape(l:errorfile, 1)
+	\)
 	silent execute l:cmd
 
 	if v:shell_error
@@ -181,25 +212,26 @@ function! s:compile_less()
 endfunction
 au BufWritePost *.less call s:compile_less()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Objective-C settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType objc set foldmethod=syntax foldnestmax=1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Python settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Python settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au BufNewFile,BufRead *.py set expandtab
 au BufNewFile,BufRead *.py set nosmartindent
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrl+p settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ctrl+p settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
 	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv$',
 	\ 'file': '\.pyc$\|\.so$\|\.class$',

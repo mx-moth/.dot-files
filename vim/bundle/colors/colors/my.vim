@@ -23,7 +23,6 @@ highlight Boolean   ctermfg=129
 highlight Keyword   ctermfg=91  cterm=NONE
 highlight Exception ctermfg=165 ctermbg=black
 
-
 " Functions and identifiers get bluey colours
 highlight Identifier ctermfg=12 cterm=NONE
 highlight Function ctermfg=26 cterm=NONE
@@ -34,20 +33,24 @@ highlight Statement ctermfg=40 cterm=NONE
 highlight Conditional ctermfg=3 cterm=NONE
 highlight Operator ctermfg=70 cterm=NONE
 highlight Repeat ctermfg=40 cterm=NONE
-
 highlight Delimiter ctermfg=40
 
-highlight Type	ctermfg=yellow cterm=NONE
-highlight TypeDef	ctermfg=yellow cterm=NONE
-highlight Structure	ctermfg=yellow
+" Type keywords (int, char, string, etc) are yellow
+highlight Type ctermfg=yellow cterm=NONE
+highlight TypeDef ctermfg=yellow cterm=NONE
+highlight Structure ctermfg=yellow
 
+" Special terms get brown colours
 highlight Special ctermfg=brown
 highlight PreProc ctermfg=brown
 
+" RED
 highlight Error ctermbg=red ctermfg=black cterm=bold
 
+" Invert TODO tags
 highlight TODO 	ctermfg=black ctermbg=LightBlue cterm=NONE
 
+" Green/red/blue backgrounds for diff add/delete/change
 highlight DiffAdd ctermbg=22 ctermfg=white
 highlight DiffDelete ctermbg=52 ctermfg=white
 highlight DiffChange ctermbg=17 ctermfg=white
@@ -85,12 +88,12 @@ highlight SpecialKey ctermfg=DarkBlue
 
 " only for vim 5
 if has("unix")
-  if v:version<600
-    highlight Normal  ctermfg=Grey	ctermbg=Black	cterm=NONE	guifg=Grey80      guibg=Black	gui=NONE
-    highlight Search  ctermfg=Black	ctermbg=Red	cterm=bold	guifg=Black       guibg=Red	gui=bold
-    highlight Visual  ctermfg=Black	ctermbg=yellow	cterm=bold	guifg=#404040			gui=bold
-    highlight Special ctermfg=LightBlue			cterm=NONE	guifg=LightBlue			gui=NONE
-    highlight Comment ctermfg=Cyan			cterm=NONE	guifg=LightBlue			gui=NONE
-  endif
+	if v:version<600
+		highlight Normal  ctermfg=Grey ctermbg=Black cterm=NONE guifg=Grey80guibg=Black gui=NONE
+		highlight Search  ctermfg=Black ctermbg=Red cterm=bold guifg=Black guibg=Red gui=bold
+		highlight Visual  ctermfg=Black ctermbg=yellow cterm=bold guifg=#404040 gui=bold
+		highlight Special ctermfg=LightBlue ctermbg=Black cterm=NONE guifg=LightBlue gui=NONE
+		highlight Comment ctermfg=Cyan ctermbg=Black cterm=NONE guifg=LightBlue gui=NONE
+	endif
 endif
 
