@@ -40,7 +40,7 @@ def make_colour_code(code, colour_type):
         return str(colour_type + _COLOURS[code])
 
     if isinstance(code, tuple):
-        return str(colour_type + 8) + ';5;' + ';'.join(str(x) for x in code)
+        return str(colour_type + 8) + ';2;' + ';'.join(str(x) for x in code)
     
     return '38;5;' + str(code)
 
