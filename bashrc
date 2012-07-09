@@ -35,6 +35,7 @@ umask 002
 alias vi='vim -p'
 alias ls='ls -hF --color=auto'
 alias xclip='xclip -selection "clipboard"'
+alias noop='echo -n ""'
 
 if [ -f "/etc/bash_completion" ] ; then
 	. "/etc/bash_completion"
