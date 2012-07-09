@@ -239,6 +239,12 @@ let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Html settings
+"
+" Disable hard mode for HTML files - The lines are always very long
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufNewFile,BufRead *.html setlocal textwidth=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl+p settings
