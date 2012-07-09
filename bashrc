@@ -47,20 +47,9 @@ fi
 
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
-export PS1='\[\e[1m\][\u@\h \W]\[\e[32m\]\$\[\e[0m\] '
-# Use git style prompt if we have the git completion function
-# See http://stackoverflow.com/questions/1007538/check-if-a-function-exists-from-a-bash-script for an explination of the if ... then
-if type -t __git_ps1 | grep -q "^function$" ; then
-	export GIT_PS1_SHOWDIRTYSTATE=true
-	export GIT_PS1_SHOWUNTRACKEDFILES=true
-	export PS1='\[[1m\][\u@\h \W\[[0;33m\]$(__git_ps1 " (%s)")\[[0;1m\]]\[[32m\]\$\[[0m\] '
-fi
+# Build up PS1
+export VIRTUAL_ENV_DISABLE_PROMPT=true
+alias vcprompt="$HOME/.bashrc.d/vcprompt"
+export PS1="$( python $HOME/.bashrc.d/build_ps1.py )"
 
-run_scripts() {
-    for script in $1/*; do
-        . $script
-    done
-}
-
-# Include custom scripts
-run_scripts $HOME/.bashrc.d
+. $HOME/.bashrc.d/wine-paths.sh
