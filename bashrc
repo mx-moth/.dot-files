@@ -27,7 +27,7 @@ export LESS='FRSX'
 export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export TZ='Australia/Hobart'
-export NODE_PATH=$HOME/local/lib/node_modules
+export NODE_PATH=$HOME/local/lib/node_modules:$HOME/local/node/lib/node_modules
 export PYTHONSTARTUP=~/.pythonrc
 umask 002
 
