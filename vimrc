@@ -124,6 +124,13 @@ imap <Nul> <Nop>
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
+map { <M-{>
+map } <M-}>
+nmap <M-{> :tabprevious<cr>
+nmap <M-}> :tabnext<cr>
+
+command! -nargs=0 Q :tabclose
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open multiple files in tabs/windows in one command
