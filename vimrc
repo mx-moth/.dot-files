@@ -46,6 +46,11 @@ set ignorecase      " Do case insensitive matching
 set smartcase       " Do smart case matching
 set incsearch       " Incremental search
 set hlsearch
+set gdefault        " Automatic global replacement
+
+" Magic searching by default
+nnoremap / /\v
+vnoremap / /\v
 
 " Improved status line: always visible, shows [+] modification, read only
 " status, git branch, etc.
