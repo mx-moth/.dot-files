@@ -74,9 +74,12 @@ PS1 += [' at ', format_text('\h', fore=13)] # at $HOST
 
 PS1 += ['$( vcprompt -f " on ',
     format_text('%n', fore=130), ':',
-    format_text('%b', fore=214), format_text(' [', fore=239),
-    format_text('%m', fore='green'),
-    format_text('%u', fore=33), format_text(']', fore=239),
+    format_text('%b', fore=214),
+    format_text(' [', fore=239),
+    format_text('%a', fore='green'),
+    format_text('%m', fore='red'),
+    format_text('%u', fore=33),
+    format_text(']', fore=239),
     '")']
 
 VENV_COMMAND = "".join([
