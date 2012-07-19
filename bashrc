@@ -50,6 +50,9 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
+export VCPROMPT_STAGED='+'
+export VCPROMPT_MODIFIED='*'
+export VCPROMPT_UNTRACKED='?'
 alias vcprompt="$HOME/.bashrc.d/vcprompt"
 export PS1="$( python $HOME/.bashrc.d/build_ps1.py )"
 

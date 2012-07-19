@@ -72,7 +72,16 @@ PS1 = ["\n"]
 PS1 += ['[ ', format_text('\u', fore=40)]     # $USER
 PS1 += [' at ', format_text('\h', fore=13)] # at $HOST
 
+
 PS1 += ['$( vcprompt -f " on ',
+    format_text('%n', fore=130), ':',
+    format_text('%b', fore=214),
+    format_text(' [', fore=239),
+    format_text('%m', fore='red'),
+    format_text('%u', fore=33),
+    format_text(']', fore=239),
+    '"',
+    '--format-git " on ',
     format_text('%n', fore=130), ':',
     format_text('%b', fore=214),
     format_text(' [', fore=239),
@@ -80,7 +89,8 @@ PS1 += ['$( vcprompt -f " on ',
     format_text('%m', fore='red'),
     format_text('%u', fore=33),
     format_text(']', fore=239),
-    '")']
+    '"',
+    ')']
 
 VENV_COMMAND = "".join([
 'if [[ x"$VIRTUAL_ENV" != x ]] ; then '
