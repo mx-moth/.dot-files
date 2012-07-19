@@ -13,6 +13,8 @@
 	hist = log --graph --date=short --all --date-order
 	sync = !git pull --rebase && git push
 	wdiff = diff --color-words
+
+	quick-amend = !VISUAL=/bin/true git commit --amend
 [alias]
 [merge]
 	log = true
