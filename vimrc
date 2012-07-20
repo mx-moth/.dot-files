@@ -80,7 +80,9 @@ set listchars=tab:▷\ ,extends:❯,precedes:❮,trail:␣
 
 " Hardcore mode: enabled
 set textwidth=80
-set colorcolumn=+1
+if exists("+colorcolumn")
+	set colorcolumn=+1
+endif
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
