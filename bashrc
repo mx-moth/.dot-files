@@ -48,6 +48,10 @@ fi
 
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
+function datestamp() {
+	date "+%Y-%m-%d-%H%m"
+}
+
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 export VCPROMPT_STAGED='+'
