@@ -137,9 +137,9 @@ command! -nargs=0 Q :tabclose
 "
 " 80 character columns, automatic text wrapping
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:HardMode()
+function! s:HardMode(width)
 	" Hardcore mode: enabled
-	setlocal textwidth=80
+	exec "setlocal textwidth=".a:width
 	if exists("+colorcolumn")
 		setlocal colorcolumn=+1
 	endif
@@ -259,7 +259,7 @@ autocmd FileType objc setlocal foldmethod=syntax foldnestmax=1
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
-	call s:HardMode()
+	call s:HardMode(79)
 endfunction
 au FileType python call s:PythonInit()
 
