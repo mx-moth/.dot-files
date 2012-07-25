@@ -78,12 +78,6 @@ set scrolloff=10
 
 set listchars=tab:▷\ ,extends:❯,precedes:❮,trail:␣
 
-" Hardcore mode: enabled
-set textwidth=80
-if exists("+colorcolumn")
-	set colorcolumn=+1
-endif
-
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
 au BufNewFile,BufRead *.thtml setfiletype php
@@ -138,6 +132,18 @@ nmap <M-}> :tabnext<cr>
 
 command! -nargs=0 Q :tabclose
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Enable hard mode
+"
+" 80 character columns, automatic text wrapping
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:HardMode()
+	" Hardcore mode: enabled
+	setlocal textwidth=80
+	if exists("+colorcolumn")
+		setlocal colorcolumn=+1
+	endif
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open multiple files in tabs/windows in one command
@@ -198,14 +204,19 @@ au BufWritePost * call s:AutoChmodX()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tie in with the PHP syntax file and folding helper
 function! s:php_init()
-	set foldmethod=manual|EnableFastPHPFolds
+	setlocal keywordprg=$HOME/.vim/plugins/php_doc  " Use the PHP doc
+	setlocal foldmethod=manual|EnableFastPHPFolds   " Turn on PHP folding
 	map <F6> <Esc>:EnableFastPHPFolds<Cr>
 endfunction
 
-" Use the PHP doc
-au BufNewFile,BufRead *.php call s:php_init()
-autocmd FileType php set keywordprg=$HOME/.vim/plugins/php_doc
+augroup php
+	au!
+	au FileType php call s:php_init()
+augroup END
 
+function s:autype(type, event, callback)
+	execute "autocmd ".a:event." * if &ft == '".a:type."' | call ".a:callback."() | endif"
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically compile less files
@@ -228,30 +239,33 @@ function! s:compile_less()
 		call rename(l:outfile, l:css)
 	endif
 endfunction
-au BufWritePost *.less call s:compile_less()
+
+augroup less
+	au!
+	call s:autype('less', 'BufWritePost', 's:compile_less')
+
+augroup END
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Objective-C settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType objc set foldmethod=syntax foldnestmax=1
+autocmd FileType objc setlocal foldmethod=syntax foldnestmax=1
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufNewFile,BufRead *.py set expandtab
-au BufNewFile,BufRead *.py set nosmartindent
+function! s:PythonInit()
+	setlocal expandtab
+	setlocal nosmartindent
+	call s:HardMode()
+endfunction
+au FileType python call s:PythonInit()
+
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Html settings
-"
-" Disable hard mode for HTML files - The lines are always very long
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufNewFile,BufRead *.html setlocal textwidth=0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl+p settings
