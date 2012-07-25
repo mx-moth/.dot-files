@@ -64,7 +64,6 @@ colorscheme my
 highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 set number          " Numbers in the margin
 set showmatch       " Show matching brackets.
-set foldcolumn=3    " Fold column is three bits wide
 
 set showfulltag     " Auto-complete things?
 
@@ -205,7 +204,8 @@ au BufWritePost * call s:AutoChmodX()
 " Tie in with the PHP syntax file and folding helper
 function! s:php_init()
 	setlocal keywordprg=$HOME/.vim/plugins/php_doc  " Use the PHP doc
-	setlocal foldmethod=manual|EnableFastPHPFolds   " Turn on PHP folding
+	setlocal foldmethod=manual|EnableFastPHPFolds
+	setlocal foldcolumn=3
 	map <F6> <Esc>:EnableFastPHPFolds<Cr>
 endfunction
 
