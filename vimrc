@@ -239,7 +239,7 @@ augroup php
 	au FileType php call s:php_init()
 augroup END
 
-function s:autype(type, event, callback)
+function! s:autype(type, event, callback)
 	let l:cmd_str = "autocmd %s * if &ft == '%s' | call %s() | endif"
 	execute printf(l:cmd_str, a:event, a:type, a:callback)
 endfunction
