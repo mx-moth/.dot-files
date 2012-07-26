@@ -10,8 +10,8 @@ filetype plugin indent on
 " line enables syntax highlighting by default.
 syntax on
 
-" Uncomment the following to have Vim jump to the last position when reopening a
-" file
+" Uncomment the following to have Vim jump to the last position when reopening
+" a file
 if has("autocmd")
 	function! s:JumpToLastLine()
 		if line("'\"") > 1 && line("'\"") <= line("$")
@@ -102,9 +102,9 @@ set fileformat=unix
 runtime ftplugin/man.vim
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Remap VIM 0
 map 0 ^
 
@@ -130,11 +130,11 @@ nmap <M-{> :tabprevious<cr>
 nmap <M-}> :tabnext<cr>
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => :Q to quit the whole tab - exiting Vim if it is the last tab
 "
 " This differs from :tabclose, which does not quit if this tab is the last tab
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:CloseTab()
 	if tabpagenr('$') == 1
 		qall
@@ -144,11 +144,11 @@ function! s:CloseTab()
 endfunction
 command! -nargs=0 Q call s:CloseTab()
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Enable hard mode
 "
 " 80 character columns, automatic text wrapping
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:HardMode(width)
 	" Hardcore mode: enabled
 	exec "setlocal textwidth=".a:width
@@ -157,14 +157,14 @@ function! s:HardMode(width)
 	endif
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open multiple files in tabs/windows in one command
 " 
 " Usage:
 "   :Etabs module/*.py
 "   :Ewindows client.h client.cpp
 "   :Evwindows logs/error.log logs/debug.log
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! -complete=file -nargs=+ Etabs call s:ETW('tabnew', <f-args>)
 command! -complete=file -nargs=+ Ewindows call s:ETW('new', <f-args>)
 command! -complete=file -nargs=+ Evwindows call s:ETW('vnew', <f-args>)
@@ -183,9 +183,9 @@ function! s:ETW(what, ...)
 endfunction
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically mkdir for files in non-existant directories
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:CheckDirectoryExists()
 	if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h"))
 		silent! execute "!mkdir -p ".shellescape(expand('%:h'), 1)
@@ -199,9 +199,9 @@ augroup BWCCreateDir
 augroup END
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically chmod +x for files starting with #! .../bin/
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:AutoChmodX()
 	if getline(1) =~ "^#!"
 		execute "silent !chmod +x " . shellescape(expand('%:h'), 1)
@@ -211,9 +211,9 @@ endfunction
 au BufWritePost * call s:AutoChmodX()
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PHP specific settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tie in with the PHP syntax file and folding helper
 function! s:php_init()
 	setlocal keywordprg=$HOME/.vim/plugins/php_doc  " Use the PHP doc
@@ -228,12 +228,13 @@ augroup php
 augroup END
 
 function s:autype(type, event, callback)
-	execute "autocmd ".a:event." * if &ft == '".a:type."' | call ".a:callback."() | endif"
+	let l:cmd_str = "autocmd %s * if &ft == '%s' | call %s() | endif"
+	execute printf(l:cmd_str, a:event, a:type, a:callback)
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Automatically compile less files
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:compile_less()
 	let l:less = expand('%:p')
 	let l:css = substitute(l:less, "\\<less\\>", "css", "g")
@@ -260,14 +261,14 @@ augroup less
 augroup END
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Objective-C settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType objc setlocal foldmethod=syntax foldnestmax=1
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Markdown settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType markdown call s:HardMode(79)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -277,9 +278,14 @@ if exists("+colorcolumn")
 	autocmd FileType gitcommit setlocal colorcolumn=+1
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vimscript settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType vim call HardMode(79)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
@@ -291,9 +297,9 @@ let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl+p settings
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
 	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv$',
 	\ 'file': '\.pyc$\|\.so$\|\.class$',
