@@ -115,6 +115,11 @@ runtime ftplugin/man.vim
 "Remap VIM 0
 map 0 ^
 
+" Q is really annoying.
+map Q gq
+nmap <F1> <Esc>
+imap <F1> <Nop>
+
 "Move a line or selection of text using Crtl+[jk] or Comamnd+[jk] on mac
 nmap <silent> <C-j> mz:m+<CR>`z
 nmap <silent> <C-k> mz:m-2<CR>`z
