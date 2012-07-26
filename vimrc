@@ -173,10 +173,10 @@ function! s:ETW(what, ...)
 	for f1 in a:000
 		let files = glob(f1)
 		if files == ''
-			execute a:what . ' ' . escape(f1, '\ "')
+			execute printf('%s %s', a:what, escape(f1, '\ "'))
 		else
 			for f2 in split(files, "\n")
-				execute a:what . ' ' . escape(f2, '\ "')
+				execute printf('%s %s', a:what, escape(f2, '\ "'))
 			endfor
 		endif
 	endfor
@@ -188,7 +188,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:CheckDirectoryExists()
 	if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h"))
-		silent! execute "!mkdir -p ".shellescape(expand('%:h'), 1)
+		silent! execute printf("!mkdir -p %s", shellescape(expand('%:h'), 1))
 		redraw!
 	endif
 endfunction
@@ -204,7 +204,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:AutoChmodX()
 	if getline(1) =~ "^#!"
-		execute "silent !chmod +x " . shellescape(expand('%:h'), 1)
+		execute printf("silent !chmod +x %s", shellescape(expand('%:h'), 1))
 	endif
 endfunction
 
