@@ -68,8 +68,11 @@ set showmatch       " Show matching brackets.
 " scheme file, as it is kind of a dirty hack
 highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 highlight ExtraWhitespace ctermbg=52 ctermfg=196
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhitespace /\s\+$/
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 set showfulltag     " Auto-complete things?
 
