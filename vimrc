@@ -61,9 +61,15 @@ hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 " Appearance settings
 set background=dark
 colorscheme my
-highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 set number          " Numbers in the margin
 set showmatch       " Show matching brackets.
+
+" Customise the colour scheme. This probably doesnt belong in the real colour
+" scheme file, as it is kind of a dirty hack
+highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
+highlight ExtraWhitespace ctermbg=52 ctermfg=196
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
 
 set showfulltag     " Auto-complete things?
 
@@ -75,7 +81,8 @@ set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=10
 
-set listchars=tab:▷\ ,extends:❯,precedes:❮,trail:␣
+set list
+set listchars=tab:»\ ,extends:❯,precedes:❮,trail:␣
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
