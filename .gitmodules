@@ -37,3 +37,6 @@
 [submodule "vim/bundle/linters"]
 	path = vim/bundle/linters
 	url = git@bitbucket.org:tim_heap/linters.vim
+[submodule "vim/bundle/surround"]
+	path = vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
