@@ -129,7 +129,20 @@ map } <M-}>
 nmap <M-{> :tabprevious<cr>
 nmap <M-}> :tabnext<cr>
 
-command! -nargs=0 Q :tabclose
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => :Q to quit the whole tab - exiting Vim if it is the last tab
+"
+" This differs from :tabclose, which does not quit if this tab is the last tab
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! s:CloseTab()
+	if tabpagenr('$') == 1
+		qall
+	else
+		tabclose
+	endif
+endfunction
+command! -nargs=0 Q call s:CloseTab()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Enable hard mode
