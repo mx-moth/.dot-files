@@ -2,9 +2,14 @@
 	name = Tim Heap
 	email = tim@ionata.com.au
 [color]
+	ui = auto
 	diff = auto
 	status = auto
 	branch = auto
+
+[color "diff"]
+	whitespace = "red reverse"
+
 [cola]
 	tabwidth = 4
 [format]
@@ -20,5 +25,6 @@
 	log = true
 [core]
 	excludesfile = ~/.gitignore_global
+
 [rebase]
 	autosquash = on
