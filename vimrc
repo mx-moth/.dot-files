@@ -149,7 +149,7 @@ command! -nargs=0 Q call s:CloseTab()
 "
 " 80 character columns, automatic text wrapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:HardMode(width)
+function! HardMode(width)
 	" Hardcore mode: enabled
 	exec "setlocal textwidth=".a:width
 	if exists("+colorcolumn")
@@ -269,7 +269,7 @@ autocmd FileType objc setlocal foldmethod=syntax foldnestmax=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Markdown settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType markdown call s:HardMode(79)
+autocmd FileType markdown call HardMode(79)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Git settings
@@ -289,7 +289,7 @@ autocmd FileType vim call HardMode(79)
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
-	call s:HardMode(79)
+	call HardMode(79)
 endfunction
 au FileType python call s:PythonInit()
 
