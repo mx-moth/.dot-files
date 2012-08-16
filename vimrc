@@ -119,7 +119,7 @@ runtime ftplugin/man.vim
 map 0 ^
 
 " Q is really annoying.
-map Q gq
+map Q :cc<CR>
 nmap <F1> <Esc>
 imap <F1> <Nop>
 
