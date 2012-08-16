@@ -52,6 +52,20 @@ function datestamp() {
 	date "+%Y-%m-%d-%H%m"
 }
 
+function pip() {
+	pip_path=`which pip`
+	if [[ "$pip_path" == "/usr/bin/pip" ]] ; then
+		echo "You are using the system-wide pip."
+		read -r -p "Are you sure you want to do this? [y/N] " response
+		case $response in
+			[yY]) $pip_path $@ ;;
+			*) ;;
+		esac
+	else
+		$pip_path $@
+	fi
+}
+
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 export VCPROMPT_STAGED='+'
