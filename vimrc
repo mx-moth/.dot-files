@@ -85,7 +85,7 @@ set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=10
 
 set list
-set listchars=tab:»\ ,extends:❯,precedes:❮,trail:␣
+set listchars=tab:│\ ,extends:❯,precedes:❮,trail:␣
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
