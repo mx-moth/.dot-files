@@ -15,6 +15,7 @@ for i in $HOME/local/*; do
 	[ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
 done
 
+# Cabal, for Haskell stuff
 if [ -d $HOME/.cabal/bin ] ; then
 	PATH="${HOME}/.cabal/bin:${PATH}"
 fi
@@ -25,37 +26,30 @@ export LD_LIBRARY_PATH
 export PKG_CONFIG_PATH
 export MANPATH
 
-export VISUAL='/usr/bin/vim'
-export EDITOR='/usr/bin/vim'
-export LESS='FRSX'
-export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export TZ='Australia/Hobart'
 export NODE_PATH=$HOME/local/node/lib/node_modules
-export PYTHONSTARTUP=~/.pythonrc
 umask 002
 
-# Program alias'
+# Yay vim
+export VISUAL='/usr/bin/vim'
+export EDITOR='/usr/bin/vim'
 alias vi='vim -p'
-alias ls='ls -hF --color=auto'
-alias xclip='xclip -selection "clipboard"'
-alias noop='echo -n ""'
 
-if [ -f "/etc/bash_completion" ] ; then
-	. "/etc/bash_completion"
-fi
+# less: Quit if little text, Colours, fold, do not clear screen
+export LESS='FRSX'
 
-if echo "$-" | grep -q 'i' ; then
-	bind '"\e[A": history-search-backward'
-	bind '"\e[B": history-search-forward'
-fi
+# Dont grep .svn folders.
+export GREP_OPTIONS="--exclude-dir=\.svn"
 
+# Python
+# ------
+export PYTHONSTARTUP=~/.pythonrc
+# Cache pip downloads, for faster installs
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
-function datestamp() {
-	date "+%Y-%m-%d-%H%m"
-}
-
+# Warn about using the global pip. This usually means we forgot to activate a
+# virtualenv
 function pip() {
 	pip_path=`which pip`
 	if [[ "$pip_path" == "/usr/bin/pip" ]] ; then
@@ -69,6 +63,35 @@ function pip() {
 		$pip_path $@
 	fi
 }
+
+# Program alias'
+# --------------
+
+# Human readable, coloured ls
+alias ls='ls -hF --color=auto'
+
+# Copy to the clipboard, for ctrl+v pasting
+alias xclip='xclip -selection "clipboard"'
+
+# Do nothing
+alias noop='echo -n ""'
+
+# Use like `command > output-from-command-`datestamp``
+alias datestamp='date "+%Y-%m-%d-%H%m"'
+
+
+# Set up bash nicely
+# ------------------
+
+if [ -f "/etc/bash_completion" ] ; then
+	. "/etc/bash_completion"
+fi
+
+# Search backwards and forwards through history easier
+if echo "$-" | grep -q 'i' ; then
+	bind '"\e[A": history-search-backward'
+	bind '"\e[B": history-search-forward'
+fi
 
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
