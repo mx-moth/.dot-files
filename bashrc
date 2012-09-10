@@ -83,8 +83,10 @@ alias datestamp='date "+%Y-%m-%d-%H%m"'
 # Set up bash nicely
 # ------------------
 
+# Source in system bash completion, if it exists# The bit of magic makes it run asynchronously or something. See http://superuser.com/q/267771
 if [ -f "/etc/bash_completion" ] ; then
-	. "/etc/bash_completion"
+	trap 'source /etc/bash_completion ; trap USR1' USR1
+	{ sleep 0.1 ; builtin kill -USR1 $$ ; } & disown
 fi
 
 # Search backwards and forwards through history easier
