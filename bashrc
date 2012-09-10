@@ -1,7 +1,11 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-PATH="$HOME/local/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/local/bin:/sbin:/bin"
+# Path in the common things
+PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/local/bin:/sbin:/bin"
 LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
+
+# ~/local/ is much like /opt, but just for me. All bin/, include/, lib/, etc
+# folders are pathed in
 for i in $HOME/local/*; do
 	[ -d $i/bin ] && PATH="${i}/bin:${PATH}"
 	[ -d $i/sbin ] && PATH="${i}/sbin:${PATH}"
@@ -27,7 +31,7 @@ export LESS='FRSX'
 export GREP_OPTIONS="--exclude-dir=\.svn"
 export ACK_OPTIONS="--pager=less --type-add php=.ctp --type-add js=.coffee"
 export TZ='Australia/Hobart'
-export NODE_PATH=$HOME/local/lib/node_modules:$HOME/local/node/lib/node_modules
+export NODE_PATH=$HOME/local/node/lib/node_modules
 export PYTHONSTARTUP=~/.pythonrc
 umask 002
 
@@ -72,9 +76,6 @@ export VCPROMPT_STAGED='+'
 export VCPROMPT_MODIFIED='*'
 export VCPROMPT_UNTRACKED='?'
 alias vcprompt="$HOME/.bashrc.d/vcprompt"
-
-. $HOME/.bashrc.d/wine-paths.sh
-
 
 # Set PS1. Levels are:
 # * 0, low, minimal: Minimal PS1. Useful for slow systems, or systems with
