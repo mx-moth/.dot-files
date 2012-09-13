@@ -224,7 +224,7 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:AutoChmodX()
 	if getline(1) =~ "^#!"
-		execute printf("silent !chmod +x %s", shellescape(expand('%:h'), 1))
+		call system(printf("chmod +x %s", shellescape(expand('%'), 1)))
 	endif
 endfunction
 
