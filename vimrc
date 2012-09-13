@@ -157,13 +157,23 @@ command! -nargs=0 Q call s:CloseTab()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Enable hard mode
 "
-" 80 character columns, automatic text wrapping
+" 79 character columns, automatic text wrapping
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! HardMode(width)
+function! HardMode(...)
 	" Hardcore mode: enabled
-	exec "setlocal textwidth=".a:width
-	if exists("+colorcolumn")
-		setlocal colorcolumn=+1
+	if a:0 > 0
+		let width = a:1
+	else
+		let width = 79
+	end
+
+	if width == 0
+		setlocal textwidth=0
+	else
+		exec "setlocal textwidth=".l:width
+		if exists("+colorcolumn")
+			setlocal colorcolumn=+1
+		endif
 	endif
 endfunction
 
