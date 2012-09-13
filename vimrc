@@ -239,7 +239,9 @@ function! s:php_init()
 	setlocal keywordprg=$HOME/.vim/plugins/php_doc  " Use the PHP doc
 	setlocal foldmethod=manual|EnableFastPHPFolds
 	setlocal foldcolumn=3
-	map <F6> <Esc>:EnableFastPHPFolds<Cr>
+	map <F5> <Esc>:syntax sync fromstart<CR>
+	map <F6> <Esc>:EnableFastPHPFolds<CR>
+	map <F7> <Esc>:set expandtab!<CR>
 endfunction
 
 augroup php
