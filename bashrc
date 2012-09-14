@@ -50,17 +50,18 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Warn about using the global pip. This usually means we forgot to activate a
 # virtualenv
+system_pip=`which pip`
 function pip() {
-	pip_path=`which pip`
-	if [[ "$pip_path" == "/usr/bin/pip" ]] ; then
+	current_pip=`which pip`
+	if [[ "$current_pip" == "$system_pip" ]] ; then
 		echo "You are using the system-wide pip."
 		read -r -p "Are you sure you want to do this? [y/N] " response
 		case $response in
-			[yY]) $pip_path $@ ;;
+			[yY]) $current_pip $@ ;;
 			*) ;;
 		esac
 	else
-		$pip_path $@
+		$current_pip $@
 	fi
 }
 
