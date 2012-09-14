@@ -139,11 +139,6 @@ imap <Nul> <Nop>
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
-map { <M-{>
-map } <M-}>
-nmap <M-{> :tabprevious<cr>
-nmap <M-}> :tabnext<cr>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => :Q to quit the whole tab - exiting Vim if it is the last tab
