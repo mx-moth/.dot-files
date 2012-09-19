@@ -53,10 +53,10 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Improved status line: always visible, shows [+] modification, read only
-" status, git branch, etc.
+" status, git branch, filetype, username, hostname
 set laststatus=2
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
+set statusline=%<%f\ │\ env:\ [%Y][%{$USER}][%{hostname()}]\ %(│\ sts:\ %h%m%r%{fugitive#statusline()}\ %)%=%-14.(%l/%L:%c%V%)\ %P
 
 " Appearance settings
 set background=dark
