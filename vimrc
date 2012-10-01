@@ -208,7 +208,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:CheckDirectoryExists()
 	if expand("<afile>")!~#'^\w\+:/' && !isdirectory(expand("%:h"))
-		call system(printf("!mkdir -p %s", shellescape(expand('%:h'), 1)))
+		call system(printf("mkdir -p %s", shellescape(expand('%:h'), 1)))
 		redraw!
 	endif
 endfunction
