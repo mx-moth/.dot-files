@@ -6,6 +6,7 @@
 	diff = auto
 	status = auto
 	branch = auto
+	all = auto
 
 [color "diff"]
 	whitespace = "red reverse"
@@ -18,6 +19,7 @@
 	hist = log --graph --date=short --all --date-order
 	sync = !git pull --rebase && git push
 	wdiff = diff --color-words
+	st = status -sb
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
 [alias]
