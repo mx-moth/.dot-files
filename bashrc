@@ -80,7 +80,8 @@ alias noop='echo -n ""'
 # Use like `command > output-from-command-`datestamp``
 alias datestamp='date "+%Y-%m-%d-%H%m"'
 
-# Enable bash completion
+alias serve="python -mSimpleHTTPServer"
+
 alias ++magic=". /etc/bash_completion"
 
 
