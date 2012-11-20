@@ -43,3 +43,9 @@
 [submodule "vim/bundle/boxdraw"]
 	path = vim/bundle/boxdraw
 	url = https://github.com/vim-scripts/boxdraw
+[submodule "vim/bundle/pastebin"]
+	path = vim/bundle/pastebin
+	url = https://github.com/mattn/pastebin-vim.git
+[submodule "vim/bundle/cute-python"]
+	path = vim/bundle/cute-python
+	url = https://github.com/ehamberg/vim-cute-python.git
