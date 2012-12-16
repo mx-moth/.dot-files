@@ -65,6 +65,25 @@ function pip() {
 	fi
 }
 
+# Quickly activate a venv in a standard location
+function ++venv() {
+	if [[ -d ./venv ]] ; then
+		source ./venv/bin/activate
+	elif [[ -d ../venv/ ]] ; then
+		source ../venv/bin/activate
+	else
+		echo 'Could not find venv to activate' >&2
+		return 1
+	fi
+}
+function --venv() {
+	deactivate
+}
+
+function ack-edit() {
+	vim -p $( ack-grep -l "$@" )
+}
+
 # Program alias'
 # --------------
 
