@@ -48,6 +48,12 @@ set incsearch       " Incremental search
 set hlsearch
 set gdefault        " Automatic global replacement
 
+" Just highlight the word under the cursor with '*', instead of searching
+nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>:echo<CR>
+
+" Clear the search highlight
+nnoremap <Delete> :nohlsearch <cr>
+
 " Magic searching by default
 nnoremap / /\v
 vnoremap / /\v
@@ -82,10 +88,13 @@ set shiftwidth=4    " I like four space tabs for indenting
 set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
-set scrolloff=10
+set scrolloff=50
 
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:␣
+
+set foldlevelstart=99
+set fillchars=vert:║,fold:═
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
@@ -111,6 +120,8 @@ set fileformat=unix
 " Man page plugin
 runtime ftplugin/man.vim
 
+map <F7> <Esc>:set expandtab!<CR>
+imap <F7> <Esc>:set expandtab!<CR>i
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -241,7 +252,6 @@ function! s:php_init()
 	setlocal foldcolumn=3
 	map <F5> <Esc>:syntax sync fromstart<CR>
 	map <F6> <Esc>:EnableFastPHPFolds<CR>
-	map <F7> <Esc>:set expandtab!<CR>
 endfunction
 
 augroup php
@@ -324,7 +334,7 @@ let g:pyindent_continue = '&sw'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
 	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv$',
-	\ 'file': '\.pyc$\|\.so$\|\.class$',
+	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$',
 	\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
