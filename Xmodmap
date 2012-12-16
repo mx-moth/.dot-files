@@ -2,7 +2,7 @@
 remove Lock = Caps_Lock
 remove Control = Control_L
 keysym Control_L = Control_L
-keysym Caps_Lock = Control_L
+keysym Caps_Lock = Escape
 add Control = Control_L
 
 keycode 135 = Menu
