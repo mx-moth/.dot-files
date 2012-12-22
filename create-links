@@ -2,6 +2,7 @@
 
 for file in [a-zA-Z]* ; do
 	if [[ "$file" != "create-links" && "$file" != "README" ]] ; then
+		echo "Linking ~/.$file to `pwd`/$file"
 
 		if [[ -h ~/."$file" ]] ; then
 			echo "  Removing symbolic link ~/.$file"
@@ -11,6 +12,6 @@ for file in [a-zA-Z]* ; do
 			mv ~/."$file" ~/."$file".back || echo "Couldn't move ~/.$file to ~/.$file.back!"
 		fi
 
-		ln -s `pwd`/"$file" ~/."$file" && echo "Linked ~/.$file to `pwd`/$file" || echo "Couldn't link ~/.$file to `pwd`/$file!"
+		ln -s `pwd`/"$file" ~/."$file" || echo "  Couldn't link ~/.$file to `pwd`/$file!"
 	fi
 done
