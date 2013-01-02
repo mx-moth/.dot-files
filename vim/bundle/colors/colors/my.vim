@@ -61,6 +61,7 @@ highlight DiffChanged ctermbg=17 ctermfg=white
 
 highlight SpecialKey ctermfg=239
 
+highlight Folded ctermfg=5 ctermbg=0
 " highlight DiffText	ctermfg=grey
 " highlight diffAdded	ctermfg=grey
 " highlight diffBDiffer	ctermfg=grey
