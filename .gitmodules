@@ -18,7 +18,7 @@
 	url = https://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/unimpaired"]
 	path = vim/bundle/unimpaired
-	url = https://github.com/tpope/vim-unimpaired.git
+	url = https://github.com/maelstrom/vim-unimpaired.git
 [submodule "vim/bundle/cocoa"]
 	path = vim/bundle/cocoa
 	url = https://github.com/fomichev/cocoa.vim
