@@ -40,9 +40,6 @@
 [submodule "vim/bundle/surround"]
 	path = vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "vim/bundle/boxdraw"]
-	path = vim/bundle/boxdraw
-	url = https://github.com/vim-scripts/boxdraw
 [submodule "vim/bundle/pastebin"]
 	path = vim/bundle/pastebin
 	url = https://github.com/mattn/pastebin-vim.git
