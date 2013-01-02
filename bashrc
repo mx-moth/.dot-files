@@ -90,6 +90,47 @@ function ack-edit() {
 	vim -p $( ack-grep -l "$@" )
 }
 
+# Print out all arguments as they are supplied, separated by the null character.
+# Useful when passing an array of file names to xargs or something. Example:
+#
+# paths=('file' 'path/with spaces/to file.txt')
+# nullinate "${paths[@]}" | xargs -0 frobnicate
+function nullinate() {
+	is_first=1
+	for arg in "$@" ; do
+		if [[ "$is_first" -eq 1 ]] ; then
+			is_first=0
+		else
+			echo -en "\0"
+		fi
+		echo -n "$arg"
+	done
+}
+
+# List the heirarchy of directories leading to the named file/directory
+# If no argument is supplied, `pwd` is used. Example:
+#
+#     $ ls-parents /usr/local/bin
+#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
+#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr
+#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr/local
+#     drwxr-xr-x  2 root root 4096 Apr 23  2012 /usr/local/bin
+#     $ cd
+#     $ ls-parents
+#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
+#     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
+#     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
+function ls-parents() {
+	path=$( readlink -e ${1:-`pwd`} )
+	paths=("$path")
+	while [[ $path != '/' ]] ; do
+		path=$( dirname "$path" )
+		paths+=("$path")
+	done
+
+	nullinate "${paths[@]}" | xargs -0 ls -ld
+}
+
 # Program alias'
 # --------------
 
