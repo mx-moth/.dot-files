@@ -365,3 +365,44 @@ function! s:ExecuteInShell(command)
 endfunction
 
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Replace the selected text with the base64 encoded contents of the file named
+" in the selection. Great for encoding images in CSS, etc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! <sid>MakeDataUri(filename)
+
+
+	let mimetype = system('mimetype -b ' . shellescape(a:filename))
+	let mimetype = substitute(mimetype, '\v^\s+|\s+$', '', 'g')
+
+	let base64 = system('base64 -w 0 ' . shellescape(a:filename))
+	let replacement = printf('data:%s;base64,%s', mimetype, base64)
+
+	return replacement
+endfunction
+
+function! <sid>DataUriSelectedFilename()
+	" This is bad. Find a better way
+	normal gv"xy
+	let selected_text = @x
+
+	let named_file = ''
+	if selected_text =~ '^/'
+		let named_file=selected_text
+	else
+		let base_directory = expand('%:h')
+		let named_file = simplify(base_directory . '/' . selected_text)
+	end
+
+	let @x = <sid>MakeDataUri(named_file)
+
+	" TODO Also bad
+	" re-select area and delete
+	normal gvd
+	" paste new string value back in
+	normal "xp
+endfunction
+
+vnoremap <leader>bb :call <sid>DataUriSelectedFilename()<CR>
