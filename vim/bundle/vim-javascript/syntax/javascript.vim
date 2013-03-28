@@ -188,16 +188,17 @@ syntax sync fromstart
 
 
 
-echo "Wooo"
-"" If conceal is available modify some rules
-syntax match   jsConcealFunction  contained /function/ containedin=jsFunc conceal cchar=λ
-syntax cluster jsPrimitives add=jsConcealFunction
-hi def link jsConcealFunction jsFunc
+if has('conceal')
+		"" If conceal is available modify some rules
+		syntax match   jsConcealFunction  contained /function/ containedin=jsFunc conceal cchar=λ
+		syntax cluster jsPrimitives add=jsConcealFunction
+		hi def link jsConcealFunction jsFunc
 
-"" Replace .prototype. with →or ∷
-"" Use containedin=@jsAll to give it more priority
-syntax match   jsConcealProto /\.prototype\./ containedin=@jsAll conceal cchar=∷
-hi def link jsConcealProto jsIdent
+		"" Replace .prototype. with →or ∷
+		"" Use containedin=@jsAll to give it more priority
+		syntax match   jsConcealProto /\.prototype\./ containedin=@jsAll conceal cchar=∷
+		hi def link jsConcealProto jsIdent
+endif
 
 
 
