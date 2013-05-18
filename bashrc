@@ -230,3 +230,7 @@ function --prompt () {
 }
 
 prompt-level 1
+
+if [[ -e ~/.bashrc.local ]] ; then
+	source ~/.bashrc.local
+fi
