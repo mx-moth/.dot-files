@@ -140,6 +140,13 @@ function ls-parents() {
 	done
 
 	nullinate "${paths[@]}" | xargs -0 ls -ld
+
+function sequester() {
+	nohup "$@" &>/dev/null &
+}
+
+function eeee() {
+    sequester dolphin "$( pwd )"
 }
 
 # Program alias'
