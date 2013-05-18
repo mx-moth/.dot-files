@@ -51,13 +51,24 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 # Warn about using the global pip. This usually means we forgot to activate a
 # virtualenv
 system_pip=`which pip`
+last_pip_time=0
+pip_cooldown=300 # five minutes
 function pip() {
 	current_pip=`which pip`
 	if [[ "$current_pip" == "$system_pip" ]] ; then
-		echo "You are using the system-wide pip."
-		read -r -p "Are you sure you want to do this? [y/N] " response
+		current_time="$( date +%s )"
+		if [[ "$(( $last_pip_time + $pip_cooldown ))" -le $current_time ]] ; then
+			echo "You are using the system-wide pip."
+			read -r -p "Are you sure you want to do this? [y/N] " response
+		else
+			response="y"
+		fi
+
 		case $response in
-			[yY]) $current_pip $@ ;;
+			[yY])
+				$current_pip $@
+				last_pip_time=$current_time
+				;;
 			*) ;;
 		esac
 	else
