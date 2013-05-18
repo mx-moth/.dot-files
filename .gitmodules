@@ -52,3 +52,6 @@
 [submodule "vim/bundle/css-color"]
 	path = vim/bundle/css-color
 	url = https://github.com/ap/vim-css-color.git
+[submodule "vim/bundle/repeat"]
+	path = vim/bundle/repeat
+	url = git://github.com/tpope/vim-repeat.git
