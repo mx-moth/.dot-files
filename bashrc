@@ -150,6 +150,15 @@ function eeee() {
     sequester dolphin "$( pwd )"
 }
 
+function psgrep() {
+	pattern=$1
+	pids="$( pgrep "$pattern" )"
+	if [[ -z "$pids" ]] ; then
+		return 1
+	fi
+	ps $pids
+}
+
 # Program alias'
 # --------------
 
