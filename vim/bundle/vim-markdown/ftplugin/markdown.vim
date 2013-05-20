@@ -9,6 +9,8 @@ endif
 runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
 unlet! b:did_ftplugin
 
+setlocal expandtab
+setlocal shiftwidth=4
 setlocal comments=fb:*,fb:-,fb:+,n:> commentstring=>\ %s
 setlocal formatoptions+=tcqln
 setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^[-*+]\\s\\+
