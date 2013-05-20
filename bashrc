@@ -98,7 +98,7 @@ function --venv() {
 }
 
 function ack-edit() {
-	vim -p $( ack-grep -l "$@" )
+	vim +/"$1" -p $( ack-grep -l "$@" )
 }
 
 # Print out all arguments as they are supplied, separated by the null character.
