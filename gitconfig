@@ -22,7 +22,9 @@
 	st = status -sb
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
-[alias]
+
+	ignore-contents = !(echo '*' && echo '!.gitignore') > $GIT_PREFIX/.gitignore
+	graphiv = "!f() { echo 'digraph git { node [fontsize = 10.0, shape = box];' ; git log --pretty='format:  %H -> { %P }' \"$@\" | sed 's/[0-9a-f]\\{40\\}/\"&\"/g' ; git log --pretty='format:  \"%H\" [ label = \"%h - %an - %ar\\n%f\" ]' \"$@\" ; echo '}'; }; f"
 [merge]
 	log = true
 [core]
@@ -30,3 +32,5 @@
 
 [rebase]
 	autosquash = on
+[pager]
+	status = true
