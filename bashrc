@@ -70,6 +70,13 @@ alias serve="python -mSimpleHTTPServer"
 # These take a second or two to run, so you have to enable them yourself.
 alias ++magic=". /etc/bash_completion"
 
+# Tail syslog. I was typing this quite a lot, so alias.
+alias syslog="sudo tail -f /var/log/syslog"
+
+# Prettify a json chunk
+# eg `curl http://example.com/api/user/1.json | pretty-json`
+alias pretty-json="python -mjson.tool"
+
 
 # Handy functions
 # ---------------
@@ -139,6 +146,47 @@ function psgrep() {
 		return 1
 	fi
 	ps $pids
+}
+
+# Put the date before every line in stdin
+# eg: `long-running-process | predate > log-file.txt`
+function predate() {
+	format=""
+	case $1 in
+		-u|--unix) format="+%s.%N" ;;
+		-h|--human) format="" ;;
+		-i|--iso8601) format="+%Y-%m-%d %H:%M:%S" ;;
+		*) format=$1 ;;
+	esac
+
+	while read line ; do
+		echo "[$( date $format )] $line"
+	done
+}
+
+# Highlight a pattern in stdin
+# eg: `foo -x bar.baz | highlight quux`
+function highlight() {
+	ack-grep --color --passthru "$@"
+}
+
+# Make a directory and cd in to it.
+function mkcd() {
+	mkdir -p "$1" && cd "$1"
+}
+
+# Compute the mathematical expression passed in on the command line.
+# Dont forget to quote your input if using functions like sin, log, etc; or if
+# using '*'.
+# eg: `c '1 + 2 * sin(3)'`
+function c() {
+	script="print $@"
+	if python -c 'import numpy' &>/dev/null ; then
+		script="from numpy import *; $script"
+	else
+		script="from math import *; $script"
+	fi
+	python -c "$script" | pxclip
 }
 
 
