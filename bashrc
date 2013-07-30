@@ -78,8 +78,9 @@ function pip() {
 
 # Quickly activate a venv in a standard location
 function ++venv() {
+	base="${1:-.}"
 	locations=( 'venv' '.virthualenv' )
-	paths=( '.' '..' )
+	paths=( "$base" "$base/.." )
 
 	for path in "${paths[@]}" ; do
 		for location in "${locations[@]}" ; do
