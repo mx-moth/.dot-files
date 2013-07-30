@@ -1,19 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # Path in the common things
-PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/local/bin:/sbin:/bin"
+PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/local/bin:/sbin:/bin"
 LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
-
-# ~/local/ is much like /opt, but just for me. All bin/, include/, lib/, etc
-# folders are pathed in
-for i in $HOME/local/*; do
-	[ -d $i/bin ] && PATH="${i}/bin:${PATH}"
-	[ -d $i/sbin ] && PATH="${i}/sbin:${PATH}"
-	[ -d $i/include ] && CPATH="${i}/include:${CPATH}"
-	[ -d $i/lib ] && LD_LIBRARY_PATH="${i}/lib:${LD_LIBRARY_PATH}"
-	[ -d $i/lib/pkgconfig ] && PKG_CONFIG_PATH="${i}/lib/pkgconfig:${PKG_CONFIG_PATH}"
-	[ -d $i/share/man ] && MANPATH="${i}/share/man:${MANPATH}"
-done
 
 # Cabal, for Haskell stuff
 if [ -d $HOME/.cabal/bin ] ; then
