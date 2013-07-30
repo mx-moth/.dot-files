@@ -188,18 +188,6 @@ syntax sync fromstart
 
 
 
-if has('conceal')
-		"" If conceal is available modify some rules
-		syntax match   jsConcealFunction  contained /function/ containedin=jsFunc conceal cchar=λ
-		syntax cluster jsPrimitives add=jsConcealFunction
-		hi def link jsConcealFunction jsFunc
-
-		"" Replace .prototype. with →or ∷
-		"" Use containedin=@jsAll to give it more priority
-		syntax match   jsConcealProto /\.prototype\./ containedin=@jsAll conceal cchar=∷
-		hi def link jsConcealProto jsIdent
-endif
-
 
 
 
@@ -268,13 +256,15 @@ hi def link jsArray             Statement
 hi def link jsArrayDelims       jsBrackets
 
 " Note: Use jsFuncParams to style the comma between parameters
-hi def link jsFunc              Keyword 
+hi def link jsFunc              Keyword
 hi def link jsFuncName          Identifier
 hi def link jsFuncParens        jsParens
 hi def link jsFuncParams        Operator
 hi def link jsFuncParam         Statement
 hi def link jsFuncBraces        jsBraces
-hi def link jsConcealFunction   jsFunc
+"hi def link jsConcealFunction   Keyword
+hi def link jsPrimitives        Keyword
+"hi! link Conceal Keyword
 
 hi def link jsOp                Operator
 hi def link jsOpEqual           jsOp
@@ -300,75 +290,45 @@ hi def link jsError             Error
 hi def link jsTodo              Todo
 
 
+if has('conceal')
+		" λ
+		"" If conceal is available modify some rules
+		syntax match   jsConcealFunction  contained /function \?/ containedin=jsFunc conceal cchar=ƒ
+		syntax cluster jsPrimitives add=jsConcealFunction
+		hi def link jsConcealFunction jsFunc
 
-"" Link styles for Solarized color scheme
-"" Specially suited for the following settings:
-""   set background=light
-""   let g:solarized_contrast='normal'
-""   let g:solarized_visibility='low'
-if count(g:syntax_js, 'solarized') && exists('g:solarized_vars')
+		"" Replace .prototype. with ∷
+		"" Use containedin=@jsAll to give it more priority
+		syntax match   jsConcealProto /\.prototype\./ containedin=@jsAll conceal cchar=∷
+		hi def link jsConcealProto jsIdent
 
-  "" Alias the dictionary
-  let s = g:solarized_vars
+		" ◀
+		syntax keyword   jsConcealReturn return conceal cchar=«
+		hi def link jsConcealReturn jsIdent
+		syntax cluster jsControl add=jsConcealReturn
 
-  "" Make conceal characters more prominent
-  exe "hi! Conceal        " . s.fmt_bold
+		syntax keyword   jsConcealThrow throw conceal cchar=^
+		hi def link jsConcealThrow jsIdent
+		syntax cluster jsControl add=jsConcealThrow
 
-  "" Matching parens/braces hint
-  exe "hi! MatchParen     " . s.fmt_bold . s.fg_base3 . s.bg_base02
+		syntax match jsConcealOperator contained "<=" containedin=@jsOp conceal cchar=≤
+		syntax match jsConcealOperator contained ">=" containedin=@jsOp conceal cchar=≥
+		" only conceal “==” if alone, to avoid concealing SCM conflict markers
+		syntax match jsConcealOperator contained "[=!]\@<!==[=!]\@!" containedin=@jsOp conceal cchar=≅
+		syntax match jsConcealOperator contained "[=!]\@<!===[=!]\@!" containedin=@jsOp conceal cchar=≡
+		syntax match jsConcealOperator contained "!==\@!" containedin=@jsOp conceal cchar=≄
+		syntax match jsConcealOperator contained "!==" containedin=@jsOp conceal cchar=≢
 
-  "" JsDoc should be more subtle imho
-  exe "hi! jsDocTag       " . s.fg_base01 . s.fmt_bold
-  exe "hi! jsDocType      " . s.fg_base01 . s.fmt_bold
-  exe "hi! jsDocParam     " . s.fg_base01 . s.fmt_undr
+		syntax match jsConcealOperator contained "&&" containedin=@jsOp conceal cchar=∧
+		syntax match jsConcealOperator contained "||" containedin=@jsOp conceal cchar=∨
 
-  "" Make the punctuation more subtle even when not concealed
-  exe "hi! jsPunct          " . s.fg_base01
-  exe "hi! jsPunctSemiColon " . s.fg_base02 . s.fmt_bold
+		hi def link jsConcealOperator jsOp
+		syntax cluster jsOp add=jsConcealOperator
 
-  "" Arrays and Object literals should stand out a bit
-  exe "hi! jsArrayDelims  " . s.fg_base00 s.fmt_bold
-  exe "hi! jsObjectDelims " . s.fg_base00 s.fmt_bold
-  exe "hi! jsObjectLabel  " . s.fg_base0 s.fmt_bold
-  exe "hi! jsObjectColon  " . s.fg_green
-
-  "" Keywords just in bold, avoid too much color :)
-  exe "hi! jsKeyword      " . s.fg_base0 s.fmt_bold
-  hi link jsControl       jsKeyword
-  hi link jsControlBranch jsControl
-  hi link jsControlLoop   jsControl
-
-  "" Operators
-  exe "hi! jsOp           " . s.fg_violet
-  exe "hi! jsOpArithmetic " . s.fg_violet s.fmt_bold
-  exe "hi! jsOpAssign     " . s.fg_green s.fmt_bold
-  exe "hi! jsOpNot        " . s.fg_magenta
-  " ternary operator is sometimes specially difficult to notice
-  exe "hi! jsOpTernary    " . s.fg_violet . s.fmt_bold
-  exe "hi! jsPunctColon   " . s.fg_violet . s.fmt_bold  
-
-  "" Functions
-  exe "hi! jsFunc         " . s.fg_base00
-  exe "hi! jsFuncName     " . s.fg_base0
-  exe "hi! jsFuncParam    " . s.fg_base0 s.fmt_undr
-  exe "hi! jsFuncParens   " . s.fg_base02 . s.fmt_bold
-
-  "" Blocks
-  exe "hi! jsBraces       " . s.fg_base01
-  exe "hi! jsFuncBraces   " . s.fg_blue
-
-  "" Strings
-  exe "hi! jsString       " . s.fg_yellow
-  exe "hi! jsStringEscape " . s.fg_orange s.fmt_bold
-  exe "hi! jsStringDelims " . s.fg_yellow s.fmt_bold
-
-  "" Regexp
-  exe "hi! jsRegex        " . s.fg_yellow
-  exe "hi! jsRegexDelims  " . s.fg_yellow s.fmt_bold
-  exe "hi! jsRegexCapture " . s.fg_yellow s.fmt_bold
-  exe "hi! jsRegexClass   " . s.fg_yellow s.fmt_bold
-
+		hi! link Conceal Keyword
+		set conceallevel=1
 endif
+
 
 
 
