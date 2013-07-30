@@ -34,13 +34,45 @@ umask 002
 # Yay vim
 export VISUAL='/usr/bin/vim'
 export EDITOR='/usr/bin/vim'
-alias vi='vim -p'
 
 # less: Quit if little text, Colours, fold, do not clear screen
 export LESS='FRSX'
 
 # Dont grep .svn folders.
 export GREP_OPTIONS="--exclude-dir=\.svn"
+
+
+# Program alias'
+# --------------
+
+# Start vim with tabs, instead of that :next rubbish
+alias vi='vim -p'
+
+# Human readable, coloured ls
+alias ls='ls -hF --color=auto'
+
+# Copy to the clipboard, for ctrl+v pasting
+alias xclip='xclip -selection "clipboard"'
+
+# Copy to the clipboard, and also print to stdout. Useful in long pipes
+alias pxclip='tee >( xclip -selection "clipboard" )'
+
+# Do nothing
+alias noop='echo -n ""'
+
+# Use like `command > output-from-command-`datestamp``
+alias datestamp='date "+%Y-%m-%d-%H%m"'
+
+# Start a simple static file server
+alias serve="python -mSimpleHTTPServer"
+
+# Source the system-wide bach completion scripts.
+# These take a second or two to run, so you have to enable them yourself.
+alias ++magic=". /etc/bash_completion"
+
+
+# Handy functions
+# ---------------
 
 function ack-edit() {
 	vim +/"$1" -p $( ack-grep -l "$@" )
@@ -87,14 +119,19 @@ function ls-parents() {
 	nullinate "${paths[@]}" | xargs -0 ls -ld
 }
 
+# Fork a program, ignoring stdin, stdout, stderr
 function sequester() {
 	nohup "$@" &>/dev/null &
 }
 
+# Shortcut for launching `dolphin` in the current directory
 function eeee() {
     sequester dolphin "$( pwd )"
 }
 
+# Combination of pgrep and ps. Basically does `ps $( pgrep pattren )` but
+# behaves when no process' are found.
+# eg: `psgrep python`
 function psgrep() {
 	pattern=$1
 	pids="$( pgrep "$pattern" )"
@@ -103,25 +140,6 @@ function psgrep() {
 	fi
 	ps $pids
 }
-
-# Program alias'
-# --------------
-
-# Human readable, coloured ls
-alias ls='ls -hF --color=auto'
-
-# Copy to the clipboard, for ctrl+v pasting
-alias xclip='xclip -selection "clipboard"'
-
-# Do nothing
-alias noop='echo -n ""'
-
-# Use like `command > output-from-command-`datestamp``
-alias datestamp='date "+%Y-%m-%d-%H%m"'
-
-alias serve="python -mSimpleHTTPServer"
-
-alias ++magic=". /etc/bash_completion"
 
 
 # Set up bash nicely
@@ -140,7 +158,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=true
 export VCPROMPT_STAGED='+'
 export VCPROMPT_MODIFIED='*'
 export VCPROMPT_UNTRACKED='?'
-alias vcprompt="$HOME/.bashrc.d/vcprompt"
+VCPROMPT="$HOME/.bashrc.d/vcprompt"
 
 # Set PS1. Levels are:
 # * 0, low, minimal: Minimal PS1. Useful for slow systems, or systems with
@@ -164,7 +182,7 @@ function prompt-level() {
 		;;
 	2|high|full)
 		level=2
-		export PS1='\n[ \[\e[38;5;40m\]\u\[\e[0m\] at \[\e[38;5;13m\]\h\[\e[0m\]$( vcprompt -f " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir=$( basename $( echo -n "$VIRTUAL_ENV" | sed -e"s/\/venv\/\?$//" ) ) ; echo " working on \[\e[38;5;51m\]$dir\[\e[0m\]" ; fi ) in \[\e[38;5;202m\]\w\[\e[0m\] ]\n\$ '
+		export PS1='\n[ \[\e[38;5;40m\]\u\[\e[0m\] at \[\e[38;5;13m\]\h\[\e[0m\]$( ${VCPROMPT} -f " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir=$( basename $( echo -n "$VIRTUAL_ENV" | sed -e"s/\/venv\/\?$//" ) ) ; echo " working on \[\e[38;5;51m\]$dir\[\e[0m\]" ; fi ) in \[\e[38;5;202m\]\w\[\e[0m\] ]\n\$ '
 		;;
 	*)
 		echo "Unknown prompt-level: $1"
