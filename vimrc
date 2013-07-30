@@ -88,7 +88,8 @@ set shiftwidth=4    " I like four space tabs for indenting
 set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
-set scrolloff=50
+set scrolloff=40
+set nowrap
 
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:␣
@@ -106,6 +107,7 @@ autocmd BufNewFile,BufRead *.csv setf csv
 " Enable XML syntax folding
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
+au FileType xml setlocal foldlevel=99
 
 " Enable modeline (Vim settings in a file)
 set modeline
@@ -133,6 +135,8 @@ map 0 ^
 map Q :cc<CR>
 nmap <F1> <Esc>
 imap <F1> <Nop>
+
+map K kJ
 
 "Move a line or selection of text using Crtl+[jk] or Comamnd+[jk] on mac
 nmap <silent> <C-j> mz:m+<CR>`z
