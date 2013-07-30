@@ -493,3 +493,7 @@ function! <sid>DataUriSelectedFilename()
 endfunction
 
 vnoremap <leader>bb :call <sid>DataUriSelectedFilename()<CR>
+
+if filereadable("~/.vimrc.local")
+	source ~/.vimrc.local
+endif
