@@ -322,11 +322,84 @@ autocmd FileType vim call HardMode(79)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! PythonSuper()
+	let l:found = 0
+	let l:line = line('.')
+	let l:defName = ''
+	let l:className = ''
+
+	let l:shiftwidth = &sw
+
+	while getline(l:line) == ''
+		let l:line = l:line - 1
+	endwhile
+	let l:currentIndent = len(matchstr(getline(line), '^ *')) / shiftwidth
+	if getline(line) =~ (repeat(' ', currentIndent * shiftwidth).'def ')
+		let l:currentIndent = l:currentIndent + 1
+	endif
+
+	let l:defIndent = currentIndent - 1
+	let l:classIndent = currentIndent - 2
+
+	let l:defPatt = '^'.repeat(' ', l:defIndent * l:shiftwidth).'def '
+	let l:classPatt = '^'.repeat(' ', l:classIndent * l:shiftwidth).'class '
+
+	while l:found == 0
+		if l:line < 0
+			return
+		endif
+		if getline(l:line) =~ l:defPatt
+			let l:defMatch = matchlist(getline(l:line), defPatt.'\([a-zA-Z0-9]*\)')
+			let l:defName = l:defMatch[1]
+			let l:found = 1
+			break
+		endif
+		let l:line = l:line - 1
+	endwhile
+
+	let l:found = 0
+	while l:found == 0
+		if l:line < 0
+			return
+		endif
+		if getline(l:line) =~ l:classPatt
+			let l:classMatch = matchlist(getline(l:line), classPatt.'\([a-zA-Z0-9]*\)')
+			let l:className = l:classMatch[1]
+			let l:found = 1
+			break
+		endif
+		let l:line = l:line - 1
+	endwhile
+
+	let l:super = 'super('.l:className.', self).'.l:defName.'('
+
+	" Various possible cases:
+	" 1. On an empty (or white-space only)
+	" 2. At the end of a line: val = super(...)
+	" 3. In the middle of a line: val = fn(super(...))
+	if getline('.') =~ '^\s*$'
+		call setline(line('.'), repeat(' ', l:currentIndent * &sw).l:super)
+		call cursor(line('.'), col('$'))
+	elseif col('.') == col('$') - 1
+		call setline(line('.'), getline('.').l:super)
+		call cursor(line('.'), col('$') - 1)
+	else
+		let currentLine = getline('.')
+		let currentColumn = col('.') - 1
+		let newLine = currentLine[0:(l:currentColumn - 1)] . l:super . ')' . currentLine[(l:currentColumn):]
+		call setline(line('.'), newLine)
+		call cursor(line('.'), currentColumn + len(super) + 1)
+	end
+endfunction
+
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
 	call HardMode(79)
+	nnoremap <leader>s :call PythonSuper()<CR>
+	nnoremap <localleader>s :call PythonSuper()<CR>
 endfunction
+
 au FileType python call s:PythonInit()
 
 let g:pyindent_open_paren = '&sw'
