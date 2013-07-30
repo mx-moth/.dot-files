@@ -97,6 +97,10 @@ function ++venv() {
 function --venv() {
 	deactivate
 }
+function mkvenv() {
+	virtualenv venv
+	++venv
+}
 
 function ack-edit() {
 	vim +/"$1" -p $( ack-grep -l "$@" )
