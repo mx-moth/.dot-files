@@ -42,66 +42,6 @@ export LESS='FRSX'
 # Dont grep .svn folders.
 export GREP_OPTIONS="--exclude-dir=\.svn"
 
-# Python
-# ------
-export PYTHONSTARTUP=~/.pythonrc
-# Cache pip downloads, for faster installs
-export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
-
-# Warn about using the global pip. This usually means we forgot to activate a
-# virtualenv
-system_pip=`which pip`
-last_pip_time=0
-pip_cooldown=300 # five minutes
-function pip() {
-	current_pip=`which pip`
-	if [[ "$current_pip" == "$system_pip" ]] ; then
-		current_time="$( date +%s )"
-		if [[ "$(( $last_pip_time + $pip_cooldown ))" -le $current_time ]] ; then
-			echo "You are using the system-wide pip."
-			read -r -p "Are you sure you want to do this? [y/N] " response
-		else
-			response="y"
-		fi
-
-		case $response in
-			[yY])
-				$current_pip $@
-				last_pip_time=$current_time
-				;;
-			*) ;;
-		esac
-	else
-		$current_pip $@
-	fi
-}
-
-# Quickly activate a venv in a standard location
-function ++venv() {
-	base="${1:-.}"
-	locations=( 'venv' '.virthualenv' )
-	paths=( "$base" "$base/.." )
-
-	for path in "${paths[@]}" ; do
-		for location in "${locations[@]}" ; do
-			if [[ -d $path/$location ]] ; then
-				source $path/$location/bin/activate
-				return 0
-			fi
-		done
-	done
-
-	echo 'Could not find venv to activate' >&2
-	return 1
-}
-function --venv() {
-	deactivate
-}
-function mkvenv() {
-	virtualenv venv
-	++venv
-}
-
 function ack-edit() {
 	vim +/"$1" -p $( ack-grep -l "$@" )
 }
@@ -245,6 +185,72 @@ function --prompt () {
 }
 
 prompt-level 1
+
+
+# Python
+# ------
+export PYTHONSTARTUP=~/.pythonrc
+# Cache pip downloads, for faster installs
+export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
+
+# Warn about using the global pip. This usually means we forgot to activate a
+# virtualenv
+system_pip=`which pip`
+last_pip_time=0
+pip_cooldown=300 # five minutes
+function pip() {
+	current_pip=`which pip`
+	if [[ "$current_pip" == "$system_pip" ]] ; then
+		current_time="$( date +%s )"
+		if [[ "$(( $last_pip_time + $pip_cooldown ))" -le $current_time ]] ; then
+			echo "You are using the system-wide pip."
+			read -r -p "Are you sure you want to do this? [y/N] " response
+		else
+			response="y"
+		fi
+
+		case $response in
+			[yY])
+				$current_pip $@
+				last_pip_time=$current_time
+				;;
+			*) ;;
+		esac
+	else
+		$current_pip $@
+	fi
+}
+
+function mkvenv() {
+	virtualenv venv
+	++venv
+}
+
+
+# Virtual environment helpers
+# ---------------------------
+# Quickly activate a venv in a standard location
+function ++venv() {
+	base="${1:-.}"
+	locations=( 'venv' '.virthualenv' )
+	paths=( "$base" "$base/.." )
+
+	for path in "${paths[@]}" ; do
+		for location in "${locations[@]}" ; do
+			if [[ -d $path/$location ]] ; then
+				source $path/$location/bin/activate
+				return 0
+			fi
+		done
+	done
+
+	echo 'Could not find venv to activate' >&2
+	return 1
+}
+function --venv() {
+	deactivate
+}
+
 
 if [[ -e ~/.bashrc.local ]] ; then
 	source ~/.bashrc.local
