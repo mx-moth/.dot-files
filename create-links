@@ -1,17 +1,43 @@
 #!/bin/bash
 
-for file in [a-zA-Z]* ; do
-	if [[ "$file" != "create-links" && "$file" != "README" ]] ; then
-		echo "Linking ~/.$file to `pwd`/$file"
+do_not_link=("Readme.md" "create-links")
 
-		if [[ -h ~/."$file" ]] ; then
-			echo "  Removing symbolic link ~/.$file"
-			rm ~/."$file"
-		elif [[ -a ~/."$file" ]] ; then
-			echo "  ~/.$file exists. Moving it to ~/.$file.back"
-			mv ~/."$file" ~/."$file".back || echo "Couldn't move ~/.$file to ~/.$file.back!"
-		fi
 
-		ln -s `pwd`/"$file" ~/."$file" || echo "  Couldn't link ~/.$file to `pwd`/$file!"
+here=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+element_in () {
+	local e
+	for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+	return 1
+}
+
+
+
+for target in "$here/"[a-zA-Z]* ; do
+	basename=$( basename "$target" )
+	link="$HOME/.$basename"
+
+	if element_in "$basename" "${do_not_link[@]}" ; then
+		# Bail on some files we do not want
+		continue
 	fi
+
+	if [[ -h "$link" && $( readlink "$link" ) == "$target" ]] ; then
+		# Bail if the symlink exists already, and points to the correct place
+		continue
+	fi
+
+	echo "Linking $link to $target"
+
+	if [[ -h "$link" ]] ; then
+		echo "  Removing existing symbolic link $link"
+		rm "$link"
+	fi
+
+	if [[ -a "$link" ]] ; then
+		echo "  $link exists. Moving it to $link.back"
+		mv "$link" "$link.back" || echo "  Couldn't move $link to $link.back!"
+	fi
+
+	ln -s "$target" "$link" || echo "  Couldn't link $link to $target"
 done
