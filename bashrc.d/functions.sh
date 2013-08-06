@@ -37,6 +37,25 @@ alias syslog="sudo tail -f /var/log/syslog"
 # eg `curl http://example.com/api/user/1.json | pretty-json`
 alias pretty-json="python -mjson.tool"
 
+# Quick directory traversal
+alias ..='cd ..'
+
+# alias ::='cd ../../'
+for i in `seq 2 10` ; do
+	colon=''
+	dots=''
+
+	for a in `seq 1 $i` ; do
+		colon="$colon:"
+		dots="$dots../"
+	done
+
+	alias="alias $colon='cd $dots'"
+	echo $alias
+
+	eval "$alias"
+done
+
 
 # Handy functions
 # ---------------
