@@ -50,10 +50,7 @@ for i in `seq 2 10` ; do
 		dots="$dots../"
 	done
 
-	alias="alias $colon='cd $dots'"
-	echo $alias
-
-	eval "$alias"
+	eval "alias $colon='cd $dots'"
 done
 
 
