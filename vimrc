@@ -62,7 +62,14 @@ vnoremap / /\v
 " status, git branch, filetype, username, hostname
 set laststatus=2
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
-set statusline=%<%f\ ❖\ env:\ [%Y][%{$USER}][%{hostname()}]\ %(❖\ sts:\ %h%m%r%{fugitive#statusline()}\ %)%=%-14.(%l/%L:%c%V%)\ %P
+set statusline=║
+set statusline+=\ %<%f\ ║   " Filename
+set statusline+=%(\ %Y\ ║%) " Filetype
+set statusline+=%(\ %h%m%r%w%{fugitive#statusline()}\ ║%) " flags
+set statusline+=%=\ ║            " Right hand side
+set statusline+=\ %4b│0x%-4B\ ║  " Character number
+set statusline+=\ %P\ of\ %L\ ║  " Position
+set statusline+=\ %(%4.l:%-4c%)\ ║ " Line/column
 
 " Appearance settings
 set background=dark
