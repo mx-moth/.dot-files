@@ -87,6 +87,11 @@ highlight Folded ctermfg=5 ctermbg=0
 " * Ignore
 " * Todo
 
+highlight StatusLine  cterm=NONE ctermfg=016 ctermbg=32
+highlight TabLine     cterm=NONE ctermfg=016 ctermbg=130
+highlight TabLineSel  cterm=NONE ctermfg=016 ctermbg=202
+highlight TabLineFill cterm=NONE ctermfg=016 ctermbg=94
+
 " only for vim 5
 if has("unix")
 	if v:version<600
