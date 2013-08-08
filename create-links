@@ -27,17 +27,17 @@ for target in "$here/"[a-zA-Z]* ; do
 		continue
 	fi
 
-	echo "Linking $link to $target"
+	echo "Linking \`$link' -> \`$target'"
 
 	if [[ -h "$link" ]] ; then
-		echo "  Removing existing symbolic link $link"
+		echo "  Removing existing symbolic link \`$link' -> \`$( readlink -e "$link" )'"
 		rm "$link"
 	fi
 
 	if [[ -a "$link" ]] ; then
-		echo "  $link exists. Moving it to $link.back"
-		mv "$link" "$link.back" || echo "  Couldn't move $link to $link.back!"
+		echo "  \`$link exists. Moving it to \`$link.back"
+		mv "$link" "$link.back" || echo "  Couldn't move \`$link' to \`$link.back'!"
 	fi
 
-	ln -s "$target" "$link" || echo "  Couldn't link $link to $target"
+	ln -s "$target" "$link" || echo "  Couldn't link \`$link' to \`$target'"
 done
