@@ -210,3 +210,9 @@ function aa_256 () {
 		echo ''
 	done
 }
+
+# Quickly print out a QR code to the terminal. Useful for sending a link to
+# your phone, etc
+function qrc() {
+	qrencode -t ANSI -o - "$@"
+}
