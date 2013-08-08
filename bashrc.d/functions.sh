@@ -166,3 +166,47 @@ function c() {
 	fi
 	python -c "$script" | pxclip
 }
+
+
+function aa_256 () {
+	local base='10'
+	if [[ $# -gt 0 ]] ; then
+		base=$1
+	fi
+
+	local prefix=''
+	local format=''
+	case "$base" in
+		"oct") prefix="0" ; format="%o"  ;;
+		"dec") prefix="" ; format="%d" ;;
+		"hex") prefix="0x" ; format="%x"  ;;
+	esac
+
+	local padding=6
+
+	local columns=8
+	local rows=$(( 256 / $columns ))
+
+	local reset=`tput op`
+	local fill=`printf %$(( ( $COLUMNS / $columns ) - $padding ))s`
+
+	local colour=''
+	local num=''
+	local code=''
+	local row=''
+	local column=''
+
+	num_format="%s${format} "
+	padded_num_format="%${padding}s"
+	colour_block="${fill// /=}$reset"
+
+	for row in `seq 0 $(( rows ))` ; do
+		for column in `seq 0 $(( columns - 1 ))` ; do
+			colour=$(( $row + $column * $rows ))
+			num="$( printf "${num_format}" "${prefix}" "${colour}" )"
+			code="$( printf "${padded_num_format}" "${num}" )"
+			echo -en "$code`tput setaf $colour; tput setab $colour`$colour_block"
+		done
+		echo ''
+	done
+}
