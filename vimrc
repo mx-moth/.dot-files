@@ -354,7 +354,7 @@ function! PythonSuper()
 			return
 		endif
 		if getline(l:line) =~ l:defPatt
-			let l:defMatch = matchlist(getline(l:line), defPatt.'\([a-zA-Z0-9]*\)')
+			let l:defMatch = matchlist(getline(l:line), defPatt.'\([a-zA-Z0-9_]*\)')
 			let l:defName = l:defMatch[1]
 			let l:found = 1
 			break
@@ -368,7 +368,7 @@ function! PythonSuper()
 			return
 		endif
 		if getline(l:line) =~ l:classPatt
-			let l:classMatch = matchlist(getline(l:line), classPatt.'\([a-zA-Z0-9]*\)')
+			let l:classMatch = matchlist(getline(l:line), classPatt.'\([a-zA-Z0-9_]*\)')
 			let l:className = l:classMatch[1]
 			let l:found = 1
 			break
