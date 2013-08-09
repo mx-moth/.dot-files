@@ -46,6 +46,7 @@ highlight PreProc ctermfg=brown
 
 " RED
 highlight Error ctermbg=red ctermfg=black cterm=bold
+highlight ColorColumn ctermbg=52 ctermfg=black cterm=NONE
 
 " Invert TODO tags
 highlight TODO 	ctermfg=black ctermbg=LightBlue cterm=NONE
@@ -87,12 +88,13 @@ highlight Folded ctermfg=5 ctermbg=0
 " * Ignore
 " * Todo
 
-highlight StatusLine   cterm=NONE ctermfg=016 ctermbg=39
-highlight StatusLineNC cterm=NONE ctermfg=016 ctermbg=17
-highlight VertSplit    cterm=NONE ctermfg=2 ctermbg=0
-highlight TabLine      cterm=NONE ctermfg=016 ctermbg=130
-highlight TabLineSel   cterm=NONE ctermfg=016 ctermbg=202
-highlight TabLineFill  cterm=NONE ctermfg=016 ctermbg=94
+highlight StatusLine   cterm=NONE ctermfg=016 ctermbg=117
+highlight StatusLineNC cterm=NONE ctermfg=016 ctermbg=27
+highlight VertSplit    cterm=NONE ctermfg=27 ctermbg=0
+highlight TabLine      cterm=NONE ctermfg=016 ctermbg=27
+highlight TabLineLeft  cterm=NONE ctermfg=117 ctermbg=0
+highlight TabLineSel   cterm=NONE ctermfg=016 ctermbg=117
+highlight TabLineFill  cterm=NONE ctermfg=016 ctermbg=17
 
 " only for vim 5
 if has("unix")

@@ -71,6 +71,9 @@ set statusline+=\ %4b│0x%-4B\ ║  " Character number
 set statusline+=\ %P\ of\ %L\ ║  " Position
 set statusline+=\ %(%4.l:%-4c%)\ ║ " Line/column
 
+set tabline=
+set tabline+='
+
 " Appearance settings
 set background=dark
 colorscheme my
@@ -132,6 +135,80 @@ runtime ftplugin/man.vim
 map <F7> <Esc>:set expandtab!<CR>
 imap <F7> <Esc>:set expandtab!<CR>i
 
+if &term =~ '256color'
+	" Disable Background Color Erase (BCE) so that color schemes work properly
+	" when Vim is used inside tmux and GNU screen.
+	" See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+	set t_ut=
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Tab line customisation
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Rename tabs to show tab# and # of viewports
+if exists("+showtabline")
+	function! MyTabLine()
+		let s = '%#TabLineLeft#'
+		let s .= '%{$USER}@%{hostname()} '
+		let wn = ''
+		let t = tabpagenr()
+		let i = 1
+		while i <= tabpagenr('$')
+			let buflist = tabpagebuflist(i)
+			let winnr = tabpagewinnr(i)
+			let selected = i == t
+
+			" Some spacing before
+			let s .= '%#TabLineFill# '
+
+			" Tab nubmer (for mouse clicks)
+			let s .= '%' . i . 'T'
+
+			" Set highlight style
+			let s .= (selected ? '%#TabLineSel#' : '%#TabLine#')
+			let s .= (selected ? '❨' : ' ')
+
+			" Tab number
+			let wn = tabpagewinnr(i,'$')
+			let s .= i
+
+			let s .= '|'
+
+			let bufnr = buflist[winnr - 1]
+			let file = bufname(bufnr)
+			let buftype = getbufvar(bufnr, 'buftype')
+			if buftype == 'nofile'
+				if file =~ '\/.'
+					let file = substitute(file, '.*\/\ze.', '', '')
+				endif
+			else
+				let file = fnamemodify(file, ':p:t')
+			endif
+			if file == ''
+				let file = '∅'
+			endif
+			let s .= file
+
+			" modified flag
+			let s .= (getbufvar(buflist[winnr - 1], "&mod") ? '•' : '')
+
+			if tabpagewinnr(i,'$') > 1
+				let s .= '/'
+				let s .= (tabpagewinnr(i,'$') > 1 ? wn : '')
+			end
+
+			" Close styling
+			let s .= (selected ? '❩' : ' ')
+			let s .= "%#TabLineFill#"
+			let i = i + 1
+		endwhile
+		let s .= '%T%#TabLineFill#%='
+		return s
+	endfunction
+	set stal=2
+	set tabline=%!MyTabLine()
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -160,6 +237,21 @@ imap <Nul> <Nop>
 
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
+
+map <silent> <C-S-left> gT
+map <silent> <C-S-right> gt
+imap <silent> <C-S-left> <Esc>gTi
+imap <silent> <C-S-right> <Esc>gti
+
+map <silent> <C-W>1 :tabn 1<Cr>
+map <silent> <C-W>2 :tabn 2<Cr>
+map <silent> <C-W>3 :tabn 3<Cr>
+map <silent> <C-W>4 :tabn 4<Cr>
+map <silent> <C-W>5 :tabn 5<Cr>
+map <silent> <C-W>6 :tabn 6<Cr>
+map <silent> <C-W>7 :tabn 7<Cr>
+map <silent> <C-W>8 :tabn 8<Cr>
+map <silent> <C-W>9 :tabn 9<Cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
