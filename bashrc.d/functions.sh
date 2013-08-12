@@ -168,6 +168,8 @@ function c() {
 }
 
 
+# Print out all the 256 console colours. Useful when designing colour schemes
+# for vim/bash/tmux/etc.
 function aa_256 () {
 	local base='10'
 	if [[ $# -gt 0 ]] ; then
