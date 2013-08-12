@@ -62,14 +62,17 @@ vnoremap / /\v
 " status, git branch, filetype, username, hostname
 set laststatus=2
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
-set statusline=║
-set statusline+=\ %<%f\ ║   " Filename
-set statusline+=%(\ %Y\ ║%) " Filetype
-set statusline+=%(\ %h%m%r%w%{fugitive#statusline()}\ ║%) " flags
-set statusline+=%=\ ║            " Right hand side
-set statusline+=\ %4b│0x%-4B\ ║  " Character number
-set statusline+=\ %P\ of\ %L\ ║  " Position
-set statusline+=\ %(%4.l:%-4c%)\ ║ " Line/column
+set statusline=
+set statusline+=\ %<%f                 " Filename
+set statusline+=\ %#User2#\            " Less important shit
+set statusline+=%y                     " Filetype
+set statusline+=%h%m%r%w               " flags
+set statusline+=%{fugitive#statusline()} " Git flags
+set statusline+=\ %#User3#%=%#User2#\  " Fill to RHS
+set statusline+=\ %4b│0x%-4B\ ╱        " Character number
+set statusline+=\ %P\ of\ %L\ ╱        " Position
+set statusline+=\ %(%4.l:%-4c%)        " Line/column
+set statusline+=\                      " Woo end
 
 set tabline=
 set tabline+='
@@ -140,6 +143,18 @@ if &term =~ '256color'
 	" when Vim is used inside tmux and GNU screen.
 	" See also http://snk.tuxfamily.org/log/vim-256color-bce.html
 	set t_ut=
+endif
+
+if &term =~ '^screen'
+	" Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
+	execute "set t_kP=\e[5;*~"
+	execute "set t_kN=\e[6;*~"
+
+	" tmux will send xterm-style keys when xterm-keys is on
+	execute "set <xUp>=\e[1;*A"
+	execute "set <xDown>=\e[1;*B"
+	execute "set <xRight>=\e[1;*C"
+	execute "set <xLeft>=\e[1;*D"
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -238,11 +253,20 @@ imap <Nul> <Nop>
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
-map <silent> <C-S-left> gT
+" Switch tabs using C-S-left/right
+map <silent> <C-S-Left> gT
 map <silent> <C-S-right> gt
 imap <silent> <C-S-left> <Esc>gTi
 imap <silent> <C-S-right> <Esc>gti
 
+" Split the view using | or -
+map <silent> <C-w><C-\> :botright vert new<cr>
+map <silent> <C-w><C--> :botright vert new<cr>
+map <silent> <C-w><C-_> :botright vert new<cr>
+map <silent> <C-w>\ :botright vert new<cr>
+map <silent> <C-w>- :botright new<cr>
+
+" Switch to a numbered tab
 map <silent> <C-W>1 :tabn 1<Cr>
 map <silent> <C-W>2 :tabn 2<Cr>
 map <silent> <C-W>3 :tabn 3<Cr>

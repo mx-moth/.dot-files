@@ -88,13 +88,23 @@ highlight Folded ctermfg=5 ctermbg=0
 " * Ignore
 " * Todo
 
+" UI colour scheme: mostly blue
+" * colour 117 (bright) for focused items
+" * colour 27 (mid) for other items
+" * colour 17 (dark) for filler
 highlight StatusLine   cterm=NONE ctermfg=016 ctermbg=117
-highlight StatusLineNC cterm=NONE ctermfg=016 ctermbg=27
-highlight VertSplit    cterm=NONE ctermfg=27 ctermbg=0
-highlight TabLine      cterm=NONE ctermfg=016 ctermbg=27
-highlight TabLineLeft  cterm=NONE ctermfg=117 ctermbg=0
 highlight TabLineSel   cterm=NONE ctermfg=016 ctermbg=117
+highlight User1        cterm=NONE ctermfg=016 ctermbg=117
+
+highlight StatusLineNC cterm=NONE ctermfg=016 ctermbg=27
+highlight TabLine      cterm=NONE ctermfg=016 ctermbg=27
+highlight User2        cterm=NONE ctermfg=016 ctermbg=27
+
 highlight TabLineFill  cterm=NONE ctermfg=016 ctermbg=17
+highlight User3        cterm=NONE ctermfg=016 ctermbg=17
+
+highlight TabLineLeft  cterm=NONE ctermfg=117 ctermbg=0
+highlight VertSplit    cterm=NONE ctermfg=27 ctermbg=0
 
 " only for vim 5
 if has("unix")
