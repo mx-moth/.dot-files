@@ -92,19 +92,30 @@ highlight Folded ctermfg=5 ctermbg=0
 " * colour 117 (bright) for focused items
 " * colour 27 (mid) for other items
 " * colour 17 (dark) for filler
-highlight StatusLine   cterm=NONE ctermfg=016 ctermbg=117
-highlight TabLineSel   cterm=NONE ctermfg=016 ctermbg=117
-highlight User1        cterm=NONE ctermfg=016 ctermbg=117
 
-highlight StatusLineNC cterm=NONE ctermfg=016 ctermbg=27
-highlight TabLine      cterm=NONE ctermfg=016 ctermbg=27
-highlight User2        cterm=NONE ctermfg=016 ctermbg=27
+function SetFgColour(name, fg)
+	exec "highlight ".a:name." cterm=NONE ctermbg=016 ctermfg=".a:fg
+endfunction
+function SetBgColour(name, bg)
+	exec "highlight ".a:name." cterm=NONE ctermfg=016 ctermbg=".a:bg
+endfunction
 
-highlight TabLineFill  cterm=NONE ctermfg=016 ctermbg=17
-highlight User3        cterm=NONE ctermfg=016 ctermbg=17
+let active = $VIM_ACTIVE
+let inactive = $VIM_INACTIVE
+let fill = $VIM_FILL
+call SetBgColour("StatusLine", active)
+call SetBgColour("TabLineSel", active)
+call SetBgColour("User1", active)
 
-highlight TabLineLeft  cterm=NONE ctermfg=117 ctermbg=0
-highlight VertSplit    cterm=NONE ctermfg=27 ctermbg=0
+call SetBgColour("StatusLineNC", inactive)
+call SetBgColour("TabLine", inactive)
+call SetBgColour("User2", inactive)
+
+call SetBgColour("TabLineFill", fill)
+call SetBgColour("User3", fill)
+
+call SetFgColour("TabLineLeft", active)
+call SetFgColour("VertSplit", fill)
 
 " only for vim 5
 if has("unix")
