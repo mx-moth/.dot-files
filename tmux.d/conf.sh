@@ -47,6 +47,8 @@ $T $SET_OPTION status-left ' #S '
 $T $SET_OPTION status-left-fg colour$TMUX_ACTIVE
 $T $SET_OPTION status-left-bg black
 
+$T $SET_OPTION status-right '#(~/.tmux.d/battery.sh )'
+
 $T $SET_OPTION pane-active-border-fg colour$TMUX_ACTIVE
 $T $SET_OPTION pane-border-fg colour$TMUX_FILL
 
