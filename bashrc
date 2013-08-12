@@ -39,6 +39,7 @@ source "$HOME/.bashrc.d/functions.sh"
 source "$HOME/.bashrc.d/prompt.sh"
 source "$HOME/.bashrc.d/python.sh"
 source "$HOME/.bashrc.d/venv.sh"
+source "$HOME/.bashrc.d/colours.sh"
 
 # Source in any local bashrc
 if [[ -e ~/.bashrc.local ]] ; then
