@@ -2,6 +2,9 @@
 
 declare -r EOL=$'\n' TAB=$'\t'
 
+THIS=$( readlink -e "$0" )
+UPDATE_SCRIPT=$( sed -n '0,/^UPDATE_SCRIPT$/d;p' < "$THIS" )
+
 function set_status() {
 	local status=$1
 	local message=$2
@@ -23,7 +26,18 @@ function set_status() {
 
 for host in $@ ; do
 	echo -n "[ ] $host"
-	out=`ssh "$host" '/bin/bash /dev/stdin' 2>&1 <<'BASH'
+	out=$( echo "$UPDATE_SCRIPT" \
+		| ssh "$host" 2>&1 )
+	exit_code=$?
+
+	set_status "$exit_code" "$out"
+
+done
+
+exit 0
+
+UPDATE_SCRIPT
+#!/bin/bash
 set -e
 
 function die() {
@@ -31,30 +45,33 @@ function die() {
 	exit $1
 }
 
+echo "Setting things"
+
 git_remote="https://bitbucket.org/tim_heap/.dot-files.git/"
 dot_files="$HOME/.dot-files/"
 
+echo "Checking git"
+
 [[ -n "$( which git )" ]] || die 1 "git is not installed"
 
+echo "Checking for repo"
 if [[ ! -d "$dot_files" ]] ; then
 	git clone "$git_remote" "$dot_files" || die 1 "Could not clone $git_remote to $dot_files"
 fi
 cd "$dot_files"
 
+echo "git diff"
 git diff  --ignore-submodules || die 2 "$dot_files has uncommitted changes"
 
-git fetch  origin || die 3 "Could not fetch from remote origin"
-git merge  --ff-only origin/master || die 4 "Could not fast-forward merge"
+echo "git fetch"
+git fetch origin || die 3 "Could not fetch from remote origin"
+echo "git merge"
+git merge --ff-only origin/master || die 4 "Could not fast-forward merge"
+echo "git submodule sync"
 git submodule sync
+echo "git submodule update --init"
 git submodule update --init || die 5 "Could not update submodules"
 
+echo "$dot_files/create-links"
 "$dot_files"/create-links &>/dev/null || die 6 "Could not link in files"
-
-echo -e ""
-BASH
-	`
-	exit_code=$?
-
-	set_status "$exit_code" "$out"
-
-done
+echo "Done"
