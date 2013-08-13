@@ -100,6 +100,12 @@ $T bind-key S command-prompt -p 'host:' "new-window -n '⚡ %1' 'ssh %1'"
 # PREFIX ^C -> Create named window
 $T bind-key ^C command-prompt -p 'name:' "new-window -n '%1'"
 
+# PREFIX ^E -> Edit a file
+$T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
+
+# PREFIX S-6 -> Open small terminal below
+$T bind-key "_" split-window -vp 20
+
 if [[ -f ~/.tmux.conf.local.sh ]] ; then
 	~/.tmux.conf.local.sh
 fi
