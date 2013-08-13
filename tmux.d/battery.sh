@@ -20,9 +20,7 @@ echo -n "#[fg=green,bg=red]"
 echo -n "${BLOCKS:$CAPACITY_8:1}"
 echo -n "${BASE_COLOUR} "
 
-if [[ $ON_BAT == '1' ]] ; then
-	POWER_NOW=`cat "$BAT_PATH/power_now"`
-	echo -n "$(( $POWER_NOW / (1024 ** 2) ))W "
-fi
+POWER_NOW=`cat "$BAT_PATH/power_now"`
+echo -n "$(( $POWER_NOW / (1024 ** 2) ))W "
 
 echo ''
