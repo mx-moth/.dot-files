@@ -3,7 +3,6 @@
 set -e
 
 T="tmux -q"
-SET_OPTION="set-option -gqs"
 VERSION=`tmux -V | cut -d' ' -f2`
 SESSION_NAME="$1"
 
@@ -16,6 +15,11 @@ function is_version() {
 	[[ "$best_version" == "$actual_version" ]]
 }
 
+if is_version "1.7" ; then
+	SET_OPTION="set-option -gqs"
+else
+	SET_OPTION="set-option -gs"
+fi
 # Control-q for prefix. Bugger all uses it, and it is close
 $T $SET_OPTION prefix "C-q"
 
