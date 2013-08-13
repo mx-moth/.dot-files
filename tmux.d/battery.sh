@@ -3,6 +3,7 @@
 set -e
 
 BAT_PATH=/sys/class/power_supply/BAT1
+[[ -e "$BAT_PATH" ]] || exit 0
 BASE_COLOUR="#[fg=colour${TMUX_ACTIVE},bg=black]"
 
 ON_BAT=$( [[ $( cat "${BAT_PATH}/status" ) == "Discharging" ]] && echo '1' || echo '0' )
