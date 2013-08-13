@@ -25,6 +25,9 @@ def hide_text(text):
     """
     return '\[' + text + '\]'
 
+def escape(text):
+    return hide_text('\e[' + text + 'm')
+
 def make_colour_code(code, colour_type):
     """
     Make a colour code escape sequence. `code` can be either:
@@ -40,7 +43,7 @@ def make_colour_code(code, colour_type):
         return str(colour_type + _COLOURS[code])
 
     if isinstance(code, tuple):
-        return str(colour_type + 8) + ';2;' + ';'.join(str(x) for x in code)
+        return str(colour_type + 8) + ';2;' + ';'.join(map(str, code))
     
     return '38;5;' + str(code)
 
@@ -61,9 +64,7 @@ def format_text(text, fore=None, back=None, bold=False):
         codes.append(str(_BOLD))
 
     if codes:
-        start = hide_text('\e[' + ';'.join(codes) + 'm')
-        end = hide_text('\e[0m')
-        return start + text + end
+        return escape(';'.join(codes)) + text + escape('0')
     else:
         return text
 
