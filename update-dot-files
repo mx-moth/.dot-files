@@ -1,0 +1,27 @@
+#!/bin/bash
+
+for host in $@ ; do
+	echo -n "$host: "
+	ssh "$host" '/bin/bash /dev/stdin' <<'BASH'
+set -e
+
+function die() {
+	echo -e "\e[31m✗\e[0m: $2"
+	exit $1
+}
+
+dot_files="$HOME/.dot-files/"
+
+[[ -d "$dot_files" ]] || die 1 "$dot_files not found"
+cd "$dot_files"
+
+git diff --quiet || die 2 "$dot_files has uncommitted changes"
+
+git fetch --quiet origin || die 3 "Could not fetch from remote origin"
+git merge --quiet --ff-only origin/master || die 4 "Could not fast-forward merge"
+
+"$dot_files"/create-links &>/dev/null || die 5 "Could not link in files"
+
+echo -e "\e[32m✓\e[0m"
+BASH
+done
