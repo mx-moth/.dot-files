@@ -50,4 +50,4 @@ function --prompt () {
 	prompt-level $level
 }
 
-prompt-level 1
+prompt-level "${PROMPT_LEVEL:-1}"
