@@ -1,12 +1,25 @@
 #!/bin/bash
 
+function set_status() {
+	local status=$1
+	local message=$2
+
+	start="\r["
+	if [[ "$status" != "0" ]] ; then
+		echo -n ": $message"
+		echo -e "${start}\e[31m✗\e[0m"
+	else
+		echo -e "${start}\e[32m✓\e[0m"
+	fi
+}
+
 for host in $@ ; do
-	echo -n "$host: "
-	ssh "$host" '/bin/bash /dev/stdin' <<'BASH'
+	echo -n "[ ] $host"
+	out=`ssh "$host" '/bin/bash /dev/stdin' <<'BASH'
 set -e
 
 function die() {
-	echo -e "\e[31m✗\e[0m: $2"
+	echo -e "$2"
 	exit $1
 }
 
@@ -22,6 +35,11 @@ git merge --quiet --ff-only origin/master || die 4 "Could not fast-forward merge
 
 "$dot_files"/create-links &>/dev/null || die 5 "Could not link in files"
 
-echo -e "\e[32m✓\e[0m"
+echo -e ""
 BASH
+	`
+	exit_code=$?
+
+	set_status "$exit_code" "$out"
+
 done
