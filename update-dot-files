@@ -41,10 +41,10 @@ if [[ ! -d "$dot_files" ]] ; then
 fi
 cd "$dot_files"
 
-git diff --quiet --ignore-submodules || die 2 "$dot_files has uncommitted changes"
+git diff  --ignore-submodules || die 2 "$dot_files has uncommitted changes"
 
-git fetch --quiet origin || die 3 "Could not fetch from remote origin"
-git merge --quiet --ff-only origin/master || die 4 "Could not fast-forward merge"
+git fetch  origin || die 3 "Could not fetch from remote origin"
+git merge  --ff-only origin/master || die 4 "Could not fast-forward merge"
 git submodule sync
 git submodule update --init || die 5 "Could not update submodules"
 
