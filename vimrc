@@ -149,6 +149,10 @@ if &term =~ '^screen'
 	" Page keys http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/FAQ
 	execute "set t_kP=\e[5;*~"
 	execute "set t_kN=\e[6;*~"
+	map <Esc>OH <Home>
+	map! <Esc>OH <Home>
+	map <Esc>OF <End>
+	map! <Esc>OF <End>
 
 	" tmux will send xterm-style keys when xterm-keys is on
 	execute "set <xUp>=\e[1;*A"
