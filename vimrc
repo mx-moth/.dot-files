@@ -103,6 +103,7 @@ set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=40
 set nowrap
+set linebreak
 
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:␣
