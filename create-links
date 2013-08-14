@@ -1,6 +1,6 @@
 #!/bin/bash
 
-do_not_link=("Readme.md" "create-links" "update-dot-files")
+do_not_link=("Readme.md" "docs" "create-links" "update-dot-files")
 
 
 here=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
