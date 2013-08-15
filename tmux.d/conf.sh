@@ -91,7 +91,7 @@ $T bind k select-pane -U
 $T bind l select-pane -R
 
 # Reload this conf file
-$T bind ^r source-file ~/.tmux.conf
+$T bind ^r run-shell ~/.tmux.d/conf.d
 
 ##################################################
 
