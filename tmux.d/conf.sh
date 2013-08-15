@@ -79,6 +79,11 @@ $T bind-key Down  select-pane -D
 $T bind-key Left  select-pane -L
 $T bind-key Right select-pane -R
 
+$T bind-key -n S-M-Up    select-pane -U
+$T bind-key -n S-M-Down  select-pane -D
+$T bind-key -n S-M-Left  select-pane -L
+$T bind-key -n S-M-Right select-pane -R
+
 # Switch panes using vim keys
 $T bind h select-pane -L
 $T bind j select-pane -D
