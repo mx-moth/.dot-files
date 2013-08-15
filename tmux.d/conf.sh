@@ -95,10 +95,6 @@ $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 
 ##################################################
 
-# PREFIX m -> ncmpcpp
-$T bind m new-window -n "♫♬" "ncmpcpp"
-$T bind M new-window -n "♫♬@xenia" "ncmpcpp -h xenia"
-
 # PREFIX S -> SSH to a host
 $T bind-key S command-prompt -p 'host:' "new-window -n '⚡ %1' 'ssh %1'"
 
@@ -111,6 +107,6 @@ $T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
 # PREFIX S-6 -> Open small terminal below
 $T bind-key "_" split-window -vp 20
 
-if [[ -f ~/.tmux.conf.local.sh ]] ; then
-	~/.tmux.conf.local.sh
+if [[ -e ~/.tmux.conf.local.sh ]] ; then
+	$HOME/.tmux.conf.local.sh
 fi
