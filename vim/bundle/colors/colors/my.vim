@@ -93,10 +93,10 @@ highlight Folded ctermfg=5 ctermbg=0
 " * colour 27 (mid) for other items
 " * colour 17 (dark) for filler
 
-function SetFgColour(name, fg)
+function! SetFgColour(name, fg)
 	exec "highlight ".a:name." cterm=NONE ctermbg=016 ctermfg=".a:fg
 endfunction
-function SetBgColour(name, bg)
+function! SetBgColour(name, bg)
 	exec "highlight ".a:name." cterm=NONE ctermfg=016 ctermbg=".a:bg
 endfunction
 
