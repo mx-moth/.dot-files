@@ -98,6 +98,8 @@ $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 # PREFIX ^S -> config panel
 $T bind-key ^s run-shell '~/.tmux.d/activate-or-new-window.sh -t "⚙"'
 
+$T bind-key ^i run-shell '~/.tmux.d/activate-or-new-window.sh -t "irc" "weechat-curses"'
+
 # PREFIX S -> SSH to a host
 $T bind-key S command-prompt -p 'host:' "new-window -n '⚡ %1' 'ssh %1'"
 
