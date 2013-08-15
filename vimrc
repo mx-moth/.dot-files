@@ -139,6 +139,9 @@ runtime ftplugin/man.vim
 map <F7> <Esc>:set expandtab!<CR>
 imap <F7> <Esc>:set expandtab!<CR>i
 
+" Shift-Enter moves the rest of the line to a new line *above* the cursor
+imap <Esc>OM <Esc>lDO<C-o>p
+
 if &term =~ '256color'
 	" Disable Background Color Erase (BCE) so that color schemes work properly
 	" when Vim is used inside tmux and GNU screen.
