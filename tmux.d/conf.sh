@@ -70,9 +70,13 @@ $T $SET_OPTION message-command-bg black
 $T $SET_OPTION message-fg black
 $T $SET_OPTION message-bg colour$TMUX_ACTIVE
 
-# Switch tabs using shift+left/right
+# Switch tabs using S-left/S-right
 $T bind -n S-left prev
 $T bind -n S-right next
+
+# Move tabs using PREFIX S-left/S-right
+$T bind -r S-left  swap-window -t -1
+$T bind -r S-right swap-window -t +1
 
 # Disable repeatable keys when switching panes
 $T bind-key Up    select-pane -U
@@ -80,6 +84,7 @@ $T bind-key Down  select-pane -D
 $T bind-key Left  select-pane -L
 $T bind-key Right select-pane -R
 
+# Select panes with S-M-arrows
 $T bind-key -n S-M-Up    select-pane -U
 $T bind-key -n S-M-Down  select-pane -D
 $T bind-key -n S-M-Left  select-pane -L
