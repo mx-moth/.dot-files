@@ -165,6 +165,15 @@ if &term =~ '^screen'
 	execute "set <xLeft>=\e[1;*D"
 endif
 
+
+function! ResizeRebalance()
+	exec "normal \<C-w>="
+endfunction
+augroup ResizeRebalance
+	au!
+	autocmd VimResized * call ResizeRebalance()
+augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tab line customisation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
