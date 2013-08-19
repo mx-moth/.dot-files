@@ -37,15 +37,18 @@ alias syslog="sudo tail -f /var/log/syslog"
 # eg `curl http://example.com/api/user/1.json | pretty-json`
 alias pretty-json="python -mjson.tool"
 
+# Shortcut for launching `dolphin` in the current directory
+alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
+
 # Quick directory traversal
 alias ..='cd ..'
 
 # alias ::='cd ../../'
-for i in `seq 2 10` ; do
+for i in $( seq 2 10 ) ; do
 	colon=''
 	dots=''
 
-	for a in `seq 1 $i` ; do
+	for a in $( seq 1 "$i" ) ; do
 		colon="$colon:"
 		dots="$dots../"
 	done
@@ -59,7 +62,7 @@ done
 
 # Opens all matching files in vim, searching via ack-grep
 function ack-edit() {
-	IFS="\n" vim +/"$1" -p $( ack-grep -l "$@" )
+	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c 'vim "$@" < /dev/tty'
 }
 
 # Print out all arguments as they are supplied, separated by the null character.
@@ -93,7 +96,7 @@ function nullinate() {
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
 function ls-parents() {
-	path=$( readlink -e ${1:-`pwd`} )
+	path=$( readlink -e ${1:-$( pwd )} )
 	paths=("$path")
 	while [[ $path != '/' ]] ; do
 		path=$( dirname "$path" )
@@ -107,11 +110,6 @@ function ls-parents() {
 # eg: `sequester noisy-gui-program`
 function sequester() {
 	nohup "$@" &>/dev/null &
-}
-
-# Shortcut for launching `dolphin` in the current directory
-function eeee() {
-    sequester dolphin "$( pwd )"
 }
 
 # Combination of pgrep and ps. Basically does `ps $( pgrep pattren )` but
@@ -189,8 +187,8 @@ function aa_256 () {
 	local columns=8
 	local rows=$(( 256 / $columns ))
 
-	local reset=`tput op`
-	local fill=`printf %$(( ( $COLUMNS / $columns ) - $padding ))s`
+	local reset=$( tput op )
+	local fill=$( printf %$(( ( $COLUMNS / $columns ) - $padding ))s )
 
 	local colour=''
 	local num=''
@@ -202,12 +200,12 @@ function aa_256 () {
 	padded_num_format="%${padding}s"
 	colour_block="${fill// /=}$reset"
 
-	for row in `seq 0 $(( rows ))` ; do
-		for column in `seq 0 $(( columns - 1 ))` ; do
+	for row in $( seq 0 "$rows" ) ; do
+		for column in $( seq 0 $(( columns - 1 )) ) ; do
 			colour=$(( $row + $column * $rows ))
 			num="$( printf "${num_format}" "${prefix}" "${colour}" )"
 			code="$( printf "${padded_num_format}" "${num}" )"
-			echo -en "$code`tput setaf $colour; tput setab $colour`$colour_block"
+			echo -en "$code$( tput setaf $colour; tput setab $colour )$colour_block"
 		done
 		echo ''
 	done
