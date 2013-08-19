@@ -93,6 +93,21 @@ highlight Folded ctermfg=5 ctermbg=0
 " * colour 27 (mid) for other items
 " * colour 17 (dark) for filler
 
+
+function! SourceColours()
+	let l:exportRe = '^\s*export\s\+'
+	let l:colours = readfile($HOME."/.bashrc.d/colours.sh")
+	for line in colours
+		if l:line =~# l:exportRe
+			let l:envSet = substitute(l:line, l:exportRe, "let $", "")
+			exec l:envSet
+		endif
+	endfor
+endfunction
+if exists($VIM_ACTIVE) == 0
+	call SourceColours()
+endif
+
 function! SetFgColour(name, fg)
 	exec "highlight ".a:name." cterm=NONE ctermbg=016 ctermfg=".a:fg
 endfunction
