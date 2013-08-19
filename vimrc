@@ -34,6 +34,10 @@ set showcmd
 " Open a maximum of 30 tabs on start up
 set tabpagemax=30
 
+" Split to the right, and below
+set splitright
+set splitbelow
+
 " Save marks and stuff
 set viminfo+='100,f1
 
