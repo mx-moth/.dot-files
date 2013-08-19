@@ -117,6 +117,7 @@ $T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
 
 # PREFIX S-6 -> Open small terminal below
 $T bind-key "_" split-window -vp 20
+$T bind-key ">" split-window -hp 30
 
 if [[ -e ~/.tmux.conf.local.sh ]] ; then
 	$HOME/.tmux.conf.local.sh
