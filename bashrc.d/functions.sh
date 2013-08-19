@@ -37,6 +37,8 @@ alias syslog="sudo tail -f /var/log/syslog"
 # eg `curl http://example.com/api/user/1.json | pretty-json`
 alias pretty-json="python -mjson.tool"
 
+alias command?="command -pv &>/dev/null"
+
 # Shortcut for launching `dolphin` in the current directory
 alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
 
