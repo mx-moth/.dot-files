@@ -41,3 +41,12 @@ for target in "$here/"[a-zA-Z]* ; do
 
 	ln -s "$target" "$link" || echo "  Couldn't link \`$link' to \`$target'"
 done
+
+unset broken_link
+while IFS= read -r -u3 -d $'\0' broken_link; do
+	target=$( readlink "$broken_link" )
+	if [[ "$target" == "$here"/* ]] ; then
+		echo "Removing dangling symlink \`$broken_link' -> \`$target'"
+		rm $broken_link
+	fi
+done 3< <( find $HOME -maxdepth 1 -type l -xtype l -print0 )
