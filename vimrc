@@ -190,8 +190,9 @@ if exists("+showtabline")
 		let t = tabpagenr()
 		let i = 1
 		while i <= tabpagenr('$')
-			let buflist = tabpagebuflist(i)
 			let winnr = tabpagewinnr(i)
+			let buflist = tabpagebuflist(i)
+			let bufnr = buflist[winnr - 1]
 			let selected = i == t
 
 			" Some spacing before
@@ -208,9 +209,8 @@ if exists("+showtabline")
 			let wn = tabpagewinnr(i,'$')
 			let s .= i
 
-			let s .= '|'
+			let s .= '│'
 
-			let bufnr = buflist[winnr - 1]
 			let file = bufname(bufnr)
 			let buftype = getbufvar(bufnr, 'buftype')
 			if buftype == 'nofile'
@@ -226,10 +226,14 @@ if exists("+showtabline")
 			let s .= file
 
 			" modified flag
-			let s .= (getbufvar(buflist[winnr - 1], "&mod") ? '•' : '')
+			let l:modified = 0
+			for l:b in l:buflist
+				let l:modified = modified || getbufvar(l:b, "&mod")
+			endfor
+			let s .= (modified ? '✦' : '')
 
 			if tabpagewinnr(i,'$') > 1
-				let s .= '/'
+				let s .= '│'
 				let s .= (tabpagewinnr(i,'$') > 1 ? wn : '')
 			end
 
