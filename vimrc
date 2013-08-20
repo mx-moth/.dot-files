@@ -274,11 +274,16 @@ imap <Nul> <Nop>
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
-" Switch tabs using C-S-left/right
-map <silent> <C-S-Left> gT
-map <silent> <C-S-right> gt
-imap <silent> <C-S-left> <Esc>gTi
-imap <silent> <C-S-right> <Esc>gti
+" Switch tabs using meta(alt)-left/right
+map <silent> <M-Left> gT
+map <silent> <M-right> gt
+imap <silent> <M-left> <Esc>gTi
+imap <silent> <M-right> <Esc>gti
+
+map <silent> <C-M-Left>  <C-w><Left>
+map <silent> <C-M-Right> <C-w><Right>
+map <silent> <C-M-Up>    <C-w><Up>
+map <silent> <C-M-Down>  <C-w><Down>
 
 " Split the view using | or -
 map <silent> <C-w><C-\> :botright vert new<cr>
