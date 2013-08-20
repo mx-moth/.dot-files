@@ -95,6 +95,9 @@ highlight Folded ctermfg=5 ctermbg=0
 
 
 function! SourceColours()
+	" The environment variables are not always present, for example if vim is
+	" run via sudo. This script loads the environment variables from the
+	" colours.sh script.
 	let l:exportRe = '^\s*export\s\+'
 	let l:colours = readfile($HOME."/.bashrc.d/colours.sh")
 	for line in colours
