@@ -15,7 +15,7 @@
 	url = https://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/unimpaired"]
 	path = vim/bundle/unimpaired
-	url = https://github.com/maelstrom/vim-unimpaired.git
+	url = https://github.com/tpope/vim-unimpaired.git
 [submodule "vim/bundle/less"]
 	path = vim/bundle/less
 	url = https://github.com/groenewege/vim-less.git
@@ -31,6 +31,7 @@
 [submodule "vim/bundle/linters"]
 	path = vim/bundle/linters
 	url = https://bitbucket.org/tim_heap/linters.vim
+	pushUrl = git@bitbucket.org:tim_heap/linters.vim.git
 [submodule "vim/bundle/surround"]
 	path = vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
