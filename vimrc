@@ -183,9 +183,25 @@ augroup END
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Rename tabs to show tab# and # of viewports
 if exists("+showtabline")
+
+	if !exists('vim_tabbar_title')
+		let g:vim_tabbar_title = ''
+	endif
+
+	function! SetTabbarTitle()
+		let g:vim_tabbar_title=input('vim title: ', g:vim_tabbar_title)
+		set tabline+=
+	endfunction
+
+	noremap <silent> <Leader>c :call SetTabbarTitle()<Cr>
+
 	function! MyTabLine()
 		let s = '%#TabLineLeft#'
-		let s .= '%{$USER}@%{hostname()} '
+		if g:vim_tabbar_title != ''
+			let s .= g:vim_tabbar_title . ' '
+		else
+			let s .= '%{$USER}@%{hostname()} '
+		endif
 		let wn = ''
 		let t = tabpagenr()
 		let i = 1
@@ -245,6 +261,7 @@ if exists("+showtabline")
 		let s .= '%T%#TabLineFill#%='
 		return s
 	endfunction
+
 	set stal=2
 	set tabline=%!MyTabLine()
 endif
