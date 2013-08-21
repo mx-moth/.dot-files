@@ -112,7 +112,7 @@ if exists($VIM_ACTIVE) == 0
 endif
 
 function! SetFgColour(name, fg)
-	exec "highlight ".a:name." cterm=NONE ctermbg=016 ctermfg=".a:fg
+	exec "highlight ".a:name." cterm=NONE ctermbg=NONE ctermfg=".a:fg
 endfunction
 function! SetBgColour(name, bg)
 	exec "highlight ".a:name." cterm=NONE ctermfg=016 ctermbg=".a:bg
