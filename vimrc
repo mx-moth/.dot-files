@@ -279,6 +279,8 @@ imap <F1> <Nop>
 
 map K kJ
 
+noremap <silent> <Leader>r :source $MYVIMRC<cr>
+
 "Move a line or selection of text using Crtl+[jk] or Comamnd+[jk] on mac
 nmap <silent> <C-j> mz:m+<CR>`z
 nmap <silent> <C-k> mz:m-2<CR>`z
