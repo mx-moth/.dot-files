@@ -26,6 +26,7 @@ $T $SET_OPTION prefix "C-q"
 # Using vim + tmux requires instant escape codes
 $T $SET_OPTION escape-time 0
 
+$T $SET_OPTION allow-rename off
 
 # Status bar style
 # The coloura scheme is purple:
