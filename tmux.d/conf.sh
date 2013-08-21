@@ -26,18 +26,6 @@ $T $SET_OPTION prefix "C-q"
 # Using vim + tmux requires instant escape codes
 $T $SET_OPTION escape-time 0
 
-$T unbind % # Remove default binding since we’re replacing
-$T unbind '"'
-# Split panes using | and -
-$T bind '\' split-window -h
-$T bind '|' split-window -h
-$T bind '-' split-window -v
-$T bind '_' split-window -v
-
-# Prefix C-Q for last pane
-$T bind ^Q last-pane
-# Prefix C-Q for last tab/window
-$T bind '`' last-window
 
 # Status bar style
 # The coloura scheme is purple:
@@ -70,13 +58,41 @@ $T $SET_OPTION message-command-bg black
 $T $SET_OPTION message-fg black
 $T $SET_OPTION message-bg colour$TMUX_ACTIVE
 
-# Switch tabs using S-left/S-right
+
+### tmux bindings
+
+
+## Window management
+
+# PREFIX C-Q: Last window
+$T bind '`' last-window
+
+# PREFIX S-left/S-right: Switch windows using 
 $T bind -n S-left prev
 $T bind -n S-right next
 
-# Move tabs using PREFIX S-left/S-right
+# PREFIX S-left/S-right: Move windows
 $T bind -r S-left  swap-window -t -1
 $T bind -r S-right swap-window -t +1
+
+# PREFIX ^C: Create named window
+$T bind-key ^C command-prompt -p 'name:' "new-window -n '%1'"
+
+
+## Pane management
+
+# Split panes using | and -
+$T bind '\' split-window -h
+$T bind '|' split-window -h
+$T bind '-' split-window -v
+$T bind '_' split-window -v
+
+# Remove default split pane binding since we replaced it
+$T unbind %
+$T unbind '"'
+
+# Prefix C-Q for last pane
+$T bind ^Q last-pane
 
 # Disable repeatable keys when switching panes
 $T bind-key Up    select-pane -U
@@ -90,35 +106,35 @@ $T bind-key -n S-M-Down  select-pane -D
 $T bind-key -n S-M-Left  select-pane -L
 $T bind-key -n S-M-Right select-pane -R
 
-# Switch panes using vim keys
-$T bind h select-pane -L
-$T bind j select-pane -D
-$T bind k select-pane -U
-$T bind l select-pane -R
+
+## Misc bindings
 
 # Reload this conf file
 $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 
-##################################################
 
-# PREFIX ^S -> config panel
+### Quick program launching
+
+# PREFIX ^S: config panel
 $T bind-key ^s run-shell '~/.tmux.d/activate-or-new-window.sh -t "⚙"'
 
+# PREFIX ^i: IRC
 $T bind-key ^i run-shell '~/.tmux.d/activate-or-new-window.sh -t "irc" "weechat-curses"'
 
-# PREFIX S -> SSH to a host
+# PREFIX S: SSH to a host
 $T bind-key S command-prompt -p 'host:' "new-window -n '⚡ %1' 'ssh %1'"
 
-# PREFIX ^C -> Create named window
-$T bind-key ^C command-prompt -p 'name:' "new-window -n '%1'"
-
-# PREFIX ^E -> Edit a file
+# PREFIX ^E: Edit a file
 $T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
 
-# PREFIX S-6 -> Open small terminal below
+# PREFIX S-_: Open small terminal below
 $T bind-key "_" split-window -vp 20
+# PREFIX S->: Open small terminal to the right
 $T bind-key ">" split-window -hp 30
 
+
+
+# Source local tmux commands
 if [[ -e ~/.tmux.conf.local.sh ]] ; then
 	$HOME/.tmux.conf.local.sh
 fi
