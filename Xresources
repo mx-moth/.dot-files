@@ -1,6 +1,6 @@
 ! Black transparent background
 URxvt*.depth:             32
-URxvt*.background:        rgba:0000/0000/0000/cccc
+URxvt*.background:        [80]#000000
 URxvt*.foreground:        [100]#B2B2B2
 
 ! Terminus font, installed from apt
