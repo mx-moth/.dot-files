@@ -64,7 +64,7 @@ done
 
 # Opens all matching files in vim, searching via ack-grep
 function ack-edit() {
-	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c 'vim "$@" < /dev/tty'
+	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c 'vim -p "$@" < /dev/tty'
 }
 
 # Print out all arguments as they are supplied, separated by the null character.
