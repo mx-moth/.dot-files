@@ -67,7 +67,7 @@ vnoremap / /\v
 set laststatus=2
 hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 set statusline=                        " Woo status line
-set statusline+=\ %<%-5.20f            " Filename
+set statusline+=\ %<%-5.80f            " Filename
 set statusline+=\ %#User2#\            " Less important shit
 set statusline+=%y                     " Filetype
 set statusline+=%h%m%r%w               " flags
