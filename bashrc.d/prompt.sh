@@ -14,8 +14,8 @@ if ! [ -z "$LC_SSH_PPLIST" ] ; then
 fi
 if [ "$list" != "$( basename $SHELL )" ] ; then
 	export _PARENT_PROCESS_LIST="$list"
-	export LC_SSH_PPLIST="$list$sepssh@$( hostname )"
 fi
+export LC_SSH_PPLIST="${list}${sep}ssh@$( hostname )"
 
 VCPROMPT="$HOME/.bashrc.d/vcprompt"
 
