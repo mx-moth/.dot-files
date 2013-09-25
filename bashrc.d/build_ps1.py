@@ -101,6 +101,8 @@ VENV_COMMAND = "".join([
 PS1 += ['$( ', VENV_COMMAND, ' )']
 
 PS1 += [' in ', format_text('\w', fore=202)]  # in $DIRECTORY
+PS1 += ['$( [ -z "$_PARENT_PROCESS_LIST" ] &&'
+        ' echo "running \[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\] " )']
 PS1 += [" ]\n"]
 
 PS1 += ['\$', ' '] # End, $

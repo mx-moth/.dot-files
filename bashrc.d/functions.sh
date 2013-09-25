@@ -218,3 +218,37 @@ function aa_256 () {
 function qrc() {
 	qrencode -t ANSI -o - "$@"
 }
+
+# elementIn "one" ("one" "two" "three")
+elementIn () {
+	local e
+	for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+	return 1
+}
+
+function trim() {
+	sed 's/^\s+//;s/\s+$//'
+}
+
+function ppids() {
+	pid=$$
+	sep=$1
+	path=""
+	ignore=("tmux" "urxvt" "init" "sshd")
+
+	while [ ${pid} -ne 0 ] ; do
+		cmd=$( ps -p ${pid} -o comm= | trim )
+
+		if ! elementIn "${cmd}" "${ignore[@]}" ; then
+			if [ -z "${path}" ] ; then
+				path="${cmd}"
+			else
+				path="${cmd}${sep}${path}"
+			fi
+		fi
+
+		pid=$( ps -p ${pid} -o ppid= | trim )
+	done
+
+	echo ${path}
+}
