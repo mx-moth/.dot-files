@@ -1,13 +1,7 @@
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
-" Load pathogen bundle loader
-filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
-filetype plugin indent on
+call pathogen#infect()
 
-" Vim5 and later versions support syntax highlighting. Uncommenting the next
-" line enables syntax highlighting by default.
 syntax on
 
 " Uncomment the following to have Vim jump to the last position when reopening
