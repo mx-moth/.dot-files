@@ -669,3 +669,9 @@ vnoremap <leader>bb :call <sid>DataUriSelectedFilename()<CR>
 if filereadable("~/.vimrc.local")
 	source ~/.vimrc.local
 endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIM Jedi configuration for python autocomplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:jedi#popup_on_dot = 0
+let g:jedi#documentation_command = "<F1>"

@@ -44,3 +44,6 @@
 [submodule "vim/bundle/repeat"]
 	path = vim/bundle/repeat
 	url = git://github.com/tpope/vim-repeat.git
+[submodule "vim/bundle/jedi"]
+	path = vim/bundle/jedi
+	url = https://github.com/davidhalter/jedi-vim.git
