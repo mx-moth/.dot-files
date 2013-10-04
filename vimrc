@@ -4,8 +4,6 @@ call pathogen#infect()
 
 syntax on
 
-" Uncomment the following to have Vim jump to the last position when reopening
-" a file
 if has("autocmd")
 	function! s:JumpToLastLine()
 		if line("'\"") > 1 && line("'\"") <= line("$")
@@ -14,11 +12,7 @@ if has("autocmd")
 	endfunction
 
 	au BufReadPost * call s:JumpToLastLine()
-endif
 
-" Have Vim load indentation rules and plugins according to the detected
-" filetype.
-if has("autocmd")
 	filetype plugin indent on
 endif
 
