@@ -244,7 +244,9 @@ function reload-xresources() {
 # elementIn "one" ("one" "two" "three")
 elementIn () {
 	local e
-	for e in "${@:2}"; do [[ "$e" == "$1" ]] && return 0; done
+	for e in "${@:2}" ; do
+		[ "$e" = "$1" ] && return 0
+	done
 	return 1
 }
 
@@ -256,12 +258,11 @@ function ppids() {
 	pid=$$
 	sep=$1
 	path=""
-	ignore=("tmux" "urxvt" "init" "sshd")
 
 	while [ ${pid} -ne 0 ] ; do
 		cmd=$( ps -p ${pid} -o comm= | trim )
 
-		if ! elementIn "${cmd}" "${ignore[@]}" ; then
+		if ! elementIn "${cmd}" "${@:2}" ; then
 			if [ -z "${path}" ] ; then
 				path="${cmd}"
 			else

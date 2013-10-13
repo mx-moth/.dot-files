@@ -8,12 +8,17 @@ export VCPROMPT_MODIFIED='*'
 export VCPROMPT_UNTRACKED='?'
 
 sep="╱"
-list=$( ppids  "$sep" )
-if ! [ -z "$LC_SSH_PPLIST" ] ; then
-	list="${LC_SSH_PPLIST}$sep$list"
+list=$( ppids  "$sep" "tmux" "urxvt" "init" "exo-helper-1" )
+if ! [ -z "$LC_SSH_PPLIST" ] && [ "${list}" = sshd${sep}* ] ; then
+	list="${LC_SSH_PPLIST}${list#sshd}"
 fi
-if [ "$list" != "$( basename $SHELL )" ] ; then
+
+list=$( sed "s#$( basename "$SHELL" )#"'$'"#g" <<<"$list" )
+
+if [ "$list" != '$' ] ; then
 	export _PARENT_PROCESS_LIST="$list"
+else
+	export _PARENT_PROCESS_LIST=""
 fi
 export LC_SSH_PPLIST="${list}${sep}ssh@$( hostname )"
 
