@@ -219,6 +219,28 @@ function qrc() {
 	qrencode -t ANSI -o - "$@"
 }
 
+# Reload ~/.Xresources, spawn a new rxvt-unicode, attach to current tmux
+# session, and then disconnect this terminal from the session.
+function reload-xresources() {
+	xrdb ~/.Xresources
+
+	if [[ -n "$TMUX" ]] ; then
+		TMUX= rxvt-unicode -e tmux attach &
+		tmux detach
+	elif tmux has-session ; then
+		rxvt-unicode -e tmux attach &
+		sleep 0.2
+		tmux display-message \
+			"You did not seem to be running tmux, so I could not just reattach to the current session. Have a fresh terminal attached to some random tmux session."
+	else
+		rxvt-unicode -e tmux &
+		sleep 0.2
+		tmux display-message \
+			"You did not seem to be running tmux, so I could not just reattach to the current session. Have a fresh terminal runnning tmux."
+		exit
+	fi
+}
+
 # elementIn "one" ("one" "two" "three")
 elementIn () {
 	local e

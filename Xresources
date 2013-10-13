@@ -6,8 +6,11 @@ URxvt*.foreground:        [100]#B2B2B2
 ! Terminus font, installed from apt
 URxvt*.font:              xft:Terminus:size=12
 
-! The default ixon is butt-ugly!
-URxvt*.iconFile:          /usr/share/icons/oxygen/128x128/apps/utilities-terminal.png
+Xft*dpi:              96
+Xft*antialias:        True
+
+! The default icon is butt-ugly!
+URxvt*.iconFile:          /usr/share/icons/Tango/scalable/apps/terminal.svg
 
 ! I think having this is a good thing?
 URxvt*.loginShell:        true
