@@ -23,6 +23,26 @@
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
 
+	show-commit = "show --pretty=fuller --no-abbrev-commit --no-patch --decorate"
+	version-bump = "!f() {\
+		set -e; \
+		if [ $# -eq 0 ] ; then\
+			if git config --get alias.get-version 1>/dev/null 2>&1 ; then\
+				version=$( git get-version 2>/dev/null ); \
+			else \
+				echo 'Usage: git version-bump <version>';\
+				exit 1;\
+			fi ; \
+		else \
+			version=\"$1\"; \
+		fi ; \
+		message_format=$( git config --get 'code.version-bump-format' || echo 'Version bump to %s' ); \
+		version_format=$( git config --get 'code.version-tag-format'  || echo '%s' ); \
+		message=$( printf \"$message_format\" \"$version\" ); \
+		version=$( printf \"$version_format\" \"$version\" ); \
+		git commit -m \"$message\"; \
+		git tag \"$version\"; \
+	}; f"
 	ignore-contents = "!f() { while [ $# -ne 0 ] ; do (echo '*' ; echo '!.gitignore') > $1/.gitignore ; shift ; done }; f"
 	graphiv = "!f() { echo 'digraph git { node [fontsize = 10.0, shape = box];' ; git log --pretty='format:  %H -> { %P }' \"$@\" | sed 's/[0-9a-f]\\{40\\}/\"&\"/g' ; git log --pretty='format:  \"%H\" [ label = \"%h - %an - %ar\\n%f\" ]' \"$@\" ; echo '}'; }; f"
 	merge-to = "!f() { local DEST=$1 ; shift ; local CURRENT=`git rev-parse --abbrev-ref HEAD` && git checkout "$DEST" && git merge "$CURRENT" $@ && git checkout "$CURRENT"; unset CURRENT; }; f"
