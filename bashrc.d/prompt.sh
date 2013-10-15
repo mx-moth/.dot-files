@@ -31,22 +31,30 @@ VCPROMPT="$HOME/.bashrc.d/vcprompt"
 #   virtualenv status
 # * 2, high, full: Prompt showing coloured information, including virtualenv
 #   and version control status
-
-# Generated with bashrc.d/build_ps1.py
 function prompt-level() {
+	user='\[\e[38;5;40m\]\u\[\e[0m\]'
+	host='@\[\e[38;5;13m\]\h\[\e[0m\]'
+	path=':\[\e[38;5;202m\]\w\[\e[0m\]'
+	vcprompt='$( ${VCPROMPT} -f "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")'
+	venv='$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir="${VIRTUAL_ENV%%/venv}"; dir="${dir##*/}" ; echo "⚒\[\e[38;5;51m\]$dir\[\e[0m\]" ; fi )'
+	running='$( ! [ -z "$_PARENT_PROCESS_LIST" ] && echo "↳\[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\]" )'
 	level=$1
 	case $level in
-	0|low|minimal)
+	0|off|none)
 		level=0
-		export PS1='[ \u at \h in \W ] \$ '
+		export PS1='\$ '
 		;;
-	1|medium|normal)
+	1|low|minimal)
 		level=1
-		export PS1='\n[ \[\e[38;5;40m\]\u\[\e[0m\] at \[\e[38;5;13m\]\h\[\e[0m\]$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir=$( basename $( echo -n "$VIRTUAL_ENV" | sed -e"s/\/venv\/\?$//" ) ) ; echo " working on \[\e[38;5;51m\]$dir\[\e[0m\]" ; fi ) in \[\e[38;5;202m\]\w\[\e[0m\] $( ! [ -z "$_PARENT_PROCESS_LIST" ] && echo "running \[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\] " )]\n\$ '
+		export PS1='[\u@\h:\W] \$ '
 		;;
-	2|high|full)
+	2|medium|normal)
 		level=2
-		export PS1='\n[ \[\e[38;5;40m\]\u\[\e[0m\] at \[\e[38;5;13m\]\h\[\e[0m\]$( ${VCPROMPT} -f " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git " on \[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\] [\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir=$( basename $( echo -n "$VIRTUAL_ENV" | sed -e"s/\/venv\/\?$//" ) ) ; echo " working on \[\e[38;5;51m\]$dir\[\e[0m\]" ; fi ) in \[\e[38;5;202m\]\w\[\e[0m\] $( ! [ -z "$_PARENT_PROCESS_LIST" ] && echo "running \[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\] " )]\n\$ '
+		export PS1='\n['"$user$host$venv$running$path"']\n\$ '
+		;;
+	3|high|full)
+		level=3
+		export PS1='\n['"$user$host$vcprompt$venv$running$path"']\n\$ '
 		;;
 	*)
 		echo "Unknown prompt-level: $1"
@@ -66,4 +74,4 @@ function --prompt () {
 	prompt-level $level
 }
 
-prompt-level "${PROMPT_LEVEL:-1}"
+prompt-level "${PROMPT_LEVEL:-2}"
