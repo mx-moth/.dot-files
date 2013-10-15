@@ -12,16 +12,18 @@ endif
 "colorscheme default
 let g:colors_name = "my"
 
+highlight Normal  ctermfg=gray ctermbg=None guifg=#ffffff guibg=#000000
+
 " Pinky values for values
-highlight Constant  ctermfg=165 ctermbg=black
-highlight Tag ctermfg=165 ctermbg=black
+highlight Constant  ctermfg=165 ctermbg=None
+highlight Tag       ctermfg=165 ctermbg=None
 highlight String    ctermfg=161
 highlight Character ctermfg=161
 highlight Number    ctermfg=127
 highlight Float     ctermfg=127
 highlight Boolean   ctermfg=129
 highlight Keyword   ctermfg=91  cterm=NONE
-highlight Exception ctermfg=165 ctermbg=black
+highlight Exception ctermfg=165 ctermbg=None
 
 " Functions and identifiers get bluey colours
 highlight Identifier ctermfg=12 cterm=NONE
@@ -138,7 +140,7 @@ call SetFgColour("VertSplit", fill)
 " only for vim 5
 if has("unix")
 	if v:version<600
-		highlight Normal  ctermfg=Grey ctermbg=Black cterm=NONE guifg=Grey80guibg=Black gui=NONE
+		highlight Normal  ctermfg=Grey ctermbg=Black cterm=NONE guifg=Grey80 guibg=Black gui=NONE
 		highlight Search  ctermfg=Black ctermbg=Red cterm=bold guifg=Black guibg=Red gui=bold
 		highlight Visual  ctermfg=Black ctermbg=yellow cterm=bold guifg=#404040 gui=bold
 		highlight Special ctermfg=LightBlue ctermbg=Black cterm=NONE guifg=LightBlue gui=NONE
