@@ -3,7 +3,7 @@
 source ~/.bashrc.d/colours.sh
 
 MPD_HOST=$( tmux show-environment 'MPD_HOST' )
-if $! ; then
+if $? ; then
 	MPC="mpc --host=${MPD_HOST#MPD_HOST=}"
 else
 	MPC="mpc"

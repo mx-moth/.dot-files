@@ -27,6 +27,7 @@ $T $SET_OPTION prefix "C-q"
 $T $SET_OPTION escape-time 0
 
 $T $SET_OPTION allow-rename off
+$T $SET_OPTION display-time 3000
 
 # Status bar style
 # The coloura scheme is purple:
@@ -130,10 +131,16 @@ $T bind-key S command-prompt -p 'host:' "new-window -n '⚡ %1' 'ssh %1'"
 # PREFIX ^E: Edit a file
 $T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
 
-# PREFIX S-_: Open small terminal below
+# PREFIX S-_: Open small terminal below or above
 $T bind-key "_" split-window -vp 20
-# PREFIX S->: Open small terminal to the right
+$T bind-key "+" new-window -dn '__split__' '\;' move-pane -vbp 80 -s ':__split__.'
+
+# PREFIX S->: Open small terminal to the right or left
 $T bind-key ">" split-window -hp 30
+$T bind-key "<" new-window -dn '__split__' '\;' move-pane -hbp 70 -s ':__split__.'
+
+$T bind-key C-y run-shell "tmux save-buffer - | DISPLAY=${DISPLAY:-:0} xclip -i -selection clipboard"
+$T bind-key C-p run-shell "xclip -i -selection clipboard | tmux load-buffer -" '\;' paste-buffer
 
 
 
