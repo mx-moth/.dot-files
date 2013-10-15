@@ -655,6 +655,19 @@ endfunction
 
 vnoremap <leader>bb :call <sid>DataUriSelectedFilename()<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Make a scratch buffer
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! <sid>ScratchBuffer()
+	  botright new
+	  resize 10
+	  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile
+	  setlocal nowrap number
+endfunction
+
+nnoremap <leader>s :call <sid>ScratchBuffer()<CR>
+
 if filereadable("~/.vimrc.local")
 	source ~/.vimrc.local
 endif
