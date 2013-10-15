@@ -6,7 +6,9 @@ syntax on
 
 if has("autocmd")
 	function! s:JumpToLastLine()
-		if line("'\"") > 1 && line("'\"") <= line("$")
+		if &filetype == "gitcommit"
+			call setpos(".", [0, 1, 1, 0])
+		elseif line("'\"") > 1 && line("'\"") <= line("$")
 			execute "normal! g'\""
 		endif
 	endfunction
@@ -53,7 +55,6 @@ vnoremap / /\v
 " Improved status line: always visible, shows [+] modification, read only
 " status, git branch, filetype, username, hostname
 set laststatus=2
-hi User1 term=inverse,bold cterm=inverse,bold ctermfg=red
 set statusline=                        " Woo status line
 set statusline+=\ %<%-5.80f            " Filename
 set statusline+=\ %#User2#\            " Less important shit
