@@ -1,9 +1,3 @@
-python << EOL
-import vim
-def EvaluateCurrentRange():
-    eval(compile('\n'.join(vim.current.range),'','exec'),globals())
-EOL
-
 " Fold routines for python code, version 3.2
 " Source: http://www.vim.org/scripts/script.php?script_id=2527
 " Last Change: 2009 Feb 25
@@ -56,7 +50,7 @@ setlocal foldtext=PythonFoldText()
 
 function! PythonFoldText()
   let fs = v:foldstart
-  while getline(fs) =~ '^\s*@|^$' | let fs = nextnonblank(fs + 1)
+  while getline(fs) =~ '^\s*@\|^$' | let fs = nextnonblank(fs + 1)
   endwhile
   let line = getline(fs)
   let nnum = nextnonblank(fs + 1)
@@ -144,6 +138,8 @@ function! GetPythonFold(lnum)
         endif
     elseif line =~ '^\s*$'
       if getline(a:lnum - 1) !~ '^\s*$'
+        return '='
+      elseif getline(a:lnum - 2) !~ '^\s*$' && getline(a:lnum -1 ) =~ '^\s*$'
         return '='
       else
         return -1
@@ -251,3 +247,11 @@ endfunction
 " C     R    <      <     foldlevel as computed for this line: use function
 "
 " vim: sw=2 expandtab
+
+if has('python')
+  python << EOL
+import vim
+def EvaluateCurrentRange():
+  eval(compile('\n'.join(vim.current.range),'','exec'),globals())
+EOL
+endif
