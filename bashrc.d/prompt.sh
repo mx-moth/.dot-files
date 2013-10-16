@@ -9,8 +9,8 @@ export VCPROMPT_UNTRACKED='?'
 
 sep="╱"
 list=$( ppids  "$sep" "tmux" "urxvt" "init" "exo-helper-1" )
-if ! [ -z "$LC_SSH_PPLIST" ] && [ "${list}" = sshd${sep}* ] ; then
-	list="${LC_SSH_PPLIST}${list#sshd}"
+if [ -n "$LC_SSH_PPLIST" ] && [[ "${list}" = sshd"${sep}"* ]] ; then
+	list="${LC_SSH_PPLIST}${sep}${list##*sshd${sep}}"
 fi
 
 list=$( sed "s#$( basename "$SHELL" )#"'$'"#g" <<<"$list" )
@@ -20,7 +20,7 @@ if [ "$list" != '$' ] ; then
 else
 	export _PARENT_PROCESS_LIST=""
 fi
-export LC_SSH_PPLIST="${list}${sep}ssh@$( hostname )"
+export LC_SSH_PPLIST="${list}${sep}»$( hostname )"
 
 VCPROMPT="$HOME/.bashrc.d/vcprompt"
 
