@@ -275,3 +275,33 @@ function ppids() {
 
 	echo ${path}
 }
+
+# Download and unzip the latest release of bootstrap.
+#
+# Usage: bootstrap-me [destination-directory]
+#
+# Example:
+#
+#     $ bootstrap-me static/libs/bootstrap
+#     $ ls static/libs/bootstrap
+#     css/ fonts/ js/
+function bootstrap-me() {
+	destination="${1:-.}"
+	tmpdir=$( mktemp -d )
+
+	owner='twbs'
+	repo='bootstrap'
+
+	tag_json=$( curl -s "https://api.github.com/repos/$owner/$repo/tags" \
+		| json -c 'this.name.match(/^v\d+\.\d+\.\d+$/)' 0 )
+
+	tag_sha=$( echo "$tag_json" | json commit.sha )
+	tag_tarball=$( echo "$tag_json" | json tarball_url )
+
+	mkdir -p -- "$destination"
+	dirname="twbs-bootstrap-${tag_sha:0:7}"
+	curl -sL "$tag_tarball" | tar -xzC "$tmpdir" "$dirname/dist"
+	cp -r -t "$destination" "$tmpdir/$dirname/dist"/*
+
+	rm -rf "$tmpdir"
+}
