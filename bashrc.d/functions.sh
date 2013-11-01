@@ -42,6 +42,9 @@ alias command?="command -pv &>/dev/null"
 # Shortcut for launching `dolphin` in the current directory
 alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
 
+# Trim whitespace from either end of stdin
+alias trim="sed -e 's/^\\s\\+//;s/\\s\\+$//'"
+
 # Quick directory traversal
 alias ..='cd ..'
 
@@ -250,9 +253,6 @@ elementIn () {
 	return 1
 }
 
-function trim() {
-	sed 's/^\s+//;s/\s+$//'
-}
 
 function ppids() {
 	pid=$$
