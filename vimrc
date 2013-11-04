@@ -67,9 +67,6 @@ set statusline+=\ %P\ of\ %L\ ╱        " Position
 set statusline+=\ %(%4.l:%-4c%)        " Line/column
 set statusline+=\                      " Woo end
 
-set tabline=
-set tabline+='
-
 " Appearance settings
 set background=dark
 colorscheme my
@@ -185,73 +182,132 @@ if exists("+showtabline")
 	noremap <silent> <Leader>c :call SetTabbarTitle()<Cr>
 
 	function! MyTabLine()
-		let s = '%#TabLineLeft#'
+		let tab_line = '%#TabLineLeft#'
+
 		if g:vim_tabbar_title != ''
-			let s .= g:vim_tabbar_title . ' '
+			let tab_bar_title = g:vim_tabbar_title . ' '
 		else
-			let s .= '%{$USER}@%{hostname()} '
+			let tab_bar_title = $USER . '@' . hostname() . ' '
 		endif
-		let wn = ''
-		let t = tabpagenr()
+		let tab_line .= tab_bar_title
+
+		let selected_tab = tabpagenr()
+		let tab_count = tabpagenr('$')
+		let tab_list = []
+
+		let total_length = 0
+		let max_length = 0
+
 		let i = 1
-		while i <= tabpagenr('$')
+		while i <= tab_count
+			let num_windows = tabpagewinnr(i, '$')
+			let selected = i == selected_tab
+
 			let winnr = tabpagewinnr(i)
 			let buflist = tabpagebuflist(i)
 			let bufnr = buflist[winnr - 1]
-			let selected = i == t
 
-			" Some spacing before
-			let s .= '%#TabLineFill# '
-
-			" Tab nubmer (for mouse clicks)
-			let s .= '%' . i . 'T'
-
-			" Set highlight style
-			let s .= (selected ? '%#TabLineSel#' : '%#TabLine#')
-			let s .= (selected ? '❨' : ' ')
-
-			" Tab number
-			let wn = tabpagewinnr(i,'$')
-			let s .= i
-
-			let s .= '│'
-
+			" Work out the tab title
 			let file = bufname(bufnr)
 			let buftype = getbufvar(bufnr, 'buftype')
-			if buftype == 'nofile'
-				if file =~ '\/.'
-					let file = substitute(file, '.*\/\ze.', '', '')
-				endif
+			if buftype == 'nofile' && file =~ '\/.'
+				let file = substitute(file, '.*\/\ze.', '', '')
 			else
 				let file = fnamemodify(file, ':p:t')
 			endif
 			if file == ''
 				let file = '∅'
 			endif
-			let s .= file
 
-			" modified flag
+			" Check if any buffer in the tab is modified
 			let l:modified = 0
 			for l:b in l:buflist
 				let l:modified = modified || getbufvar(l:b, "&mod")
 			endfor
-			let s .= (modified ? '✦' : '')
 
-			if tabpagewinnr(i,'$') > 1
-				let s .= '│'
-				let s .= (tabpagewinnr(i,'$') > 1 ? wn : '')
-			end
+			" Work out the length of the tab
+			let length = 0
+			let length += 4  " before padding, │, selected ()
+			let length += strlen(i)
+			let length += strlen(file)
+			let length += (modified ? 1 : 0)
+			let length += (num_windows > 1 ? 1 + strlen(num_windows) : 0)
+			if file == '.vimrc'
+				echo length
+			endif
 
-			" Close styling
-			let s .= (selected ? '❩' : ' ')
-			let s .= "%#TabLineFill#"
+			let total_length += length
+			let max_length = max([max_length, strlen(file)])
+
+			" Construct the tab string. Tab consists of:
+			" * Spacing
+			" * Tab number for mouse
+			" * current tab marker + styles
+			" * filename
+			" * modified flag
+			" * window count
+			" * closing bits
+			let before = '%#TabLineFill# '
+			let before .= '%' . i . 'T'
+			let before .= (selected ? '%#TabLineSel#' . '❨' : '%#TabLine#'    . ' ')
+			let before .= i . '│'
+
+			let after = ''
+			let after .= (modified ? '✦' : '')
+			let after .= (num_windows > 1 ? '│' . num_windows : '')
+			let after .= (selected ? '❩' : ' ')
+			let after .= "%T%#TabLineFill#"
+
+			" Add all this to the list
+			call add(tab_list, {
+			\	'before': before,
+			\	'file': file,
+			\	'after': after,
+			\})
+
 			let i = i + 1
 		endwhile
-		let s .= '%T%#TabLineFill#%='
-		return s
+
+		echo max_length
+
+		" Trim the filename portion of the tab down if the tab line will be
+		" longer than can fit in the terminal
+
+		" TODO strlen(tab_bar_title) will be incorrect, as the tab_bar_title
+		" may have interpolated content
+		let max_width = &columns - strlen(tab_bar_title)
+
+		let i = 0
+		let found_long = 0
+		while total_length > max_width && max_length > 1
+			let tab_info = tab_list[i]
+			let length = strlen(substitute(tab_info['file'], '.', 'x', 'g'))
+			if length >= max_length
+				echo 'trimming ' . tab_info['file']
+				let tab_info['file'] = tab_info['file'][:-2]
+				let total_length = total_length - 1
+
+				if !found_long && length == max_length
+					let max_length -= 1
+					let found_long = 1
+				endif
+			endif
+
+			let i = (i + 1) % tab_count
+			if i == 0
+				let found_long = 0
+			endif
+		endwhile
+
+		for tab_info in tab_list
+			let tab_line .= tab_info['before'] . tab_info['file'] . tab_info['after']
+		endfor
+
+		let tab_line .= '%T%#TabLineFill#%='
+		return tab_line
 	endfunction
 
-	set stal=2
+	set showtabline=2
 	set tabline=%!MyTabLine()
 endif
 
