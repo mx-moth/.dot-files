@@ -246,7 +246,9 @@ if exists("+showtabline")
 			" * closing bits
 			let before = '%#TabLineFill# '
 			let before .= '%' . i . 'T'
-			let before .= (selected ? '%#TabLineSel#' . '❨' : '%#TabLine#'    . ' ')
+			let before .= (selected
+						\ ? '%#TabLineSel#' . '❨'
+						\ : (modified ? '%#TabLineInvert#' : '%#TabLine#') . ' ')
 			let before .= i . '│'
 
 			let after = ''

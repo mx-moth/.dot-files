@@ -113,11 +113,20 @@ if exists($VIM_ACTIVE) == 0
 	call SourceColours()
 endif
 
-function! SetFgColour(name, fg)
-	exec "highlight ".a:name." cterm=NONE ctermbg=NONE ctermfg=".a:fg
+function! SetColour(name, opts)
+	let l:opt_string = ''
+	for [key, val] in items(a:opts)
+		let opt_string .= ' ' . key . '=' . val
+	endfor
+	exec "highlight "a:name." ".opt_string
 endfunction
+
+function! SetFgColour(name, fg)
+	call SetColour(a:name, {'ctermfg': a:fg, 'cterm': 'NONE', 'ctermbg': 'NONE'})
+endfunction
+
 function! SetBgColour(name, bg)
-	exec "highlight ".a:name." cterm=NONE ctermfg=016 ctermbg=".a:bg
+	call SetColour(a:name, {'ctermfg': '016', 'cterm': 'NONE', 'ctermbg': a:bg})
 endfunction
 
 let active = $VIM_ACTIVE
@@ -136,6 +145,8 @@ call SetBgColour("User3", fill)
 
 call SetFgColour("TabLineLeft", active)
 call SetFgColour("VertSplit", fill)
+
+call SetColour("TabLineInvert", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
 
 " only for vim 5
 if has("unix")
