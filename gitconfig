@@ -56,3 +56,5 @@
 	autosquash = on
 [pager]
 	status = true
+[push]
+	default = nothing
