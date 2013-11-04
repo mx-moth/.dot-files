@@ -232,9 +232,6 @@ if exists("+showtabline")
 			let length += strlen(file)
 			let length += (modified ? 1 : 0)
 			let length += (num_windows > 1 ? 1 + strlen(num_windows) : 0)
-			if file == '.vimrc'
-				echo length
-			endif
 
 			let total_length += length
 			let max_length = max([max_length, strlen(file)])
@@ -256,7 +253,7 @@ if exists("+showtabline")
 			let after .= (modified ? '✦' : '')
 			let after .= (num_windows > 1 ? '│' . num_windows : '')
 			let after .= (selected ? '❩' : ' ')
-			let after .= "%T%#TabLineFill#"
+			let after .= "%T"
 
 			" Add all this to the list
 			call add(tab_list, {
@@ -267,8 +264,6 @@ if exists("+showtabline")
 
 			let i = i + 1
 		endwhile
-
-		echo max_length
 
 		" Trim the filename portion of the tab down if the tab line will be
 		" longer than can fit in the terminal
@@ -283,7 +278,6 @@ if exists("+showtabline")
 			let tab_info = tab_list[i]
 			let length = strlen(substitute(tab_info['file'], '.', 'x', 'g'))
 			if length >= max_length
-				echo 'trimming ' . tab_info['file']
 				let tab_info['file'] = tab_info['file'][:-2]
 				let total_length = total_length - 1
 
@@ -303,7 +297,8 @@ if exists("+showtabline")
 			let tab_line .= tab_info['before'] . tab_info['file'] . tab_info['after']
 		endfor
 
-		let tab_line .= '%T%#TabLineFill#%='
+		let tab_line .= '%#TabLineFill#%='
+
 		return tab_line
 	endfunction
 
