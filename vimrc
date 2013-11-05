@@ -42,6 +42,8 @@ set incsearch       " Incremental search
 set hlsearch
 set gdefault        " Automatic global replacement
 
+set concealcursor=nc
+
 " Just highlight the word under the cursor with '*', instead of searching
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>:echo<CR>
 
@@ -75,7 +77,6 @@ set showmatch       " Show matching brackets.
 
 " Customise the colour scheme. This probably doesnt belong in the real colour
 " scheme file, as it is kind of a dirty hack
-highlight FoldColumn ctermfg=darkyellow ctermbg=darkgrey
 highlight ExtraWhitespace ctermbg=52 ctermfg=196
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/

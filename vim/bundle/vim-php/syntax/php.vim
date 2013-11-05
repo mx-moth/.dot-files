@@ -606,20 +606,20 @@ if version >= 508 || !exists("did_php_syn_inits")
   HiLink   phpBacktick  String
   HiLink   phpNumber  Number
   HiLink   phpFloat Float
-  HiLink   phpMethods Function
-  HiLink   phpFunctions Function
+  "HiLink   phpMethods Function
+  "HiLink   phpFunctions Function
   HiLink   phpBaselib Function
   HiLink   phpRepeat  Repeat
   HiLink   phpConditional Conditional
-  HiLink   phpLabel Label
-  HiLink   phpStatement Statement
+  "HiLink   phpLabel Label
+  "HiLink   phpStatement Statement
   HiLink   phpKeyword Statement
   HiLink   phpType  Type
   HiLink   phpInclude Include
   HiLink   phpDefine  Define
   HiLink   phpSpecialChar SpecialChar
   HiLink   phpParent  Delimiter
-  HiLink   phpIdentifierConst Delimiter
+  "HiLink   phpIdentifierConst Delimiter
   HiLink   phpParentError Error
   HiLink   phpOctalError  Error
   HiLink   phpTodo  Todo
@@ -639,11 +639,32 @@ if version >= 508 || !exists("did_php_syn_inits")
   HiLink  phpOperator Operator
   HiLink  phpVarSelector  Operator
   HiLink  phpRelation Operator
-  HiLink  phpIdentifier Identifier
-  HiLink  phpMethodsVar Identifier
+  "HiLink  phpIdentifier Identifier
+  "HiLink  phpMethodsVar Identifier
   HiLink  phpScopeResolution Identifier
-  HiLink  phpIdentifierSimply Identifier
+  "HiLink  phpIdentifierSimply Identifier
   endif
+
+  syntax keyword phpType list conceal cchar=▤
+  syntax keyword phpType array conceal cchar=▤
+  syntax keyword phpType function conceal cchar=ƒ
+
+  syntax keyword phpType public conceal cchar=+
+  syntax keyword phpType private conceal cchar=×
+  syntax keyword phpType protected conceal cchar=-
+
+  syntax match phpType " \?=>" conceal cchar=:
+  syntax match phpType "->" conceal cchar=→
+  syntax match phpType "::" conceal cchar=∷
+
+  syntax match phpType "&&" conceal cchar=∧
+  syntax match phpType "||" conceal cchar=∨
+  syntax match phpType "!" conceal cchar=¬
+
+  syntax keyword phpType return conceal cchar=«
+  syntax match phpType "return;" conceal cchar=«
+
+  set conceallevel=1
 
   delcommand HiLink
 endif

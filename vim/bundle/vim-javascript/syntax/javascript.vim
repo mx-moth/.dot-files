@@ -264,7 +264,6 @@ hi def link jsFuncParam         Statement
 hi def link jsFuncBraces        jsBraces
 "hi def link jsConcealFunction   Keyword
 hi def link jsPrimitives        Keyword
-"hi! link Conceal Keyword
 
 hi def link jsOp                Operator
 hi def link jsOpEqual           jsOp
@@ -325,7 +324,6 @@ if has('conceal')
 		hi def link jsConcealOperator jsOp
 		syntax cluster jsOp add=jsConcealOperator
 
-		hi! link Conceal Keyword
 		set conceallevel=1
 endif
 
