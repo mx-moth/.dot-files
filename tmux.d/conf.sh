@@ -37,7 +37,7 @@ $T $SET_OPTION display-time 3000
 $T $SET_OPTION status-bg colour$TMUX_FILL
 is_version "1.7" && $T $SET_OPTION status-position top
 
-$T $SET_OPTION status-left ' #S '
+$T $SET_OPTION status-left ''
 $T $SET_OPTION status-left-fg colour$TMUX_ACTIVE
 $T $SET_OPTION status-left-bg black
 

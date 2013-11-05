@@ -148,6 +148,11 @@ call SetFgColour("VertSplit", fill)
 
 call SetColour("TabLineInvert", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
 
+call SetFgColour("LineNr", inactive)
+call SetColour("FoldColumn", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
+
+call SetFgColour("conceal", inactive)
+
 " only for vim 5
 if has("unix")
 	if v:version<600

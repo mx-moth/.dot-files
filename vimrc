@@ -187,7 +187,7 @@ if exists("+showtabline")
 		if g:vim_tabbar_title != ''
 			let tab_bar_title = g:vim_tabbar_title . ' '
 		else
-			let tab_bar_title = $USER . '@' . hostname() . ' '
+			let tab_bar_title = ''
 		endif
 		let tab_line .= tab_bar_title
 
@@ -244,7 +244,7 @@ if exists("+showtabline")
 			" * modified flag
 			" * window count
 			" * closing bits
-			let before = '%#TabLineFill# '
+			let before = ''
 			let before .= '%' . i . 'T'
 			let before .= (selected
 						\ ? '%#TabLineSel#' . '❨'
@@ -255,7 +255,7 @@ if exists("+showtabline")
 			let after .= (modified ? '✦' : '')
 			let after .= (num_windows > 1 ? '│' . num_windows : '')
 			let after .= (selected ? '❩' : ' ')
-			let after .= "%T"
+			let after .= "%T%#TabLineFill# "
 
 			" Add all this to the list
 			call add(tab_list, {
@@ -299,7 +299,7 @@ if exists("+showtabline")
 			let tab_line .= tab_info['before'] . tab_info['file'] . tab_info['after']
 		endfor
 
-		let tab_line .= '%#TabLineFill#%='
+		let tab_line .= '%='
 
 		return tab_line
 	endfunction
