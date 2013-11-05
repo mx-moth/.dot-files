@@ -260,7 +260,7 @@ if exists("+showtabline")
 
 			let after = ''
 			let after .= (modified ? '✦' : '')
-			let after .= (num_windows > 1 ? '│' . num_windows : '')
+			let after .= (num_windows > 1 ? '×' . num_windows : '')
 			let after .= (selected ? '❩' : ' ')
 			let after .= "%T%#TabLineFill# "
 
