@@ -211,8 +211,14 @@ if exists("+showtabline")
 			" Work out the tab title
 			let file = bufname(bufnr)
 			let buftype = getbufvar(bufnr, 'buftype')
+
+			let l:filetype = getbufvar(bufnr, '&filetype')
+			let transform_fn = 'g:'.l:filetype.'_filename_transform'
+
 			if buftype == 'nofile' && file =~ '\/.'
 				let file = substitute(file, '.*\/\ze.', '', '')
+			elseif exists('*'.transform_fn)
+				let file = call(transform_fn, [file])
 			else
 				let file = fnamemodify(file, ':p:t')
 			endif
