@@ -15,6 +15,7 @@ fi
 
 export PATH
 export LD_LIBRARY_PATH
+export COMP_WORDS="${COMP_WORDS/:/}"
 
 
 # Some bash configuration
@@ -40,6 +41,7 @@ source "$HOME/.bashrc.d/prompt.sh"
 source "$HOME/.bashrc.d/python.sh"
 source "$HOME/.bashrc.d/venv.sh"
 source "$HOME/.bashrc.d/colours.sh"
+source "$HOME/.bashrc.d/installers.sh"
 
 # Source in any local bashrc
 if [[ -e ~/.bashrc.local ]] ; then
