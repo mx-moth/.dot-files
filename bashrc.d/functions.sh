@@ -42,9 +42,6 @@ alias command?="command -pv &>/dev/null"
 # Shortcut for launching `dolphin` in the current directory
 alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
 
-# Trim whitespace from either end of stdin
-alias trim="sed -e 's/^\\s\\+//;s/\\s\\+$//'"
-
 # Quick directory traversal
 alias ..='cd ..'
 
@@ -64,6 +61,11 @@ done
 
 # Handy functions
 # ---------------
+
+# Trim whitespace from either end of stdin
+function trim() {
+	sed -e 's/^\\s\\+//;s/\\s\\+$//'
+}
 
 # Opens all matching files in vim, searching via ack-grep
 function ack-edit() {
