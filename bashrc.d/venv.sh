@@ -1,14 +1,18 @@
 # Virtual environment helpers
 # ---------------------------
 
+function venv::get_filesystem() {
+	df -PTh "$1" | tail -n1 | awk '{print $1 }'
+}
+
+
 # Quickly activate a venv in a standard location
 function ++venv() {
 	cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
 	path="${1:-"$cwd"}"
 	locations=( 'venv' '.virthualenv' )
 
-	get_filesystem="df --output=target"
-	initial_filesystem="$( $get_filesystem "$path" )"
+	initial_filesystem="$( venv::get_filesystem "$path" )"
 
 	while ! [ -z "$path" ] ; do
 
@@ -21,7 +25,7 @@ function ++venv() {
 		done
 
 		new_path=$( dirname "$path" )
-		if [ "$initial_filesystem" != "$( $get_filesystem "$new_path" )" ] ; then
+		if [ "$initial_filesystem" != "$( venv::get_filesystem "$new_path" )" ] ; then
 			echo  "Could not find venv to activate, crossed file system boundary at $path" >&2
 			return 2
 		fi
