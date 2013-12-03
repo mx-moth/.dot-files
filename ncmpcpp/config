@@ -2,7 +2,7 @@ main_window_color = "grey"
 
 song_list_format = "$8{$3%a$9 │ }{$2%4y$9 | }{$4%b$9 │ }{$7(%n, disc %d)$9 }|{$7(%n)$9 }{%t}|{$8%f$9}$R{$3(%l)$9}"
 
-song_columns_list_format = "(15)[yellow]{arE} (5f)[green]{yE} (15)[blue]{bE} (3f)[red]{drE:D} (3f)[red]{nE:#} (70)[]{t|f} (11f)[purple]{lr}"
+song_columns_list_format = "(15)[yellow]{arE} (5f)[green]{yE} (15)[cyan]{bE} (3f)[red]{drE:D} (3f)[red]{nE:#} (70)[]{t|f} (11f)[purple]{lr}"
 
 playlist_display_mode = "columns"
 browser_display_mode = "columns"
