@@ -5,27 +5,32 @@ declare -r EOL=$'\n' TAB=$'\t'
 THIS=$( readlink -e "$0" )
 UPDATE_SCRIPT=$( sed -n '0,/^UPDATE_SCRIPT$/d;p' < "$THIS" )
 
+function clr() {
+	echo -n "\e[${1}m${2}\e[0m"
+}
+success="\r$( clr 32 "•" )"
+working="\r$( clr 33 "•" )"
+failure="\r$( clr 31 "•" )"
+
 function set_status() {
 	local status=$1
 	local message=$2
-
-	start="\r["
 	if [[ "$status" != "0" ]] ; then
 		if [[ "$message" = *$EOL* ]]; then
-			echo -e "${start}\e[31m✗\e[0m"
+			echo -e "${failure}"
 			echo "$message"
 		else
 			echo -n ": $message"
-			echo -e "${start}\e[31m✗\e[0m"
+			echo -e "${failure}"
 		fi
 
 	else
-		echo -e "${start}\e[32m✓\e[0m"
+		echo -e "${success}"
 	fi
 }
 
 for host in $@ ; do
-	echo -n "[ ] $host"
+	echo -ne "$working $host"
 	out=$( echo "$UPDATE_SCRIPT" \
 		| ssh "$host" 2>&1 )
 	exit_code=$?
@@ -40,38 +45,42 @@ UPDATE_SCRIPT
 #!/bin/bash
 set -e
 
-function die() {
+die() {
 	echo -e "$2"
 	exit $1
 }
 
-echo "Setting things"
+highlight() {
+	printf '\e[1m%s\e[0m\n' "$@"
+}
+
+highlight "# Setting things"
 
 git_remote="https://bitbucket.org/tim_heap/.dot-files.git/"
 dot_files="$HOME/.dot-files/"
 
-echo "Checking git"
+highlight "# Checking git"
 
 [[ -n "$( which git )" ]] || die 1 "git is not installed"
 
-echo "Checking for repo"
+highlight "# Checking for repo"
 if [[ ! -d "$dot_files" ]] ; then
 	git clone "$git_remote" "$dot_files" || die 1 "Could not clone $git_remote to $dot_files"
 fi
 cd "$dot_files"
 
-echo "git diff"
+highlight "git diff"
 git diff  --ignore-submodules || die 2 "$dot_files has uncommitted changes"
 
-echo "git fetch"
+highlight "git fetch"
 git fetch origin || die 3 "Could not fetch from remote origin"
-echo "git merge"
+highlight "git merge"
 git merge --ff-only origin/master || die 4 "Could not fast-forward merge"
-echo "git submodule sync"
+highlight "git submodule sync"
 git submodule sync
-echo "git submodule update --init"
+highlight "git submodule update --init"
 git submodule update --init || die 5 "Could not update submodules"
 
-echo "$dot_files/create-links"
+highlight "$dot_files/create-links"
 "$dot_files"/create-links &>/dev/null || die 6 "Could not link in files"
-echo "Done"
+highlight "Done"
