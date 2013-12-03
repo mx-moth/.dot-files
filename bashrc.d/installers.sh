@@ -10,7 +10,7 @@
 #     $ bootstrap-me static/libs/bootstrap
 #     $ ls static/libs/bootstrap
 #     css/ fonts/ js/
-function install::bootstrap() {
+function install.bootstrap() {
 	destination="${1:-.}"
 	tmpdir=$( mktemp -d )
 
@@ -38,7 +38,7 @@ function install::bootstrap() {
 #
 # TODO Generate the wp-config.php file
 # TODO Generate the wp-settings.php file
-function install::wordpress() {
+function install.wordpress() {
 	local old_pwd="$( pwd )"
 
 	local destination="${1:-.}"

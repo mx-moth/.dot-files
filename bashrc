@@ -15,7 +15,6 @@ fi
 
 export PATH
 export LD_LIBRARY_PATH
-export COMP_WORDS="${COMP_WORDS/:/}"
 
 
 # Some bash configuration

@@ -36,7 +36,7 @@ function pip() {
 }
 
 # Make and source a virtualenv in the current directory
-function mkvenv::python() {
+function mkvenv.python() {
 	dir="${1:-.}"
 	virtualenv "$dir/venv"
 	++venv "$dir"
