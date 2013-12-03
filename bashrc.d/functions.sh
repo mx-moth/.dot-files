@@ -177,8 +177,14 @@ function c() {
 # for vim/bash/tmux/etc.
 function aa_256 () {
 	local base='10'
+
 	if [[ $# -gt 0 ]] ; then
 		base=$1
+	fi
+
+	local columns=8
+	if [[ $# -gt 1 ]] ; then
+		columns=$2
 	fi
 
 	local prefix=''
@@ -191,7 +197,6 @@ function aa_256 () {
 
 	local padding=6
 
-	local columns=8
 	local rows=$(( 256 / $columns ))
 
 	local reset=$( tput op )
