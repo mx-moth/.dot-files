@@ -42,7 +42,9 @@ set incsearch       " Incremental search
 set hlsearch
 set gdefault        " Automatic global replacement
 
-set concealcursor=nc
+if exists('&concealcursor')
+	set concealcursor=nc
+endif
 
 " Just highlight the word under the cursor with '*', instead of searching
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>:echo<CR>
