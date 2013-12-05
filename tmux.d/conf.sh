@@ -71,9 +71,14 @@ $T $SET_OPTION message-bg colour$TMUX_ACTIVE
 # PREFIX C-Q: Last window
 $T bind '`' last-window
 
-# PREFIX S-left/S-right: Switch windows using 
+# S-left/S-right: Switch windows
 $T bind -n S-left prev
 $T bind -n S-right next
+
+# PREFIX T/t to switch windows, ala vim
+# Useful when terminals do not support Shift+arrows (Terminal.app)
+$T bind T prev
+$T bind t next
 
 # PREFIX S-left/S-right: Move windows
 $T bind -r S-left  swap-window -t -1
