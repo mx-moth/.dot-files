@@ -32,8 +32,13 @@ syntax match pyNiceKeyword "\<\%(math\.\)\?pi\>" conceal cchar=π
 
 syntax keyword pyNiceOperator return conceal cchar=«
 syntax keyword pyNiceOperator yield conceal cchar=⟷
+syntax keyword pyNiceOperator raise conceal cchar=^
 syntax keyword pyNiceOperator def conceal cchar=ƒ
 syntax keyword pyNiceOperator for conceal cchar=∀
+
+syntax keyword pyNiceOperator any conceal cchar=∃
+syntax match pyNiceOperator "\<not any\>" conceal cchar=∄
+syntax keyword pyNiceOperator all conceal cchar=∀
 
 syntax keyword pyNiceStatement lambda conceal cchar=λ
 
