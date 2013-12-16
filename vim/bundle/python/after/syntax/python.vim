@@ -46,4 +46,4 @@ hi link pyNiceOperator Operator
 hi link pyNiceStatement Statement
 hi link pyNiceKeyword Keyword
 
-setlocal conceallevel=1
+call rainbow_parens#activate()

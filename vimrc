@@ -44,6 +44,7 @@ set gdefault        " Automatic global replacement
 
 if exists('&concealcursor')
 	set concealcursor=nc
+	set conceallevel=1
 endif
 
 " Just highlight the word under the cursor with '*', instead of searching
@@ -633,6 +634,7 @@ au FileType python call s:PythonInit()
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
+let g:python_no_builtin_highlight = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Erlang settings
@@ -741,3 +743,28 @@ let g:jedi#popup_on_dot = 0
 let g:jedi#documentation_command = "<F1>"
 let g:jedi#show_call_signatures = 0
 let g:jedi#auto_vim_configuration = 0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Rainbow parens
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:rainbow_paren_colors = [
+			\ 'darkgreen',
+			\ 'darkcyan',
+			\ 'magenta',
+			\ 'darkgray',
+			\ 'brown',
+			\ 'gray',
+			\ 'darkmagenta',
+			\ 'darkgreen',
+			\ 'darkgreen',
+			\ 'darkcyan',
+			\ 'magenta',
+			\ 'darkgray',
+			\ 'brown',
+			\ 'gray',
+			\ 'darkmagenta',
+			\ 'darkgreen',
+			\ 'darkcyan',
+			\]

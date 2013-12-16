@@ -20,6 +20,26 @@ if 4 not in [1,2,3]: pass
 if a ≡ b: pass """
 if a == b: pass
 
+any(thing)
+all(things)
+
+not any(things)
+not all(things)
+
+test.all(things)
+test.any(things)
+test(test(test(test())))
+test(one[two{three}])
+
+test(all())
+
+"""unbalanced string("""
+
+(((((((((((((((((((
+    )))))))))))))))))))
+
+())))
+
 """
 √(7) """
 sqrt(7)
@@ -30,7 +50,7 @@ pi
 
 """
 map (λ x: x, [1,2,3]) """
-map (lambda x: x, [1,2,3])
+map (lambda x: x, (1, 2, 3), [1,2,3])
 
 """
 a ∧ b """
