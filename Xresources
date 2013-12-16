@@ -29,5 +29,5 @@ URxvt*internalBorder:     0
 ! Dont blank the cursor - ever
 URxvt*pointerBlankDelay:  987654321
 
-URxvt*cutchars:           `"'&()*;<=>?@[]^\\{|}│
+URxvt*cutchars:           "`\"'&()*;<=>?@[]^\\{|}│"
 
