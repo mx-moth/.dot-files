@@ -59,6 +59,12 @@ for i in $( seq 2 10 ) ; do
 done
 
 
+# Example: fsck -y /dev/sdb1 && yn
+alias yeaaaaaaah='printf "\e[%dm%s\e[0m %s\n" 32 "•" "(⌐■_■)"'
+alias flip-table='printf "\e[%dm%s\e[0m %s\n" 31 "•" "(╯°□°)╯ ┻━┻"'
+alias yn='yeaaaaaaah || flip-table'
+
+
 # Handy functions
 # ---------------
 
