@@ -20,6 +20,7 @@
 	sync = !git pull --rebase && git push
 	wdiff = diff --color-words
 	st = status -sb
+	ff = merge --ff-only
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
 
