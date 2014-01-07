@@ -2,8 +2,25 @@
 
 declare -r EOL=$'\n' TAB=$'\t'
 
+DEBUG=${DEBUG:-0}
+
 THIS=$( readlink -e "$0" )
-UPDATE_SCRIPT=$( sed -n '0,/^UPDATE_SCRIPT$/d;p' < "$THIS" )
+ROOT=$( dirname "$THIS" )
+
+GIT_BRANCH=$( git rev-parse --abbrev-ref HEAD )
+GIT_DESTINATION=$( printf "%s/%s" \
+	"$( git config --get "branch.$GIT_BRANCH.remote" )" \
+	"$( git config --get "branch.$GIT_BRANCH.merge" )" \
+)
+GIT_HEAD=$( cd "$ROOT" && git rev-parse "$GIT_DESTINATION" )
+
+UPDATE_SCRIPT=$(  )
+UPDATE_SCRIPT=$( \
+	echo "#!/bin/bash" ; \
+	printf "GIT_HEAD='%s'\n" "$GIT_HEAD" ; \
+	sed -n '0,/^UPDATE_SCRIPT$/d;p' < "$THIS" \
+)
+
 
 function clr() {
 	echo -n "\e[${1}m${2}\e[0m"
@@ -26,13 +43,15 @@ function set_status() {
 
 	else
 		echo -e "${success}"
+		if [ "$DEBUG" != "0" ] ; then
+			echo "$message"
+		fi
 	fi
 }
 
 for host in $@ ; do
 	echo -ne "$working $host"
-	out=$( echo "$UPDATE_SCRIPT" \
-		| ssh "$host" 2>&1 )
+	out=$( echo -n "$UPDATE_SCRIPT" | ssh "$host" 2>&1 )
 	exit_code=$?
 
 	set_status "$exit_code" "$out"
@@ -42,11 +61,13 @@ done
 exit 0
 
 UPDATE_SCRIPT
-#!/bin/bash
+
 set -e
+
 
 die() {
 	echo -e "$2"
+	set +e
 	exit $1
 }
 
@@ -69,8 +90,11 @@ if [[ ! -d "$dot_files" ]] ; then
 fi
 cd "$dot_files"
 
+highlight "# Matching against HEAD"
+[ "$( git rev-parse HEAD )" = "$GIT_HEAD" ] && die 0 "git heads match, no update needed"
+
 highlight "git diff"
-git diff  --ignore-submodules || die 2 "$dot_files has uncommitted changes"
+git diff  --ignore-submodules --exit-code --color || die 2 "$dot_files has uncommitted changes"
 
 highlight "git fetch"
 git fetch origin || die 3 "Could not fetch from remote origin"
