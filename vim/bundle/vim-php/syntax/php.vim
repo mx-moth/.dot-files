@@ -645,26 +645,27 @@ if version >= 508 || !exists("did_php_syn_inits")
   "HiLink  phpIdentifierSimply Identifier
   endif
 
-  syntax keyword phpType list conceal cchar=▤
-  syntax keyword phpType array conceal cchar=▤
-  syntax keyword phpType function conceal cchar=ƒ
+  if has('conceal')
+    syntax keyword phpType list conceal cchar=▤
+    syntax keyword phpType array conceal cchar=▤
+    syntax keyword phpType function conceal cchar=ƒ
 
-  syntax keyword phpType public conceal cchar=+
-  syntax keyword phpType private conceal cchar=×
-  syntax keyword phpType protected conceal cchar=-
+    syntax keyword phpType public conceal cchar=+
+    syntax keyword phpType private conceal cchar=×
+    syntax keyword phpType protected conceal cchar=-
 
-  syntax match phpType " \?=>" conceal cchar=:
-  syntax match phpType "->" conceal cchar=→
-  syntax match phpType "::" conceal cchar=∷
+    syntax keyword phpType return conceal cchar=«
 
-  syntax match phpType "&&" conceal cchar=∧
-  syntax match phpType "||" conceal cchar=∨
-  syntax match phpType "!" conceal cchar=¬
+    syntax match phpType "->" conceal cchar=→
+    syntax match pyNiceOperator "<=" conceal cchar=≤
+    syntax match phpType "::" conceal cchar=∷
 
-  syntax keyword phpType return conceal cchar=«
-  syntax match phpType "return;" conceal cchar=«
+    syntax match phpType "&&" conceal cchar=∧
+    syntax match phpType "||" conceal cchar=∨
+    syntax match phpType "!" conceal cchar=¬
 
-  set conceallevel=1
+    syntax match phpType "return;" conceal cchar=«
+  endif
 
   delcommand HiLink
 endif
