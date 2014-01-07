@@ -24,7 +24,7 @@
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
 
-	show-commit = "show --pretty=fuller --no-abbrev-commit --no-patch --decorate"
+	show-commit = "show --pretty=fuller --abbrev=40 --decorate"
 	version-bump = "!f() {\
 		set -e; \
 		if [ $# -eq 0 ] ; then\
