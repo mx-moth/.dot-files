@@ -132,7 +132,7 @@ function! s:EnablePHPFolds(...) " {{{
 	let s:foldsCreated = 0
 	call s:PHPCustomFolds()
 	" .. Fold all
-	normal zM
+	" normal zM
 
 	" Restore previously opened folds
 	let currentItem = 0
