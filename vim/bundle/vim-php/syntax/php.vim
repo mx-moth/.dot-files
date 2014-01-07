@@ -300,9 +300,9 @@ syn match phpVarSelector  "\$"  contained display
 
 " Identifier
 syn match phpIdentifier "$\h\w*"  contained contains=phpEnvVar,phpIntVar,phpVarSelector display
-syn match phpIdentifierSimply "${\h\w*}"  contains=phpOperator,phpParent  contained display
-syn region  phpIdentifierComplex  matchgroup=phpParent start="{\$"rs=e-1 end="}"  contains=phpIdentifier,phpMemberSelector,phpVarSelector,phpIdentifierComplexP contained extend
-syn region  phpIdentifierComplexP matchgroup=phpParent start="\[" end="]" contains=@phpClInside contained
+syn match phpIdentifierSimply "${\h\w*}"  contains=phpOperator  contained display
+syn region  phpIdentifierComplex   start="{\$"rs=e-1 end="}"  contains=phpIdentifier,phpMemberSelector,phpVarSelector,phpIdentifierComplexP contained extend
+syn region  phpIdentifierComplexP  start="\[" end="]" contains=@phpClInside contained
 
 " Methoden
 syn match phpMethodsVar "->\h\w*" contained contains=phpMemberSelector display
@@ -337,9 +337,6 @@ syn match phpSpecialChar  "\\x\x\{2}" contained display
 
 " Error
 syn match phpOctalError "[89]"  contained display
-if exists("php_parent_error_close")
-  syn match phpParentError  "[)\]}]"  contained display
-endif
 
 " Todo
 syn keyword phpTodo todo fixme xxx  contained
@@ -383,20 +380,9 @@ if version >= 600
 endif
 
 " Parent
-if exists("php_parent_error_close") || exists("php_parent_error_open")
-  syn match phpParent "[{}]"  contained
-  syn region  phpParent matchgroup=Delimiter start="(" end=")"  contained contains=@phpClInside transparent
-  syn region  phpParent matchgroup=Delimiter start="\[" end="\]"  contained contains=@phpClInside transparent
-  if !exists("php_parent_error_close")
-    syn match phpParent "[\])]" contained
-  endif
-else
-  syn match phpParent "[({[\]})]" contained
-endif
-
 syn cluster phpClConst  contains=phpFunctions,phpIdentifier,phpConditional,phpRepeat,phpStatement,phpOperator,phpRelation,phpStringSingle,phpStringDouble,phpBacktick,phpNumber,phpFloat,phpKeyword,phpType,phpBoolean,phpStructure,phpMethodsVar,phpConstant,phpCoreConstant,phpException
-syn cluster phpClInside contains=@phpClConst,phpComment,phpLabel,phpParent,phpParentError,phpInclude,phpHereDoc
-syn cluster phpClFunction contains=@phpClInside,phpDefine,phpParentError,phpStorageClass
+syn cluster phpClInside contains=@phpClConst,phpComment,phpLabel,phpInclude,phpHereDoc
+syn cluster phpClFunction contains=@phpClInside,phpDefine,phpStorageClass
 syn cluster phpClTop  contains=@phpClFunction,phpFoldFunction,phpFoldClass,phpFoldInterface,phpFoldTry,phpFoldCatch
 
 " Php Region
@@ -448,7 +434,6 @@ elseif exists("php_folding") && php_folding==2
   syn keyword phpStorageClass final global private protected public static  contained
 
   syn region  phpFoldHtmlInside matchgroup=Delimiter start="?>" end="<?\(php\)\=" contained transparent contains=@htmlTop
-  syn region  phpParent matchgroup=Delimiter start="{" end="}"  contained contains=@phpClFunction,phpFoldHtmlInside transparent fold
 else
   syn keyword phpDefine function  contained
   syn keyword phpStructure  abstract class interface  contained
@@ -618,9 +603,7 @@ if version >= 508 || !exists("did_php_syn_inits")
   HiLink   phpInclude Include
   HiLink   phpDefine  Define
   HiLink   phpSpecialChar SpecialChar
-  HiLink   phpParent  Delimiter
   "HiLink   phpIdentifierConst Delimiter
-  HiLink   phpParentError Error
   HiLink   phpOctalError  Error
   HiLink   phpTodo  Todo
   HiLink   phpMemberSelector  Structure

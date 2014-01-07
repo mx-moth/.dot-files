@@ -46,4 +46,3 @@ hi link pyNiceOperator Operator
 hi link pyNiceStatement Statement
 hi link pyNiceKeyword Keyword
 
-call rainbow_parens#activate()

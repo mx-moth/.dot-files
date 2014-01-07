@@ -753,22 +753,19 @@ let g:jedi#auto_vim_configuration = 0
 " Rainbow parens
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let g:rainbow_paren_colors = [
-			\ 'darkgreen',
-			\ 'darkcyan',
-			\ 'magenta',
-			\ 'darkgray',
-			\ 'brown',
-			\ 'gray',
-			\ 'darkmagenta',
-			\ 'darkgreen',
-			\ 'darkgreen',
-			\ 'darkcyan',
-			\ 'magenta',
-			\ 'darkgray',
-			\ 'brown',
-			\ 'gray',
-			\ 'darkmagenta',
-			\ 'darkgreen',
-			\ 'darkcyan',
-			\]
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+	\'operators': '_,,,_',
+	\'ctermfgs': [
+		\'darkgreen', 'darkcyan', 'magenta', 'darkgray', 'brown',
+		\'gray', 'darkmagenta', 'darkgreen', 'darkgreen', 'darkcyan',
+		\'magenta', 'darkgray', 'brown', 'gray', 'darkmagenta', 'darkgreen',
+		\'darkcyan',
+	\],
+	\'separately': {
+		\'*': {},
+		\'vim': { },
+	\}
+\}
+
+
