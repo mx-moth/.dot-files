@@ -33,89 +33,82 @@ endfun
 
 
 " [-- <ELEMENT ? - - ...> --]
-call <SID>HtmlIndentPush('a')
-call <SID>HtmlIndentPush('abbr')
-call <SID>HtmlIndentPush('acronym')
-call <SID>HtmlIndentPush('address')
-call <SID>HtmlIndentPush('b')
-call <SID>HtmlIndentPush('bdo')
-call <SID>HtmlIndentPush('big')
-call <SID>HtmlIndentPush('blockquote')
-call <SID>HtmlIndentPush('button')
-call <SID>HtmlIndentPush('caption')
-call <SID>HtmlIndentPush('center')
-call <SID>HtmlIndentPush('cite')
-call <SID>HtmlIndentPush('code')
-call <SID>HtmlIndentPush('colgroup')
-call <SID>HtmlIndentPush('del')
-call <SID>HtmlIndentPush('dfn')
-call <SID>HtmlIndentPush('dir')
-call <SID>HtmlIndentPush('div')
-call <SID>HtmlIndentPush('dl')
-call <SID>HtmlIndentPush('em')
-call <SID>HtmlIndentPush('fieldset')
-call <SID>HtmlIndentPush('font')
-call <SID>HtmlIndentPush('form')
-call <SID>HtmlIndentPush('frameset')
-call <SID>HtmlIndentPush('h1')
-call <SID>HtmlIndentPush('h2')
-call <SID>HtmlIndentPush('h3')
-call <SID>HtmlIndentPush('h4')
-call <SID>HtmlIndentPush('h5')
-call <SID>HtmlIndentPush('h6')
-call <SID>HtmlIndentPush('i')
-call <SID>HtmlIndentPush('iframe')
-call <SID>HtmlIndentPush('ins')
-call <SID>HtmlIndentPush('kbd')
-call <SID>HtmlIndentPush('label')
-call <SID>HtmlIndentPush('legend')
-call <SID>HtmlIndentPush('map')
-call <SID>HtmlIndentPush('menu')
-call <SID>HtmlIndentPush('noframes')
-call <SID>HtmlIndentPush('noscript')
-call <SID>HtmlIndentPush('object')
-call <SID>HtmlIndentPush('ol')
-call <SID>HtmlIndentPush('optgroup')
-" call <SID>HtmlIndentPush('pre')
-call <SID>HtmlIndentPush('q')
-call <SID>HtmlIndentPush('s')
-call <SID>HtmlIndentPush('samp')
-call <SID>HtmlIndentPush('script')
-call <SID>HtmlIndentPush('select')
-call <SID>HtmlIndentPush('small')
-call <SID>HtmlIndentPush('span')
-call <SID>HtmlIndentPush('strong')
-call <SID>HtmlIndentPush('style')
-call <SID>HtmlIndentPush('sub')
-call <SID>HtmlIndentPush('sup')
-call <SID>HtmlIndentPush('table')
-call <SID>HtmlIndentPush('textarea')
-call <SID>HtmlIndentPush('title')
-call <SID>HtmlIndentPush('tt')
-call <SID>HtmlIndentPush('u')
-call <SID>HtmlIndentPush('ul')
-call <SID>HtmlIndentPush('var')
-
+let g:html_indent_tag_list = [
+\ 'a',
+\ 'abbr',
+\ 'acronym',
+\ 'address',
+\ 'b',
+\ 'bdo',
+\ 'big',
+\ 'blockquote',
+\ 'button',
+\ 'caption',
+\ 'center',
+\ 'cite',
+\ 'code',
+\ 'colgroup',
+\ 'del',
+\ 'dfn',
+\ 'dir',
+\ 'div',
+\ 'dl',
+\ 'em',
+\ 'fieldset',
+\ 'font',
+\ 'form',
+\ 'frameset',
+\ 'h1',
+\ 'h2',
+\ 'h3',
+\ 'h4',
+\ 'h5',
+\ 'h6',
+\ 'i',
+\ 'iframe',
+\ 'ins',
+\ 'kbd',
+\ 'label',
+\ 'legend',
+\ 'map',
+\ 'menu',
+\ 'noframes',
+\ 'noscript',
+\ 'object',
+\ 'ol',
+\ 'optgroup',
+\ 'q',
+\ 's',
+\ 'samp',
+\ 'script',
+\ 'select',
+\ 'small',
+\ 'span',
+\ 'strong',
+\ 'style',
+\ 'sub',
+\ 'sup',
+\ 'table',
+\ 'textarea',
+\ 'title',
+\ 'tt',
+\ 'u',
+\ 'ul',
+\ 'var',
+\]
 
 " [-- <ELEMENT ? O O ...> --]
 if !exists('g:html_indent_strict')
-    call <SID>HtmlIndentPush('body')
-    call <SID>HtmlIndentPush('head')
-    call <SID>HtmlIndentPush('html')
-    call <SID>HtmlIndentPush('tbody')
+    let g:html_indent_tag_list += ['body', 'head', 'html', 'tbody']
 endif
 
 
 " [-- <ELEMENT ? O - ...> --]
 if !exists('g:html_indent_strict_table')
-    call <SID>HtmlIndentPush('th')
-    call <SID>HtmlIndentPush('td')
-    call <SID>HtmlIndentPush('tr')
-    call <SID>HtmlIndentPush('tfoot')
-    call <SID>HtmlIndentPush('thead')
+    let g:html_indent_tag_list += ['th', 'td', 'tr', 'tfoot', 'thead']
 endif
 
-delfun <SID>HtmlIndentPush
+let g:html_indent_tags = join(g:html_indent_tag_list, '\|')
 
 let s:cpo_save = &cpo
 set cpo-=C
