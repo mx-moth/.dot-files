@@ -175,7 +175,11 @@ augroup END
 if exists("+showtabline")
 
 	if !exists('vim_tabbar_title')
-		let g:vim_tabbar_title = ''
+		if exists('$IS_REMOTE_CONNECTION')
+			let g:vim_tabbar_title = hostname()
+		else
+			let g:vim_tabbar_title = ''
+		endif
 	endif
 
 	function! SetTabbarTitle()
