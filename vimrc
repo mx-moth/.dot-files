@@ -189,6 +189,12 @@ if exists("+showtabline")
 
 	noremap <silent> <Leader>c :call SetTabbarTitle()<Cr>
 
+	" Count number of characters in a multibyte string. Use technique from
+	" :help strlen().
+	function! s:mbstrlen(s)
+		return strlen(substitute(a:s, ".", "x", "g"))
+	endfunction
+
 	function! MyTabLine()
 		let tab_line = '%#TabLineLeft#'
 
@@ -243,12 +249,12 @@ if exists("+showtabline")
 			let length = 0
 			let length += 4  " before padding, │, selected ()
 			let length += strlen(i)
-			let length += strlen(file)
+			let length += s:mbstrlen(file)
 			let length += (modified ? 1 : 0)
 			let length += (num_windows > 1 ? 1 + strlen(num_windows) : 0)
 
 			let total_length += length
-			let max_length = max([max_length, strlen(file)])
+			let max_length = max([max_length, s:mbstrlen(file)])
 
 			" Construct the tab string. Tab consists of:
 			" * Spacing
@@ -286,13 +292,13 @@ if exists("+showtabline")
 
 		" TODO strlen(tab_bar_title) will be incorrect, as the tab_bar_title
 		" may have interpolated content
-		let max_width = &columns - strlen(tab_bar_title)
+		let max_width = &columns - s:mbstrlen(tab_bar_title)
 
 		let i = 0
 		let found_long = 0
 		while total_length > max_width && max_length > 1
 			let tab_info = tab_list[i]
-			let length = strlen(substitute(tab_info['file'], '.', 'x', 'g'))
+			let length = s:mbstrlen(tab_info['file'])
 			if length >= max_length
 				let tab_info['file'] = tab_info['file'][:-2]
 				let total_length = total_length - 1
