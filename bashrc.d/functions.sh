@@ -114,7 +114,7 @@ function nullinate() {
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
 function ls-parents() {
-	path=$( readlink -e ${1:-$( pwd )} )
+	path=$( readlink -em ${1:-$( pwd )} )
 	paths=("$path")
 	while [[ $path != '/' ]] ; do
 		path=$( dirname "$path" )
