@@ -294,3 +294,26 @@ function ppids() {
 	echo ${path}
 }
 
+function easy-svc() {
+	path="${SVC_DIR:-/etc/service}"
+
+	command="$1"
+	name="$2"
+
+	sudo svc "$command" "${path}/${name}"
+}
+
+function svc-down() {
+	easy-svc -d $1
+}
+
+function svc-up() {
+	easy-svc -o $1
+}
+
+function svc-restart() {
+	name="$1"
+	svc-down "$1"
+	sleep 2
+	svc-up "$1"
+}
