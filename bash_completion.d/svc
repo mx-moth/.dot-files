@@ -1,0 +1,14 @@
+have svc &&
+_svc()
+{
+	local cur
+
+	_get_comp_words_by_ref cur
+	COMPREPLY=( $( compgen -W "$( \ls -1 /etc/service )" -- "$cur" ) )
+
+	return 0
+} &&
+complete -F _svc svc &&
+complete -F _svc svc-down &&
+complete -F _svc svc-up &&
+complete -F _svc svc-restart
