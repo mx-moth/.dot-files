@@ -42,6 +42,11 @@ alias command?="command -pv &>/dev/null"
 # Shortcut for launching `dolphin` in the current directory
 alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
 
+# Print tab-delimited input as a table
+# I always forget if it is column/columns, and the -t flag trips me up.
+# eg: run-script | table
+alias table='column -t -s"	"'
+
 # Quick directory traversal
 alias ..='cd ..'
 
