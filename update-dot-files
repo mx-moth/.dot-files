@@ -12,18 +12,18 @@ GIT_DESTINATION=$( printf "%s/%s" \
 	"$( git config --get "branch.$GIT_BRANCH.remote" )" \
 	"$( git config --get "branch.$GIT_BRANCH.merge" )" \
 )
-GIT_HEAD=$( cd "$ROOT" && git rev-parse "$GIT_DESTINATION" )
+GIT_HEAD=$( cd "$ROOT" && git rev-parse HEAD )
+GIT_REMOTE_HEAD=$( cd "$ROOT" && git rev-parse "$GIT_DESTINATION" )
 
 UPDATE_SCRIPT=$(  )
 UPDATE_SCRIPT=$( \
 	echo "#!/bin/bash" ; \
-	printf "GIT_HEAD='%s'\n" "$GIT_HEAD" ; \
+	printf "GIT_HEAD='%s'\n" "$GIT_REMOTE_HEAD" ; \
 	sed -n '0,/^UPDATE_SCRIPT$/d;p' < "$THIS" \
 )
 
-
 function clr() {
-	echo -n "\e[${1}m${2}\e[0m"
+	echo -e "\e[${1}m${2}\e[0m"
 }
 success="\r$( clr 32 "•" )"
 working="\r$( clr 33 "•" )"
@@ -48,6 +48,10 @@ function set_status() {
 		fi
 	fi
 }
+
+if [[ "$GIT_HEAD" != "$GIT_REMOTE_HEAD" ]] ; then
+	echo $( clr '33;1' "Warning: local commits have not been pushed to remote" )
+fi
 
 for host in $@ ; do
 	echo -ne "$working $host"
