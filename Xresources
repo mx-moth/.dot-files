@@ -22,7 +22,6 @@ URxvt*.loginShell:        true
 ! Nice and large, no window decorations
 URxvt*.geometry:          200x60
 URxvt*.scrollBar:         false
-URxvt*.borderLess:        true
 URxvt*externalBorder:     0
 URxvt*internalBorder:     0
 
