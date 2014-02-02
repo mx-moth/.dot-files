@@ -22,6 +22,8 @@
 ####################
 *.swp
 *.swo
+~$*
+.sass-cache
 
 # Logs and databases #
 ######################
