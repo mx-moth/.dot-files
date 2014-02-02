@@ -34,6 +34,9 @@ set viminfo+='100,f1
 " Bash style tab completion
 set wildmenu
 set wildmode=longest:full
+set showfulltag     " Auto-complete things?
+
+inoremap <Nul> <C-x><C-o>
 
 " Search settings
 set ignorecase      " Do case insensitive matching
@@ -86,8 +89,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-set showfulltag     " Auto-complete things?
 
 " Indentation settings
 set tabstop=4       " I like four space tabs for indenting
@@ -352,9 +353,6 @@ vmap <silent> <C-j> :m'>+<CR>`<my`>mzgv`yo`z
 vmap <silent> <C-k> :m'<-2<CR>`>my`<mzgv`yo`z
 vmap <silent> <C-down> :m'>+<CR>`<my`>mzgv`yo`z
 vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
-
-" Nul (aka. Ctrl-Space) does dicky things. Lets stop that.
-imap <Nul> <Nop>
 
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
@@ -655,8 +653,8 @@ au FileType erlang setlocal expandtab
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv$',
-	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$',
+	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output$',
+	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
