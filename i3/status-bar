@@ -1,0 +1,111 @@
+#!/bin/bash
+
+function exists? {
+	command -v "$@" 1>/dev/null 2>/dev/null
+}
+
+function join {
+	local IFS="$1"
+	shift
+	echo "$*"
+}
+
+function json_string_escape {
+	sed 's/["\\]/\\\0/'
+}
+
+color_normal=""
+color_good="#00ff00"
+color_warn="#ffaa00"
+color_bad="#ff0000"
+
+function json_wrap {
+	text="$1"
+
+	if [ -n "$2" ] ; then
+		color=$( printf '"%s"' "$2" )
+	else
+		color=null
+	fi
+
+	printf '{"full_text": "%s", "color": %s}' "$( echo "$text" | json_string_escape )" "$color"
+}
+
+entries=()
+function add_entry {
+	entries+=("$@")
+}
+
+function add_json_entry {
+	add_entry "$( json_wrap "$@" )"
+}
+
+function print_mpc {
+	local mpc out song play_info mpd_info symbol
+	mpc=mpc
+
+	exists? mpc || return 1
+	out=$( $mpc 2>/dev/null )
+
+	[[ $( echo "$out" | wc -l ) -eq 1 ]] && return 2
+
+	song=$( $mpc current --format='[%track%[-%disc%]: ][%title%[ - %album%][ - %artist%]' )
+	play_info=$( echo "$out" | head -n 2 | tail -n 1)
+	mpd_info=$( echo "$out" | tail -n 1)
+
+	case "${play_info%% *}" in
+	'[playing]') symbol="▶" ; color=${color_normal} ;;
+	'[paused]')  symbol="‖" ; color=${color_warn} ;;
+	'[stopped]') symbol="■" ; color=${color_bad} ;;
+	esac
+
+	add_json_entry "${symbol} ${song}" "$color"
+}
+
+function print_wifi {
+	interface=${1:-wlan0}
+	ssid=$( /sbin/iwgetid --raw "$interface" 2>&1 )
+	if [[ -n "$ssid" ]] ; then
+		add_json_entry "W: $ssid" "$color_normal"
+	else
+		add_json_entry "!W" "$color_bad"
+	fi
+}
+
+function print_time {
+	format="${1:-'%Y-%m-%d %H:%M:%S'}"
+	add_json_entry "$( date "+$format" )"
+}
+
+function print_line {
+	local bits out_bits first bit
+
+	entries=()
+	for command in "${config[@]}" ; do
+		eval "$command"
+	done
+
+	out_bits=()
+	first=true
+	for bit in "${entries[@]}" ; do
+		[[ -z "$bit" ]] && continue
+		out_bits+=("$bit")
+	done
+
+	printf '[%s],\n' "$( join ", " "${out_bits[@]}" )"
+}
+
+printf '{"version":1}\n[\n'
+
+if [[ -e ~/.i3/status-bar-bits ]] ; then
+	while IFS="\n" read command ; do
+		config+=("print_$command")
+	done < "$HOME/.i3/status-bar-bits"
+else
+	config="time"
+fi
+
+while true ; do
+	print_line
+	sleep 5
+done

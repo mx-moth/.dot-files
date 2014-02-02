@@ -1,0 +1,13 @@
+#!/bin/bash
+
+xrdb $HOME/.Xresources
+[[ -e "$HOME/.Xresources.local" ]] && xrdb -merge /home/tim/.Xresources.local
+xmodmap ~/.Xmodmap.d/right-alt-as-super
+
+xcompmgr &  # Window compositor
+nm-applet &  # Network manager
+~/.i3/background &  # Rotating background image
+xfce4-power-manager &
+xfce4-volumed
+
+xset r rate 160  # Keyboard repeat rate

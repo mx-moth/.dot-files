@@ -1,0 +1,195 @@
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+
+# Key bindings
+########################################
+
+# Modifier is the Super (Win) key
+set $mod Mod4
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start dmenu (a program launcher)
+bindsym $mod+space exec dmenu_run
+bindsym $mod+d exec i3-dmenu-desktop
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in an orientation
+# Much like tmux: | for two windows next to each other
+#                 - for two windows above each other
+bindsym $mod+backslash split h
+bindsym $mod+minus split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+# change focus between tiling / floating windows
+bindsym $mod+Control+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+# focus the child container
+bindsym $mod+shift+a focus child
+
+workspace 1 output HDMI1
+workspace 2 output HDMI2
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+bindsym $mod+Control+minus scratchpad show
+# starting a specially named term automatically 
+exec --no-startup-id urxvt -name scratchpad -e /usr/bin/vim ~/.scratchpad
+# move this to scratchpad, if active
+for_window [class="URxvt" instance="scratchpad"] move scratchpad
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+bindsym $mod+Control+Left move workspace to output left
+bindsym $mod+Control+Right move workspace to output right
+bindsym $mod+Control+Up move workspace to output up
+bindsym $mod+Control+Down move workspace to output down
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+	# These bindings trigger as soon as you enter the resize mode
+
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym h resize shrink width 10 px or 10 ppt
+	bindsym j resize grow height 10 px or 10 ppt
+	bindsym k resize shrink height 10 px or 10 ppt
+	bindsym l resize grow width 10 px or 10 ppt
+
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 10 ppt
+	bindsym Down resize grow height 10 px or 10 ppt
+	bindsym Up resize shrink height 10 px or 10 ppt
+	bindsym Right resize grow width 10 px or 10 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+# Behaviour
+########################################
+
+# Disable focus follows mouse. It is annoying, certainly when you bump the mouse
+focus_follows_mouse no
+
+# Start some programs
+exec ~/.i3/startup
+
+
+# Appearance
+########################################
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below. ISO 10646 = Unicode
+# One of these is bound to exist on a system!
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font pango:DejaVu Sans 14px
+
+# Use normal borders, but hide edge borders.
+new_window normal
+hide_edge_borders both
+
+# Colours               border  bg      text    indicator
+client.focused          #ffffff #222222 #ffffff #2e9ef4
+client.focused_inactive #ffffff #666666 #cccccc #484e50
+client.unfocused        #ffffff #666666 #cccccc #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
+# Start i3bar to display a workspace bar
+bar {
+	status_command  ~/.i3/status-bar
+	position top
+	font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+	font pango:DejaVu Sans 14px
+}
+
+
+# App-specific configs
+########################################
+
+# Terminals
+# ---------
+
+# start a terminal
+bindsym $mod+Return exec ~/.i3/cwd-term.sh urxvt
+# Make all urxvts use a 1-pixel border
+for_window [class="URxvt"] border 1pixel
+
+# Steam
+# -----
+for_window [class="Steam"] move container to workspace 10
+
+# Music control
+# -------------
+#bindsym XF86AudioNext exec --no-startup-id  mpc next
+bindsym XF86AudioPrev exec --no-startup-id  mpc prev
+bindsym XF86AudioPlay exec --no-startup-id  mpc toggle
+bindsym XF86AudioStop exec --no-startup-id  mpc stop
+# bindsym XF86AudioMedia exec --no-startup-id adb shell "input keyevent KEYCODE_CAMERA"
+# bindsym XF86Tools exec --no-startup-id adb shell "input keyevent KEYCODE_CAMERA"
+# bindsym XF86AudioNext exec --no-startup-id ~/android-take-photo
+bindsym XF86Back exec --no-startup-id ~/android-take-photo
+bindsym XF86Forwards exec --no-startup-id ~/android-take-photo
