@@ -317,3 +317,17 @@ function svc-restart() {
 	sleep 2
 	svc-up "$1"
 }
+
+_set_font_size() {
+	local font_size="$1"
+	_font_size=$font_size
+	echo "Setting font size to $font_size"
+	printf '\33]50;%s%d\007' "xft:Terminus:pixelsize=" $font_size
+}
+export _font_size=12
+++font() {
+	_set_font_size $(( $_font_size + 2 ))
+}
+--font() {
+	_set_font_size $(( $_font_size - 2 ))
+}
