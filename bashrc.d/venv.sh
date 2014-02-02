@@ -10,16 +10,16 @@ function venv.get_filesystem() {
 function ++venv() {
 	cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
 	path="${1:-"$cwd"}"
-	locations=( 'venv' '.virthualenv' )
+	locations=( 'venv' '.hsenv_main' )
 
 	initial_filesystem="$( venv.get_filesystem "$path" )"
 
 	while ! [ -z "$path" ] ; do
 
 		for location in "${locations[@]}" ; do
-			if [[ -d $path/$location ]] ; then
+			if [[ -d "$path"/$location ]] ; then
 				echo "Activating $path/$location"
-				source $path/$location/bin/activate
+				source "$path"/$location/bin/activate
 				return 0
 			fi
 		done
@@ -42,5 +42,9 @@ function ++venv() {
 
 # Deacticate a venv, assuming it is standard and uses `deactivate()`
 function --venv() {
-	deactivate
+	if command -V 'deactivate' &>/dev/null ; then
+		deactivate
+	elif command -V 'deactivate_hsenv' &>/dev/null ; then
+		deactivate_hsenv
+	fi
 }
