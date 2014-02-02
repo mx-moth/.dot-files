@@ -1,22 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 
-# Set up paths
-# ------------
-
-# Path in the common things
-PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/local/bin:/sbin:/bin"
-LD_LIBRARY_PATH="/opt/local/lib:/usr/local/lib:/usr/lib"
-
-# Cabal, for Haskell stuff
-if [ -d $HOME/.cabal/bin ] ; then
-	PATH="${HOME}/.cabal/bin:${PATH}"
-fi
-
-export PATH
-export LD_LIBRARY_PATH
-
-
 # Some bash configuration
 # -----------------------
 

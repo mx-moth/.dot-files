@@ -1,3 +1,16 @@
+# Set up paths
+# ------------
+
+# Optional entries for PATH, added if they exist
+EXTRA_PATHS=("$HOME/bin" "$HOME/.local/bin" "$HOME/.cabal/bin" "$HOME/.ghc")
+for EXTRA_PATH in "${EXTRA_PATHS[@]}" ; do
+	if [ -d "$EXTRA_PATH" ] ; then
+		PATH="$EXTRA_PATH:$PATH"
+	fi
+done
+
+export PATH
+
 # Some environment configuration
 # ------------------------------
 
