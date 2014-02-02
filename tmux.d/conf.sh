@@ -2,6 +2,8 @@
 
 set -e
 
+source ~/.bashrc.d/colours.sh
+
 T="tmux -q"
 VERSION=`tmux -V | cut -d' ' -f2`
 SESSION_NAME="$1"
@@ -20,6 +22,7 @@ if is_version "1.7" ; then
 else
 	SET_OPTION="set-option -gs"
 fi
+
 # Control-q for prefix. Bugger all uses it, and it is close
 $T $SET_OPTION prefix "C-q"
 
@@ -40,6 +43,7 @@ is_version "1.7" && $T $SET_OPTION status-position top
 $T $SET_OPTION status-left ''
 $T $SET_OPTION status-left-fg colour$TMUX_ACTIVE
 $T $SET_OPTION status-left-bg black
+
 
 $T $SET_OPTION status-right '#(~/.tmux.d/music.sh)#(~/.tmux.d/battery.sh )'
 $T $SET_OPTION status-right-length 100
