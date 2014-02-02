@@ -1,3 +1,6 @@
 vim/view/*
 vim/.netrwhist
 vim/bundle/*/doc/tags
+[submodule "vim/bundle/vimerl"]
+	path = vim/bundle/vimerl
+	url = https://github.com/oscarh/vimerl.git
