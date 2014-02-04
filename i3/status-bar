@@ -73,7 +73,7 @@ function print_wifi {
 }
 
 function print_time {
-	format="${1:-'%Y-%m-%d %H:%M:%S'}"
+	format="${1:-%Y-%m-%d %H:%M:%S}"
 	add_json_entry "$( date "+$format" )"
 }
 
@@ -102,7 +102,7 @@ if [[ -e ~/.i3/status-bar-bits ]] ; then
 		config+=("print_$command")
 	done < "$HOME/.i3/status-bar-bits"
 else
-	config="time"
+	config="print_time"
 fi
 
 while true ; do
