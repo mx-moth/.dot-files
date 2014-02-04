@@ -53,3 +53,6 @@
 [submodule "vim/bundle/rainbow"]
 	path = vim/bundle/rainbow
 	url = https://github.com/luochen1990/rainbow.git
+[submodule "vim/bundle/vimerl"]
+	path = vim/bundle/vimerl
+	url = https://github.com/jimenezrick/vimerl.git
