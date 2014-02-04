@@ -55,4 +55,4 @@
 	url = https://github.com/luochen1990/rainbow.git
 [submodule "vim/bundle/vimerl"]
 	path = vim/bundle/vimerl
-	url = https://github.com/jimenezrick/vimerl.git
+	url = https://github.com/oscarh/vimerl.git
