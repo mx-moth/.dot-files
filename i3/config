@@ -184,12 +184,8 @@ for_window [class="Steam"] move container to workspace 10
 
 # Music control
 # -------------
-#bindsym XF86AudioNext exec --no-startup-id  mpc next
+bindsym XF86AudioNext exec --no-startup-id  mpc next
 bindsym XF86AudioPrev exec --no-startup-id  mpc prev
 bindsym XF86AudioPlay exec --no-startup-id  mpc toggle
 bindsym XF86AudioStop exec --no-startup-id  mpc stop
-# bindsym XF86AudioMedia exec --no-startup-id adb shell "input keyevent KEYCODE_CAMERA"
-# bindsym XF86Tools exec --no-startup-id adb shell "input keyevent KEYCODE_CAMERA"
-# bindsym XF86AudioNext exec --no-startup-id ~/android-take-photo
-bindsym XF86Back exec --no-startup-id ~/android-take-photo
-bindsym XF86Forwards exec --no-startup-id ~/android-take-photo
+bindsym XF86Sleep exec dbus-send --system  --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
