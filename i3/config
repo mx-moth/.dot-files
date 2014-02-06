@@ -95,6 +95,12 @@ bindsym $mod+Control+Right move workspace to output right
 bindsym $mod+Control+Up move workspace to output up
 bindsym $mod+Control+Down move workspace to output down
 
+# Use mod + </> to switch outputs (monitors)
+bindsym $mod+comma focus output right
+# Use mod + [/] to cycle workspaces
+bindsym $mod+bracketleft workspace prev
+bindsym $mod+bracketright workspace next
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
