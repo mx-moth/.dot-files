@@ -159,9 +159,9 @@ new_window normal
 hide_edge_borders both
 
 # Colours               border  bg      text    indicator
-client.focused          #ffffff #222222 #ffffff #2e9ef4
-client.focused_inactive #ffffff #666666 #cccccc #484e50
-client.unfocused        #ffffff #666666 #cccccc #292d2e
+client.focused          #3673a1 #285577 #ffffff #2e9ef4
+client.focused_inactive #111111 #455969 #cccccc #484e50
+client.unfocused        #555555 #666666 #cccccc #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 # Start i3bar to display a workspace bar
