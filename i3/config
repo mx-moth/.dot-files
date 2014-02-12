@@ -186,9 +186,20 @@ bindsym $mod+Return exec ~/.i3/cwd-term.sh urxvt
 # Make all urxvts use a 1-pixel border
 for_window [class="URxvt"] border 1pixel
 
+# Make some extra windows floating? Not sure what this will apply to.
+for_window [window_role="pop-up"] floating enable
+
 # Steam
 # -----
 for_window [class="Steam"] move container to workspace 10
+
+# GPick
+# -----
+for_window [class="Gpick"] floating enable
+
+# Thunar
+# ------
+for_window [title="File Operation Progress"] floating enable
 
 # Music control
 # -------------
