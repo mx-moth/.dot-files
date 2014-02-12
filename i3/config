@@ -100,6 +100,8 @@ bindsym $mod+comma focus output right
 # Use mod + [/] to cycle workspaces
 bindsym $mod+bracketleft workspace prev
 bindsym $mod+bracketright workspace next
+# mod+n to rename the current workspace
+bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
