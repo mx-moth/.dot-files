@@ -331,3 +331,13 @@ export _font_size=12
 --font() {
 	_set_font_size $(( $_font_size - 2 ))
 }
+
+# Draw a ========== line across your terminal to mark something
+function hr () {
+	char="${1:-─}"
+	width=$( tput cols )
+	for i in $( seq $width ) ; do
+		echo -n "$char"
+	done
+	echo
+}
