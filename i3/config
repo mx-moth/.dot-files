@@ -98,10 +98,13 @@ bindsym $mod+Control+Down move workspace to output down
 # Use mod + </> to switch outputs (monitors)
 bindsym $mod+comma focus output right
 # Use mod + [/] to cycle workspaces
-bindsym $mod+bracketleft workspace prev
-bindsym $mod+bracketright workspace next
+bindsym $mod+bracketleft workspace prev_on_output
+bindsym $mod+bracketright workspace next_on_output
+# Use mod + tab to switch back-and-forth to last workspace
+bindsym $mod+z workspace back_and_forth
 # mod+n to rename the current workspace
 bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+bindsym $mod+Shift+n exec i3-input -F 'workspace "%s"' -P 'Create workspace: '
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
