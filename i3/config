@@ -100,11 +100,17 @@ bindsym $mod+comma focus output right
 # Use mod + [/] to cycle workspaces
 bindsym $mod+bracketleft workspace prev_on_output
 bindsym $mod+bracketright workspace next_on_output
+# Use mod + [/] to move windows through workspaces
+bindsym $mod+shift+bracketleft move container to workspace prev_on_output; workspace prev_on_output
+bindsym $mod+shift+bracketright move container to workspace next_on_output; workspace next_on_output
 # Use mod + tab to switch back-and-forth to last workspace
 bindsym $mod+z workspace back_and_forth
 # mod+n to rename the current workspace
 bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+# mod+Shift+N to create a new named workspace
 bindsym $mod+Shift+n exec i3-input -F 'workspace "%s"' -P 'Create workspace: '
+# mod+Enter to create a new workspace
+bindsym $mod+Return exec --no-startup-id ~/.i3/make-new-workspace
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -185,7 +191,7 @@ bar {
 # ---------
 
 # start a terminal
-bindsym $mod+Return exec ~/.i3/cwd-term.sh urxvt
+bindsym $mod+slash exec ~/.i3/cwd-term.sh urxvt
 # Make all urxvts use a 1-pixel border
 for_window [class="URxvt"] border 1pixel
 
