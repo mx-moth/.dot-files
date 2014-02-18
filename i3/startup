@@ -16,3 +16,5 @@ cmd? xfce4-volumed && xfce4-volumed
 
 xset r rate 160  # Keyboard repeat rate
 xset b off
+
+cmd? ~/.i3/startup.local && ~/.i3/startup.local
