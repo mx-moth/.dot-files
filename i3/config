@@ -150,7 +150,7 @@ bindsym $mod+r mode "resize"
 ########################################
 
 # Disable focus follows mouse. It is annoying, certainly when you bump the mouse
-focus_follows_mouse no
+focus_follows_mouse yes
 
 # Start some programs
 exec ~/.i3/startup
