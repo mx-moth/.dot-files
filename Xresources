@@ -29,6 +29,7 @@ URxvt*internalBorder:     0
 URxvt*pointerBlankDelay:  987654321
 
 URxvt*cutchars:           "`\"'&()*;<=>?@[]^\\{|}│"
+URxvt*urgentOnBell:       true
 
 
 URxvt.keysym.Control-Up:    \033[1;5A

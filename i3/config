@@ -175,12 +175,18 @@ client.focused_inactive #111111 #455969 #cccccc #484e50
 client.unfocused        #555555 #666666 #cccccc #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
+force_display_urgency_hint 500 ms
+
 # Start i3bar to display a workspace bar
 bar {
 	status_command  ~/.i3/status-bar
 	position top
+	tray_output primary
 	font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 	font pango:DejaVu Sans 14px
+	colors {
+		urgent_workspace   #2f343a #900000 #ffffff
+	}
 }
 
 
