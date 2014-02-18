@@ -253,11 +253,9 @@ function reload-xresources() {
 		sleep 0.2
 		tmux display-message \
 			"You did not seem to be running tmux, so I could not just reattach to the current session. Have a fresh terminal attached to some random tmux session."
+		exit
 	else
-		rxvt-unicode -e tmux &
-		sleep 0.2
-		tmux display-message \
-			"You did not seem to be running tmux, so I could not just reattach to the current session. Have a fresh terminal runnning tmux."
+		rxvt-unicode &
 		exit
 	fi
 }
