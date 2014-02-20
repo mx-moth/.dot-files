@@ -1,0 +1,6 @@
+#!/bin/bash
+
+name=$( zenity --entry --text "Enter new workspace name" )
+if [ $? -eq 0 ] && [[ -n "$name" ]] ; then
+	i3-msg rename workspace to "$name"
+fi
