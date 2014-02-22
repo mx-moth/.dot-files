@@ -188,14 +188,12 @@ for_window [class="URxvt"] border 1pixel
 bindsym $mod+Shift+f exec thunar
 bindsym $mod+Shift+c exec chromium
 
-# Steam
-# -----
-for_window [class="Steam"] move container to workspace 10
-
 # Make some things float by default
 for_window [class="Gpick"] floating enable # GPick
 for_window [title="File Operation Progress"] floating enable # Thunar
 for_window [class="Pavucontrol"] floating enable # PulseAudio volume control
+for_window [class="Steam"][title="* - Properties"] floating enable
+for_window [class="Steam"] move container to workspace 🚂
 for_window [window_role="pop-up"] floating enable
 
 # Music control
