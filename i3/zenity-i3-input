@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Execute getopt
+ARGS=$(getopt -o s:F:l:P: -n "$0" -- "$@");
+
+#Bad arguments
+if [ $? -ne 0 ] ; then
+	exit 1
+fi
+
+eval set -- "$ARGS";
+
+i3msG='i3-msg'
+format='%s'
+zenity_opts=('--entry')
+
+while true; do case "$1" in
+-s) i3msg="$i3msg $1 $2" ; shift 2 ;;
+-F) format="$2"
+	shift 2
+	;;
+-l) limit=$2 ; shift 2 ;;
+-P) zenity_opts+=("--text" "$2")
+	shift 2
+	;;
+--) shift ; break ;;
+esac ; done
+
+out=$( zenity "${zenity_opts[@]}" )
+if [ $? -eq 0 ] && [[ -n "$out" ]] ; then
+	i3-msg "${format//%s/$out}"
+fi

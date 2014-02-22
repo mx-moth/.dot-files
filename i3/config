@@ -81,12 +81,16 @@ bindsym $mod+shift+bracketleft move container to workspace prev_on_output; works
 bindsym $mod+shift+bracketright move container to workspace next_on_output; workspace next_on_output
 # Use mod + tab to switch back-and-forth to last workspace
 bindsym $mod+z workspace back_and_forth
+
 # mod+n to rename the current workspace
-bindsym $mod+n exec --no-startup-id ~/.i3/rename-workspace i3-input -F 'rename workspace to "%s"' -P 'New name: '
+bindsym $mod+n exec --no-startup-id ~/.i3/zenity-i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 # mod+Shift+N to create a new named workspace
-bindsym $mod+Shift+n exec i3-input -F 'workspace "%s"' -P 'Create workspace: '
+bindsym $mod+Control+n exec ~/.i3/zenity-i3-input -F 'workspace "%s"' -P 'Create workspace: '
+# mod+Enter to move container to new named workspace
+bindsym $mod+Shift+n exec "~/.i3/zenity-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
+
 # mod+Enter to create a new workspace
-bindsym $mod+Return exec --no-startup-id ~/.i3/make-new-workspace
+bindsym $mod+Return exec  ~/.i3/make-new-workspace
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
