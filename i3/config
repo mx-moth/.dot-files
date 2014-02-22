@@ -143,8 +143,8 @@ exec ~/.i3/startup
 # is used in the bar {} block below. ISO 10646 = Unicode
 # One of these is bound to exist on a system!
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font pango:Symbola 16px
-font pango:DejaVu Sans 16px
+font pango:Symbola 14px
+font pango:DejaVu Sans 14px
 
 # Use normal borders, but hide edge borders.
 new_window normal
