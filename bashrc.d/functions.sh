@@ -319,7 +319,7 @@ function svc-restart() {
 _set_font_size() {
 	local font_size="$1"
 	_font_size=$font_size
-	echo "Setting font size to $font_size"
+	echo "Setting font size to $font_size" >&2
 	printf '\33]50;%s%d\007' "xft:Terminus:pixelsize=" $font_size
 }
 export _font_size=12
@@ -328,6 +328,17 @@ export _font_size=12
 }
 --font() {
 	_set_font_size $(( $_font_size - 2 ))
+}
+
+function adjust-font() {
+	while read -rsN1 char ; do
+		case "$char" in
+			[+=]) ++font 2>/dev/null ;;
+			[-_]) --font 2>/dev/null ;;
+			[qQ]) break ;;
+			*) ;;
+		esac
+	done
 }
 
 # Draw a ========== line across your terminal to mark something
