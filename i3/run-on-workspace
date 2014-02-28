@@ -1,0 +1,9 @@
+#!/bin/bash
+
+workspace="$1"
+shift
+
+cmd="$@"
+
+i3-msg "workspace $workspace"
+i3-msg -- exec "$@"
