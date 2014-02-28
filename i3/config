@@ -192,7 +192,7 @@ bindsym $mod+Shift+m exec ~/.i3/run-on-workspace '♫' urxvt -name ncmpcpp -e nc
 for_window [class="Gpick"] floating enable # GPick
 for_window [title="File Operation Progress"] floating enable # Thunar
 for_window [class="Pavucontrol"] floating enable # PulseAudio volume control
-for_window [class="Steam"][title="* - Properties"] floating enable
+for_window [class="Steam" title="* - Properties"] floating enable
 for_window [class="Steam"] move container to workspace 🚂
 for_window [window_role="pop-up"] floating enable
 
