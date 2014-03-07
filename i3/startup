@@ -1,20 +1,15 @@
 #!/bin/bash
 
 function cmd? {
-	command -V "$1" &>/dev/null
+	command -V "$1" &>/dev/null && "$@"
 }
 
-xrdb $HOME/.Xresources
-[[ -e "$HOME/.Xresources.local" ]] && xrdb -merge /home/tim/.Xresources.local
-xmodmap ~/.Xmodmap.d/right-alt-as-super
+# Window compositor
+( cmd? compton || cmd? xcompmgr ) &
 
-xcompmgr &  # Window compositor
-nm-applet &  # Network manager
-~/.i3/background &  # Rotating background image
-cmd? xfce4-power-manager && xfce4-power-manager &
-cmd? xfce4-volumed && xfce4-volumed
-
-xset r rate 160  # Keyboard repeat rate
-xset b off
+cmd? nm-applet &
+cmd? ~/.i3/background &
+cmd? xfce4-power-manager &
+cmd? xfce4-volumed &
 
 cmd? ~/.i3/startup.local && ~/.i3/startup.local
