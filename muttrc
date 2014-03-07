@@ -1,5 +1,5 @@
 
-set folder="imaps://mail.timheap.me/INBOX"
+set folder="imaps://mail.timheap.me/"
 set spoolfile = "imaps://mail.timheap.me/INBOX"
 set imap_user="tim"
 set imap_pass="`pass show mail/tim@timheap.me/imap`"
@@ -10,7 +10,7 @@ set timeout=10
 
 set sendmail="/usr/bin/msmtp"
 set from="tim@timheap.me"
-set record="=Sent"
+set record="=archive"
 set postponed="=Drafts"
 
 set ssl_starttls=yes
@@ -39,3 +39,19 @@ color index default default ~F
 color index color202 default "~N|~O"
 
 bind index "^" imap-fetch-mail
+
+# Key bindings
+macro index,pager A "<save-message>=archive<enter>" "move message to the archive"
+macro index,pager a "<pipe-message>~/.local/bin/goobook add<return>" "add sender to google contacts"
+
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=archive<enter>" "Go to all mail"
+macro index gs "<change-folder>=archive<enter>" "Go to Sent Mail"
+macro index gd "<change-folder>=Drafts<enter>" "Go to drafts"
+
+bind editor <space> noop
+
+set query_command="~/.local/bin/goobook query '%s'"
+bind editor <Tab> complete-query
+
+set index_format="%4C│%Z┃%{%Y-%m-%d %H%M}│%-20.20L: %s"
