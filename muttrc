@@ -1,0 +1,41 @@
+
+set folder="imaps://mail.timheap.me/INBOX"
+set spoolfile = "imaps://mail.timheap.me/INBOX"
+set imap_user="tim"
+set imap_pass="`pass show mail/tim@timheap.me/imap`"
+unset imap_passive
+set imap_check_subscribed
+set mail_check=60
+set timeout=10
+
+set sendmail="/usr/bin/msmtp"
+set from="tim@timheap.me"
+set record="=Sent"
+set postponed="=Drafts"
+
+set ssl_starttls=yes
+set ssl_force_tls=yes
+
+set header_cache=~/.hcache
+set net_inc=5
+
+
+# Palette for use with the Linux console.  Black background.
+
+color hdrdefault blue default
+color quoted blue default
+color signature blue default
+color attachment color220 default
+color message default default
+color error brightred default
+color indicator black color202
+color status black color208
+color tree default default
+color normal default default
+color markers color202 default
+color search default default
+color tilde brightmagenta default
+color index default default ~F
+color index color202 default "~N|~O"
+
+bind index "^" imap-fetch-mail
