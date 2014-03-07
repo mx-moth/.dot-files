@@ -147,6 +147,7 @@ font pango:DejaVu Sans 14px
 
 # Use normal borders, but hide edge borders.
 new_window normal
+new_window pixel
 hide_edge_borders both
 
 # Colours               border  bg      text    indicator
@@ -180,7 +181,7 @@ bar {
 # start a terminal
 bindsym $mod+slash exec ~/.i3/cwd-term.sh urxvt
 # Make all urxvts use a 1-pixel border
-for_window [class="URxvt"] border 1pixel
+# for_window [class="URxvt"] border 1pixel
 
 # Start some apps using shortcuts
 bindsym $mod+Shift+f exec thunar
