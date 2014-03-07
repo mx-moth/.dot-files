@@ -7,6 +7,10 @@
 
 # Modifier is the Super (Win) key
 set $mod Mod4
+set $exec_script exec --no-startup-id
+set $exec_cwd exec --no-startup-id ~/.i3/cwd-term.sh
+set $run_on_workspace exec --no-startup-id ~/.i3/run-on-workspace
+set $input exec --no-startup-id ~/.i3/zenity-i3-input
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -54,14 +58,14 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+shift+a focus child
 
-exec i3-msg workspace 🌐
+$exec_script i3-msg workspace 🌐
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+Control+minus scratchpad show
 # starting a specially named term automatically 
-exec --no-startup-id urxvt -name scratchpad -e /usr/bin/vim ~/.scratchpad
+$exec_script urxvt -name scratchpad -e /usr/bin/vim ~/.scratchpad
 # move this to scratchpad, if active
 for_window [class="URxvt" instance="scratchpad"] move scratchpad
 
@@ -82,11 +86,11 @@ bindsym $mod+shift+bracketright move container to workspace next_on_output; work
 bindsym $mod+z workspace back_and_forth
 
 # mod+n to rename the current workspace
-bindsym $mod+n exec --no-startup-id ~/.i3/zenity-i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
+bindsym $mod+n $input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 # mod+Shift+N to create a new named workspace
-bindsym $mod+Control+n exec ~/.i3/zenity-i3-input -F 'workspace "%s"' -P 'Create workspace: '
+bindsym $mod+Control+n $input -F 'workspace "%s"' -P 'Create workspace: '
 # mod+Enter to move container to new named workspace
-bindsym $mod+Shift+n exec "~/.i3/zenity-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
+bindsym $mod+Shift+n $input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
 
 # mod+Enter to create a new workspace
 bindsym $mod+Return exec  ~/.i3/make-new-workspace
@@ -96,7 +100,7 @@ bindsym $mod+Shift+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+Control+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e $exec_script "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -132,7 +136,7 @@ bindsym $mod+r mode "resize"
 focus_follows_mouse yes
 
 # Start some programs
-exec ~/.i3/startup
+$exec_script ~/.i3/startup
 
 
 # Appearance
@@ -179,18 +183,18 @@ bar {
 # ---------
 
 # start a terminal
-bindsym $mod+slash exec ~/.i3/cwd-term.sh urxvt
+bindsym $mod+slash $exec_cwd urxvt
 # Make all urxvts use a 1-pixel border
 # for_window [class="URxvt"] border 1pixel
 
 # Start some apps using shortcuts
-bindsym $mod+Shift+f exec thunar
-bindsym $mod+Shift+c exec chromium
+bindsym $mod+Shift+f $exec_cwd thunar
 # Start some apps on a workspace
-bindsym $mod+Shift+h exec ~/.i3/run-on-workspace '💬' hipchat
-bindsym $mod+Shift+s exec ~/.i3/run-on-workspace '🚂' steam
-bindsym $mod+Shift+p exec ~/.i3/run-on-workspace '♫' urxvt -name ncmpcpp -e ncmpcpp
-bindsym $mod+Shift+m exec ~/.i3/run-on-workspace '🐕' urxvt -name mutt -e mutt
+bindsym $mod+Shift+c $run_on_workspace '🌐' chromium
+bindsym $mod+Shift+h $run_on_workspace '💬' hipchat
+bindsym $mod+Shift+s $run_on_workspace '🚂' steam
+bindsym $mod+Shift+p $run_on_workspace '♫' urxvt -name ncmpcpp -e ncmpcpp
+bindsym $mod+Shift+m $run_on_workspace '🐕' urxvt -name mutt -e mutt
 
 # Make some things float by default
 for_window [class="Gpick"] floating enable # GPick
@@ -202,8 +206,9 @@ for_window [window_role="pop-up"] floating enable
 
 # Music control
 # -------------
-bindsym XF86AudioNext exec --no-startup-id  mpc next
-bindsym XF86AudioPrev exec --no-startup-id  mpc prev
-bindsym XF86AudioPlay exec --no-startup-id  mpc toggle
-bindsym XF86AudioStop exec --no-startup-id  mpc stop
-bindsym XF86Sleep exec dbus-send --system  --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+set $mpc exec --no-startup-id mpc
+bindsym XF86AudioNext $mpc next
+bindsym XF86AudioPrev $mpc prev
+bindsym XF86AudioPlay $mpc toggle
+bindsym XF86AudioStop $mpc stop
+bindsym XF86Sleep $exec_script dbus-send --system  --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
