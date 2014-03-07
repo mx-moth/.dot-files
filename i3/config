@@ -188,7 +188,8 @@ bindsym $mod+Shift+c exec chromium
 # Start some apps on a workspace
 bindsym $mod+Shift+h exec ~/.i3/run-on-workspace '💬' hipchat
 bindsym $mod+Shift+s exec ~/.i3/run-on-workspace '🚂' steam
-bindsym $mod+Shift+m exec ~/.i3/run-on-workspace '♫' urxvt -name ncmpcpp -e ncmpcpp
+bindsym $mod+Shift+p exec ~/.i3/run-on-workspace '♫' urxvt -name ncmpcpp -e ncmpcpp
+bindsym $mod+Shift+m exec ~/.i3/run-on-workspace '🐕' urxvt -name mutt -e mutt
 
 # Make some things float by default
 for_window [class="Gpick"] floating enable # GPick
