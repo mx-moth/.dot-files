@@ -87,10 +87,10 @@ bindsym $mod+z workspace back_and_forth
 
 # mod+n to rename the current workspace
 bindsym $mod+n $input -F 'rename workspace to "%s"' -P 'Rename workspace: '
-# mod+Shift+N to create a new named workspace
+# mod+Control+N to create a new named workspace
 bindsym $mod+Control+n $input -F 'workspace "%s"' -P 'Create workspace: '
-# mod+Enter to move container to new named workspace
-bindsym $mod+Shift+n $input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
+# mod+Shift+N to move container to new named workspace
+bindsym $mod+Shift+n $exec_script "~/.i3/zenity-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
 
 # mod+Enter to create a new workspace
 bindsym $mod+Return exec  ~/.i3/make-new-workspace
