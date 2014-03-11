@@ -36,9 +36,9 @@ syntax keyword pyNiceOperator raise conceal cchar=^
 syntax keyword pyNiceOperator def conceal cchar=ƒ
 syntax keyword pyNiceOperator for conceal cchar=∀
 
-syntax keyword pyNiceOperator any conceal cchar=∃
+syntax match pyNiceOperator "\.\@<!\<any\>\ze(" conceal cchar=∃
 syntax match pyNiceOperator "\<not any\>" conceal cchar=∄
-syntax keyword pyNiceOperator all conceal cchar=∀
+syntax match pyNiceOperator "\.\@<!\<all\>\ze(" conceal cchar=∀
 
 syntax keyword pyNiceStatement lambda conceal cchar=λ
 
