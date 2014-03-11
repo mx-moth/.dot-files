@@ -201,8 +201,10 @@ for_window [class="Gpick"] floating enable # GPick
 for_window [title="File Operation Progress"] floating enable # Thunar
 for_window [class="Pavucontrol"] floating enable # PulseAudio volume control
 for_window [class="Steam" title="* - Properties"] floating enable
-for_window [class="Steam"] move container to workspace 🚂
+for_window [class="Steam"] new_float pixel 1
 for_window [window_role="pop-up"] floating enable
+
+assign [class="Steam"] → 🚂
 
 # Music control
 # -------------
