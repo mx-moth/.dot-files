@@ -1,4 +1,17 @@
+# Me
+set realname="Tim Heap"
+set from="tim@timheap.me"
+alternates "heap.tim@gmail.com|heap.tim+.*@gmail.com"
+set reverse_name
 
+
+# ???
+set header_cache=~/.mutt/hcache/
+set net_inc=5
+set nomark_old
+
+
+# Mail server
 set folder="imaps://mail.timheap.me/"
 set spoolfile = "imaps://mail.timheap.me/INBOX"
 set imap_user="tim"
@@ -7,21 +20,67 @@ unset imap_passive
 set imap_check_subscribed
 set mail_check=60
 set timeout=10
-
-set sendmail="/usr/bin/msmtp"
-set from="tim@timheap.me"
-set record="=archive"
-set postponed="=Drafts"
-
 set ssl_starttls=yes
 set ssl_force_tls=yes
 
-set header_cache=~/.hcache
-set net_inc=5
+
+# Local mail
+set sendmail="/usr/bin/msmtp"
+
+
+# Folders n shit
+set record="=archive"
+set postponed="=Drafts"
+
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=archive<enter>" "Go to all mail"
+macro index gs "<change-folder>=archive<enter>" "Go to Sent Mail"
+macro index gd "<change-folder>=Drafts<enter>" "Go to drafts"
+macro index gt "<change-folder>=Trash<enter>" "Go to trash"
+macro index gg "<change-folder>?" "List folders"
+macro index,pager A "<save-message>=archive<enter>" "move message to the archive"
+
+
+# Index
+set index_format="%Z│%4C┃%-20.20L %s%> %{%Y-%m-%d %H%M}"
+set to_chars=" >}]<═"
+
+
+# Pager
+set pager_index_lines = 10   # Show a few lines from the index above the msg
+set pager_stop = yes         # PgDown at bottom does not move to next message
+set noconfirmappend
+
+
+# Replying
+set reply_self = no         # Reply to recipients, not to myself on my own msgs
+set indent_string = "> "
+set include = yes
+set attribution = "On %d, %n wrote:"
+set bounce_delivered = yes
+
+
+# Key bindings
+bind  pager   <up>     previous-line
+bind  pager   <down>   next-line
+bind  pager   <left>   exit
+bind  pager   <right>  view-attachments
+bind  attach  <left>   exit
+bind  attach  <right>  view-attach
+bind  index   <right>  display-message
+macro index   <left>   "c?\t"   "Get Folder List"
+macro index   I        "c!\n"   "Go to INBOX"
+bind  index   \Cr      imap-fetch-mail
+bind  browser <right>  view-file
+bind  browser <left>   exit
+
+
+# autoview HTML mail using lynx -dump
+auto_view text/html
+alternative_order text/enriched text/plain text/html
 
 
 # Palette for use with the Linux console.  Black background.
-
 color hdrdefault blue default
 color quoted blue default
 color signature blue default
@@ -40,18 +99,13 @@ color index color202 default "~N|~O"
 
 bind index "^" imap-fetch-mail
 
+
 # Key bindings
-macro index,pager A "<save-message>=archive<enter>" "move message to the archive"
-macro index,pager a "<pipe-message>~/.local/bin/goobook add<return>" "add sender to google contacts"
-
-macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
-macro index ga "<change-folder>=archive<enter>" "Go to all mail"
-macro index gs "<change-folder>=archive<enter>" "Go to Sent Mail"
-macro index gd "<change-folder>=Drafts<enter>" "Go to drafts"
-
 bind editor <space> noop
+macro index,pager <Esc>r ":source $HOME/.mutt/muttrc<Return>" "Reload configuration"
 
+
+# Contacts lookup
+macro index,pager a "<pipe-message>~/.local/bin/goobook add<return>" "add sender to google contacts"
 set query_command="~/.local/bin/goobook query '%s'"
 bind editor <Tab> complete-query
-
-set index_format="%4C│%Z┃%{%Y-%m-%d %H%M}│%-20.20L: %s"
