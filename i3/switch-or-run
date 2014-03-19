@@ -1,0 +1,13 @@
+#!/bin/bash
+
+workspace="$1"
+shift 1
+
+cmd="$@"
+
+if i3-msg -t get_workspaces | jq -r '.[] | .name' | grep -qxG "$workspace" ; then
+	i3-msg "workspace $workspace"
+else
+	i3-msg "workspace $workspace"
+	$@
+fi
