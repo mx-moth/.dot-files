@@ -2,6 +2,7 @@
 # i3 thread: https://faq.i3wm.org/question/150/how-to-launch-a-terminal-from-here/?answer=152#post-id-152
 
 CMD=${1:-x-terminal-emulator}
+shift 1
 CWD=''
 
 # Get window ID
@@ -22,7 +23,7 @@ if [ -n "$PID" ]; then
 fi
 
 if [ -n "$CWD" ]; then
-  cd $CWD && exec $CMD
+  cd $CWD && exec $CMD "$@"
 else
-  exec $CMD
+  cd ~ && exec $CMD "$@"
 fi
