@@ -20,8 +20,4 @@ xrdb $HOME/.Xresources
 cmd? ~/.xinitrc.local
 
 # Window manager
-exec ck-launch-session i3
-
-# Kill the ssh/gpg agents
-kill $SSH_AGENT_PID
-kill $GPG_AGENT_PID
+exec ck-launch-session dbus-launch i3
