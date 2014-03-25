@@ -350,3 +350,10 @@ function hr () {
 	done
 	echo
 }
+
+# Turn off all screensavers, dpms, x-blanking, suspending, etc
+function movie-time() {
+	xset s off
+	xset s noblank
+	xset -dpms
+}
