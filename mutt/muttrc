@@ -9,6 +9,7 @@ set reverse_name
 set header_cache=~/.mutt/hcache/
 set net_inc=5
 set nomark_old
+set sleep_time=0
 
 
 # Mail server
@@ -18,8 +19,8 @@ set imap_user="tim"
 set imap_pass="`pass show mail/tim@timheap.me/imap`"
 unset imap_passive
 set imap_check_subscribed
-set mail_check=60
-set timeout=10
+set mail_check=10
+set timeout=20
 set ssl_starttls=yes
 set ssl_force_tls=yes
 
@@ -96,13 +97,27 @@ color search default default
 color tilde brightmagenta default
 color index default default ~F
 color index color202 default "~N|~O"
+color sidebar_new color202 default
 
 bind index "^" imap-fetch-mail
+
+# Sidebar
+set sidebar_width=20
+set sidebar_visible=yes
+set sidebar_delim=' '
+set sidebar_sort=yes
+mailboxes =INBOX =archive =archive.bills =archive.payments
+set imap_check_subscribed
 
 
 # Key bindings
 bind editor <space> noop
 macro index,pager <Esc>r ":source $HOME/.mutt/muttrc<Return>" "Reload configuration"
+
+## Sidebar bindings
+bind index,pager gT sidebar-prev
+bind index,pager gt sidebar-next
+bind index,pager go sidebar-open
 
 
 # Contacts lookup
