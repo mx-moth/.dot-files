@@ -9,5 +9,5 @@ if i3-msg -t get_workspaces | jq -r '.[] | .name' | grep -qxG "$workspace" ; the
 	i3-msg "workspace $workspace"
 else
 	i3-msg "workspace $workspace"
-	$@
+	exec $@
 fi
