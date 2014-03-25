@@ -17,6 +17,9 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+EXTRA_PATHS=("$HOME/bin" "$HOME/.local/bin" "$HOME/.cabal/bin" "$HOME/.ghc")
+for EXTRA_PATH in "${EXTRA_PATHS[@]}" ; do
+	if [ -d "$EXTRA_PATH" ] ; then
+		PATH="$EXTRA_PATH:$PATH"
+	fi
+done
