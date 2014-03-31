@@ -206,6 +206,7 @@ for_window [class="Pavucontrol"] floating enable # PulseAudio volume control
 for_window [class="Steam" title="* - Properties"] floating enable
 for_window [class="Steam"] new_float pixel 1
 for_window [class="URxvt" title="popup"] floating enable
+for_window [class="feh"] floating enable
 for_window [window_role="pop-up"] floating enable
 
 assign [class="Steam"] → 🚂
