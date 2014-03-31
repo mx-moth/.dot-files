@@ -54,13 +54,13 @@ highlight ColorColumn ctermbg=52 ctermfg=black cterm=NONE
 highlight TODO 	ctermfg=black ctermbg=LightBlue cterm=NONE
 
 " Green/red/blue backgrounds for diff add/delete/change
-highlight DiffAdd ctermbg=22 ctermfg=white
-highlight DiffDelete ctermbg=52 ctermfg=white
-highlight DiffChange ctermbg=17 ctermfg=white
+highlight DiffAdd ctermbg=155 ctermfg=black
+highlight DiffDelete ctermbg=210 ctermfg=210
+highlight DiffChange ctermbg=136 ctermfg=black
+highlight DiffText ctermbg=202 ctermfg=black cterm=NONE
 
-highlight DiffAdded ctermbg=22 ctermfg=white
-highlight DiffRemoved ctermbg=52 ctermfg=white
-highlight DiffChanged ctermbg=17 ctermfg=white
+highlight DiffChange ctermbg=153 ctermfg=black
+highlight DiffText ctermbg=105 ctermfg=black cterm=NONE
 
 highlight SpecialKey ctermfg=239
 

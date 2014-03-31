@@ -80,6 +80,7 @@ set background=dark
 colorscheme my
 set number          " Numbers in the margin
 set showmatch       " Show matching brackets.
+set diffopt=filler,foldcolumn:0
 
 " Customise the colour scheme. This probably doesnt belong in the real colour
 " scheme file, as it is kind of a dirty hack
