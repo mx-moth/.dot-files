@@ -10,6 +10,7 @@ set header_cache=~/.mutt/hcache/
 set net_inc=5
 set nomark_old
 set sleep_time=0
+set mailcap_path = ~/.mutt/mailcap
 
 
 # Mail server

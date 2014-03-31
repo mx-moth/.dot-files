@@ -1,0 +1,3 @@
+text/html; chromium --new-window %s & sleep 2; test=test -n "$DISPLAY" && which chromium; nametemplate=%s.html
+text/html; x-www-browser %s & sleep 2; test=test -n "$DISPLAY"; nametemplate=%s.html
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
