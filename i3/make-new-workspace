@@ -250,4 +250,8 @@ names=( \
 
 name="${names[$RANDOM % ${#names[@]} ]}"
 
-i3-msg "workspace $name"
+while [ $# -ne 0 ] ; do
+	message_format="${1:-workspace %s}"
+	i3-msg $( printf "$message_format" "$name" )
+	shift
+done
