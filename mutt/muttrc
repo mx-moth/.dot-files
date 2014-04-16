@@ -2,12 +2,10 @@
 set realname="Tim Heap"
 set from="tim@timheap.me"
 alternates "heap.tim@gmail.com|heap.tim+.*@gmail.com"
-set reverse_name
 
 
 # ???
 set header_cache=~/.mutt/hcache/
-set net_inc=5
 set nomark_old
 set sleep_time=0
 set mailcap_path = ${HOME}/.mutt/mailcap:/usr/local/share/mutt/mailcap:/etc/mailcap:/usr/etc/mailcap:/usr/local/etc/mailcap
@@ -46,6 +44,7 @@ macro index,pager A "<save-message>=archive<enter>" "move message to the archive
 # Index
 set index_format="%Z│%4C┃%-20.20L %s%> %{%Y-%m-%d %H%M}"
 set to_chars=" >}]<═"
+# set to_chars=" →⇒»←═"
 
 
 # Pager
@@ -107,7 +106,7 @@ set sidebar_width=20
 set sidebar_visible=yes
 set sidebar_delim=' '
 set sidebar_sort=yes
-mailboxes =INBOX =archive =archive.bills =archive.payments
+mailboxes =INBOX =archive =archive.bills =archive.purchases
 set imap_check_subscribed
 
 
