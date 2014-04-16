@@ -12,4 +12,5 @@ cmd? ~/.i3/background
 cmd? xfce4-power-manager
 cmd? xfce4-volumed
 
+cmd? ~/.bin/setup_external_monitor
 cmd? ~/.i3/startup.local
