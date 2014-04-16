@@ -94,7 +94,8 @@ bindsym $mod+Control+n $input -F 'workspace "%s"' -P 'Create workspace: '
 bindsym $mod+Shift+n $exec_script "~/.i3/zenity-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
 
 # mod+Enter to create a new workspace
-bindsym $mod+Return exec  ~/.i3/make-new-workspace
+bindsym $mod+Return exec  ~/.i3/make-new-workspace 'workspace %s'
+bindsym $mod+shift+Return exec  ~/.i3/make-new-workspace 'move container to workspace %s' 'workspace %s'
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
