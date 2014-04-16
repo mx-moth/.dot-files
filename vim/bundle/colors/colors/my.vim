@@ -59,7 +59,7 @@ highlight DiffDelete ctermbg=210 ctermfg=210
 highlight DiffChange ctermbg=136 ctermfg=black
 highlight DiffText ctermbg=202 ctermfg=black cterm=NONE
 
-highlight DiffChange ctermbg=153 ctermfg=black
+highlight DiffChange ctermbg=153 ctermfg=black cterm=NONE
 highlight DiffText ctermbg=105 ctermfg=black cterm=NONE
 
 highlight SpecialKey ctermfg=239
