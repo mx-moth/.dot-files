@@ -192,6 +192,8 @@ bindsym $mod+shift+slash $exec_cwd urxvt -geometry 80x25 -name 'popup' -title 'p
 
 # Start some apps using shortcuts
 bindsym $mod+Shift+f $exec_cwd thunar
+bindsym Print exec --no-startup-id xfce4-screenshooter
+
 # Start some apps on a workspace
 bindsym $mod+Shift+c $run_on_workspace '🌐' chromium
 bindsym $mod+Shift+h $run_on_workspace '💬' hipchat
