@@ -69,6 +69,8 @@ alias yeaaaaaaah='printf "\e[%dm%s\e[0m %s\n" 32 "•" "(⌐■_■)"'
 alias flip-table='printf "\e[%dm%s\e[0m %s\n" 31 "•" "(╯°□°)╯ ┻━┻"'
 alias yn='yeaaaaaaah || flip-table'
 
+alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
+
 
 # Handy functions
 # ---------------
