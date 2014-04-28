@@ -6,7 +6,7 @@ URxvt*.foreground:        [100]#B2B2B2
 ! Terminus font, installed from apt,
 ! X11 Unicode font, from http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 ! Monospace, from debian core
-URxvt*.font:              xft:Terminus:size=12,xft:Symbola:size=16,-misc-fixed-medium-r-*-*-15-*-*-*-*-*-iso10646-*,xft:Monospace:size=12:antialias=true
+URxvt*.font:              xft:Terminus:size=12,xft:Symbola,-misc-fixed-medium-r-*-*-15-*-*-*-*-*-iso10646-*,xft:Monospace:size=12:antialias=true
 URxvt*.xftAutoHint:       true
 URxvt*.letterSpace:       0
 
