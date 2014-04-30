@@ -196,6 +196,7 @@ bindsym $mod+shift+slash $exec_cwd urxvt -geometry 80x25 -name 'popup' -title 'p
 # for_window [class="URxvt"] border 1pixel
 
 # Start some apps using shortcuts
+bindsym $mod+c exec chromium
 bindsym $mod+Shift+f $exec_cwd thunar
 bindsym Print exec --no-startup-id xfce4-screenshooter
 
