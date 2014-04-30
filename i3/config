@@ -171,7 +171,7 @@ force_display_urgency_hint 500 ms
 
 # Start i3bar to display a workspace bar
 bar {
-	status_command  ~/.i3/status-bar
+	status_command python3 ~/.i3/status.py
 	position top
 	tray_output primary
 	font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
