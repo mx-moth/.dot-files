@@ -162,6 +162,11 @@ client.focused_inactive #111111 #455969 #cccccc #484e50
 client.unfocused        #555555 #666666 #cccccc #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
+client.focused          #000000 #000000 #ffffff #2e9ef4
+client.focused_inactive #111111 #333333 #cccccc #484e50
+client.unfocused        #111111 #333333 #cccccc #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
 force_display_urgency_hint 500 ms
 
 # Start i3bar to display a workspace bar
