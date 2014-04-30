@@ -21,7 +21,8 @@ alias pxclip='tee >( xclip -selection "clipboard" )'
 alias noop='echo -n ""'
 
 # Use like `command > output-from-command-`datestamp``
-alias datestamp='date "+%Y-%m-%d-%H%m"'
+alias datestamp='date "+%Y-%m-%d"'
+alias datetimestamp='date "+%Y-%m-%d-%H%m"'
 
 # Start a simple static file server
 alias serve="python -mSimpleHTTPServer"
