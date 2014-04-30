@@ -1,0 +1,32 @@
+[extensions]
+color =
+pager =
+mq =
+record =
+graphlog =
+
+[color]
+status.modified = green
+status.added = green bold
+status.removed = red
+status.deleted = red bold
+status.unknown = none
+status.ignored = black
+
+[ui]
+username = Tim Heap <tim@takeflight.com.au>
+ignore = $HOME/.hg/hgignore
+merge = vimdiff
+
+[alias]
+hist = glog --style=$HOME/.hg/format-short-graph.txt -r "not closed()"
+
+[pager]
+pager = LESS='FRXS' less
+attend = help, annotate, cat, diff, export, glog, log, qdiff, hist
+
+[merge-tools]
+vimdiff.executable = vim
+vimdiff.args = -d $base $local $output $other -c "wincmd J"
+
+%include ~/.hgrc.local
