@@ -23,6 +23,6 @@ echo -n "${BLOCKS:$CAPACITY_8:1}"
 echo -n "${BASE_COLOUR} "
 
 POWER_NOW=`cat "$BAT_PATH/power_now"`
-echo -n "$(( $POWER_NOW / (1024 ** 2) ))W "
+echo -n "$(( $POWER_NOW / (1000 ** 2) ))W "
 
 echo ''
