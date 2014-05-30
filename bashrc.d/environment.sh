@@ -2,12 +2,8 @@
 # ------------------------------
 # PATH is set in ~/.profile
 
-# Thats where I live!
-export TZ='Australia/Hobart'
-
-# Yay vim
-export VISUAL='/usr/bin/vim'
-export EDITOR='/usr/bin/vim'
+# Source in some reused environment variables, incase we are SSHing in
+source ~/.xsessionrc
 
 # less: Quit if little text, Colours, fold, do not clear screen
 export LESS='FRSX'
