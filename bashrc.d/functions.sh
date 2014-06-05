@@ -118,13 +118,14 @@ function nullinate() {
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
 function ls-parents() {
 	path=$( readlink -em ${1:-$( pwd )} )
-	paths=("$path")
+	paths="$path"
+
 	while [[ $path != '/' ]] ; do
 		path=$( dirname "$path" )
-		paths+=("$path")
+		paths=$"$path\0$paths"
 	done
 
-	nullinate "${paths[@]}" | xargs -0 ls -ld
+	echo -ne "$paths" | xargs -0 ls -ld
 }
 
 # Launch a program, ignoring stdin, stdout, stderr
