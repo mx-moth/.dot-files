@@ -1,6 +1,3 @@
-[user]
-	name = Tim Heap
-	email = tim@timheap.me
 [color]
 	ui = auto
 	diff = auto
@@ -60,3 +57,5 @@
 	status = true
 [push]
 	default = nothing
+[include]
+	path = ~/.gitconfig.local  # Put your credentials in here
