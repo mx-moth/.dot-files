@@ -8,6 +8,7 @@ function cmd? {
 ( cmd? compton || cmd? xcompmgr ) &
 
 cmd? nm-applet
+cmd? cmst --minimized || cmd? connman-ui-gtk
 cmd? ~/.i3/background
 cmd? xfce4-power-manager
 cmd? xfce4-volumed
