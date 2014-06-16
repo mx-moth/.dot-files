@@ -24,7 +24,7 @@ function cwdterm() {
 	  fi
 	fi
 
-	if [ -n "$CWD" ]; then
+	if [ -n "$CWD" ] && [ "$CWD" != "/" ]; then
 	  cd "$CWD" && exec "$CMD" "$@" &
 	else
 	  cd ~ && exec "$CMD" "$@" &
