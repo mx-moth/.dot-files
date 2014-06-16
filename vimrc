@@ -228,7 +228,7 @@ if exists("+showtabline")
 			let buftype = getbufvar(bufnr, 'buftype')
 
 			let l:filetype = getbufvar(bufnr, '&filetype')
-			let transform_fn = 'g:'.l:filetype.'_filename_transform'
+			let transform_fn = 'g:FilenameTransform_'.l:filetype
 
 			if buftype == 'nofile' && file =~ '\/.'
 				let file = substitute(file, '.*\/\ze.', '', '')

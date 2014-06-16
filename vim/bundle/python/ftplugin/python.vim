@@ -48,7 +48,7 @@ setlocal foldmethod=expr
 setlocal foldexpr=GetPythonFold(v:lnum)
 setlocal foldtext=PythonFoldText()
 
-function! g:python_filename_transform(file)
+function! g:FilenameTransform_python(file)
   let l:tail = fnamemodify(a:file, ':p:t')
   if l:tail == '__init__.py'
     return fnamemodify(a:file, ':p:h:t') . '/⊥'
