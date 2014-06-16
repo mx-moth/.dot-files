@@ -654,7 +654,7 @@ au FileType erlang setlocal expandtab
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output$',
+	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output\|^var$',
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
