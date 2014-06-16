@@ -12,7 +12,7 @@ endif
 "colorscheme default
 let g:colors_name = "my"
 
-highlight Normal  ctermfg=gray ctermbg=None guifg=#ffffff guibg=#000000
+highlight Normal  ctermfg=gray ctermbg=None guifg=#ffffff guibg=#111122
 
 " Pinky values for values
 highlight Constant  ctermfg=165 ctermbg=None
@@ -94,64 +94,6 @@ highlight Folded ctermfg=5 ctermbg=0
 " * colour 117 (bright) for focused items
 " * colour 27 (mid) for other items
 " * colour 17 (dark) for filler
-
-
-function! SourceColours()
-	" The environment variables are not always present, for example if vim is
-	" run via sudo. This script loads the environment variables from the
-	" colours.sh script.
-	let l:exportRe = '^\s*export\s\+'
-	let l:colours = readfile($HOME."/.bashrc.d/colours.sh")
-	for line in colours
-		if l:line =~# l:exportRe
-			let l:envSet = substitute(l:line, l:exportRe, "let $", "")
-			exec l:envSet
-		endif
-	endfor
-endfunction
-if exists($VIM_ACTIVE) == 0
-	call SourceColours()
-endif
-
-function! SetColour(name, opts)
-	let l:opt_string = ''
-	for [key, val] in items(a:opts)
-		let opt_string .= ' ' . key . '=' . val
-	endfor
-	exec "highlight "a:name." ".opt_string
-endfunction
-
-function! SetFgColour(name, fg)
-	call SetColour(a:name, {'ctermfg': a:fg, 'cterm': 'NONE', 'ctermbg': 'NONE'})
-endfunction
-
-function! SetBgColour(name, bg)
-	call SetColour(a:name, {'ctermfg': '016', 'cterm': 'NONE', 'ctermbg': a:bg})
-endfunction
-
-let active = $VIM_ACTIVE
-let inactive = $VIM_INACTIVE
-let fill = $VIM_FILL
-call SetBgColour("StatusLine", active)
-call SetBgColour("TabLineSel", active)
-call SetBgColour("User1", active)
-
-call SetBgColour("StatusLineNC", inactive)
-call SetBgColour("TabLine", inactive)
-call SetBgColour("User2", inactive)
-
-call SetBgColour("TabLineFill", fill)
-call SetBgColour("User3", fill)
-
-call SetFgColour("TabLineLeft", active)
-call SetFgColour("VertSplit", fill)
-
-call SetColour("TabLineInvert", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
-
-call SetFgColour("LineNr", inactive)
-call SetColour("FoldColumn", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
-
-call SetFgColour("conceal", inactive)
 
 " only for vim 5
 if has("unix")

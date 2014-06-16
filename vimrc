@@ -61,15 +61,15 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Improved status line: always visible, shows [+] modification, read only
-" status, git branch, filetype, username, hostname
+" status, git branch, filetype
 set laststatus=2
 set statusline=                        " Woo status line
 set statusline+=\ %<%-5.80f            " Filename
-set statusline+=\ %#User2#\            " Less important shit
+set statusline+=\ %#StatusLineDull#\   " Less important shit
 set statusline+=%y                     " Filetype
 set statusline+=%h%m%r%w               " flags
 set statusline+=%{fugitive#statusline()} " Git flags
-set statusline+=\ %#User3#%=%#User2#\  " Fill to RHS
+set statusline+=\ %#StatusLineFill#%=%#StatusLineDull#\  " Fill to RHS
 set statusline+=\ %4b│0x%-4B\ ╱        " Character number
 set statusline+=\ %P\ of\ %L\ ╱        " Position
 set statusline+=\ %(%4.l:%-4c%)        " Line/column
@@ -77,14 +77,14 @@ set statusline+=\                      " Woo end
 
 " Appearance settings
 set background=dark
-colorscheme my
 set number          " Numbers in the margin
 set showmatch       " Show matching brackets.
 set diffopt=filler,foldcolumn:0
+colorscheme my
 
 " Customise the colour scheme. This probably doesnt belong in the real colour
 " scheme file, as it is kind of a dirty hack
-highlight ExtraWhitespace ctermbg=52 ctermfg=196
+highlight ExtraWhitespace ctermbg=52 ctermfg=196 guibg=#ff0000 guibg=#000000
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
