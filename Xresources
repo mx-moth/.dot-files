@@ -6,7 +6,7 @@ URxvt*.foreground:        [100]#B2B2B2
 ! Terminus font, installed from apt,
 ! X11 Unicode font, from http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 ! Monospace, from debian core
-URxvt*.font:              xft:Terminus:size=12,xft:Symbola,-misc-fixed-medium-r-*-*-15-*-*-*-*-*-iso10646-*,xft:Monospace:size=12:antialias=true
+URxvt*.font:              xft:Terminess Powerline:size=14;xft:Symbola:antialias=true,-misc-fixed-medium-r-*-*-15-*-*-*-*-*-iso10646-*,xft:Monospace:size=12:antialias=true
 URxvt*.xftAutoHint:       true
 URxvt*.letterSpace:       0
 
@@ -30,6 +30,7 @@ URxvt*pointerBlankDelay:  987654321
 
 URxvt*cutchars:           "`\"'&()*;<=>?@[]^\\{|}│"
 URxvt*urgentOnBell:       true
+URxvt.iso14755 : false
 
 
 URxvt.keysym.Control-Up:    \033[1;5A
@@ -42,9 +43,15 @@ URxvt.keysym.M-Up:          \033[1;3A
 URxvt.keysym.M-Left:        \033[1;3D
 URxvt.keysym.M-Right:       \033[1;3C
 
-
+URxvt.perl-ext-common: default,matcher,clipboard
 ! Clickable URLs
-URxvt.perl-ext-common: default,matcher
 URxvt.url-launcher: x-www-browser
 URxvt.matcher.button: 1
 URxvt.colorUL: #4682B4
+
+! Clipboard integration
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.keysym.C-C: perl:clipboard:copy
+URxvt.keysym.C-V: perl:clipboard:paste
+URxvt.keysym.C-A-V: perl:clipboard:paste_escaped
