@@ -361,3 +361,24 @@ function movie-time() {
 	xset s noblank
 	xset -dpms
 }
+
+function ips() {
+	local interfaces=()
+	local current_interface=""
+	local active=false
+	local nl=$'\n'
+	local IFS="$nl"
+	local line
+	for line in $( ip addr ) ; do
+		if [[ "$line" == "    "* ]] ; then
+			if [[ "$line" == "    inet"* ]] ; then
+				ip=$( sed 's!^    inet6\? \(.*\)/.*!\1!' <<< "$line" ) ;
+				interfaces+=("$current_interface $ip")
+			fi
+		else
+			current_interface=$( cut -d' ' -f2 <<< "$line" )
+		fi
+	done
+
+	for interface in "${interfaces[@]}" ; do echo "$interface" ; done | column -t
+}
