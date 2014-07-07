@@ -65,6 +65,9 @@ highlight DiffText ctermbg=105 ctermfg=black cterm=NONE
 highlight SpecialKey ctermfg=239
 
 highlight Folded ctermfg=5 ctermbg=0
+highlight SignColumn ctermbg=None
+highlight SyntasticErrorSign ctermbg=red ctermfg=black
+highlight SyntasticWarningSign ctermbg=yellow ctermfg=black
 " highlight DiffText	ctermfg=grey
 " highlight diffAdded	ctermfg=grey
 " highlight diffBDiffer	ctermfg=grey

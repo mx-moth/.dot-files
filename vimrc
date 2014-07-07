@@ -63,17 +63,6 @@ vnoremap / /\v
 " Improved status line: always visible, shows [+] modification, read only
 " status, git branch, filetype
 set laststatus=2
-set statusline=                        " Woo status line
-set statusline+=\ %<%-5.80f            " Filename
-set statusline+=\ %#StatusLineDull#\   " Less important shit
-set statusline+=%y                     " Filetype
-set statusline+=%h%m%r%w               " flags
-set statusline+=%{fugitive#statusline()} " Git flags
-set statusline+=\ %#StatusLineFill#%=%#StatusLineDull#\  " Fill to RHS
-set statusline+=\ %4b│0x%-4B\ ╱        " Character number
-set statusline+=\ %P\ of\ %L\ ╱        " Position
-set statusline+=\ %(%4.l:%-4c%)        " Line/column
-set statusline+=\                      " Woo end
 
 " Appearance settings
 set background=dark
@@ -102,7 +91,7 @@ set nowrap
 set linebreak
 
 set list
-set listchars=tab:│\ ,extends:❯,precedes:❮,trail:␣
+set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_
 
 set foldlevelstart=99
 set fillchars=vert:║,fold:═
@@ -170,165 +159,6 @@ augroup ResizeRebalance
 	autocmd VimResized * call ResizeRebalance()
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Tab line customisation
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Rename tabs to show tab# and # of viewports
-if exists("+showtabline")
-
-	if !exists('vim_tabbar_title')
-		if exists('$IS_REMOTE_CONNECTION')
-			let g:vim_tabbar_title = hostname()
-		else
-			let g:vim_tabbar_title = ''
-		endif
-	endif
-
-	function! SetTabbarTitle()
-		let g:vim_tabbar_title=input('vim title: ', g:vim_tabbar_title)
-		set tabline+=
-	endfunction
-
-	noremap <silent> <Leader>c :call SetTabbarTitle()<Cr>
-
-	" Count number of characters in a multibyte string. Use technique from
-	" :help strlen().
-	function! s:mbstrlen(s)
-		return strlen(substitute(a:s, ".", "x", "g"))
-	endfunction
-
-	function! MyTabLine()
-		let tab_line = '%#TabLineLeft#'
-
-		if g:vim_tabbar_title != ''
-			let tab_bar_title = g:vim_tabbar_title . ' '
-		else
-			let tab_bar_title = ''
-		endif
-		let tab_line .= tab_bar_title
-
-		let selected_tab = tabpagenr()
-		let tab_count = tabpagenr('$')
-		let tab_list = []
-
-		let total_length = 0
-		let max_length = 0
-
-		let i = 1
-		while i <= tab_count
-			let num_windows = tabpagewinnr(i, '$')
-			let selected = i == selected_tab
-
-			let winnr = tabpagewinnr(i)
-			let buflist = tabpagebuflist(i)
-			let bufnr = buflist[winnr - 1]
-
-			" Work out the tab title
-			let file = bufname(bufnr)
-			let buftype = getbufvar(bufnr, 'buftype')
-
-			let l:filetype = getbufvar(bufnr, '&filetype')
-			let transform_fn = 'g:FilenameTransform_'.l:filetype
-
-			if buftype == 'nofile' && file =~ '\/.'
-				let file = substitute(file, '.*\/\ze.', '', '')
-			elseif exists('*'.transform_fn)
-				let file = call(transform_fn, [file])
-			else
-				let file = fnamemodify(file, ':p:t')
-			endif
-			if file == ''
-				let file = '∅'
-			endif
-
-			" Check if any buffer in the tab is modified
-			let l:modified = 0
-			for l:b in l:buflist
-				let l:modified = modified || getbufvar(l:b, "&mod")
-			endfor
-
-			" Work out the length of the tab
-			let length = 0
-			let length += 4  " before padding, │, selected ()
-			let length += strlen(i)
-			let length += s:mbstrlen(file)
-			let length += (modified ? 1 : 0)
-			let length += (num_windows > 1 ? 1 + strlen(num_windows) : 0)
-
-			let total_length += length
-			let max_length = max([max_length, s:mbstrlen(file)])
-
-			" Construct the tab string. Tab consists of:
-			" * Spacing
-			" * Tab number for mouse
-			" * current tab marker + styles
-			" * filename
-			" * modified flag
-			" * window count
-			" * closing bits
-			let before = ''
-			let before .= '%' . i . 'T'
-			let before .= (selected
-						\ ? '%#TabLineSel#' . '❨'
-						\ : (modified ? '%#TabLineInvert#' : '%#TabLine#') . ' ')
-			let before .= i . '│'
-
-			let after = ''
-			let after .= (modified ? '✦' : '')
-			let after .= (num_windows > 1 ? '×' . num_windows : '')
-			let after .= (selected ? '❩' : ' ')
-			let after .= "%T%#TabLineFill# "
-
-			" Add all this to the list
-			call add(tab_list, {
-			\	'before': before,
-			\	'file': file,
-			\	'after': after,
-			\})
-
-			let i = i + 1
-		endwhile
-
-		" Trim the filename portion of the tab down if the tab line will be
-		" longer than can fit in the terminal
-
-		" TODO strlen(tab_bar_title) will be incorrect, as the tab_bar_title
-		" may have interpolated content
-		let max_width = &columns - s:mbstrlen(tab_bar_title)
-
-		let i = 0
-		let found_long = 0
-		while total_length > max_width && max_length > 1
-			let tab_info = tab_list[i]
-			let length = s:mbstrlen(tab_info['file'])
-			if length >= max_length
-				let tab_info['file'] = tab_info['file'][:-2]
-				let total_length = total_length - 1
-
-				if !found_long && length == max_length
-					let max_length -= 1
-					let found_long = 1
-				endif
-			endif
-
-			let i = (i + 1) % tab_count
-			if i == 0
-				let found_long = 0
-			endif
-		endwhile
-
-		for tab_info in tab_list
-			let tab_line .= tab_info['before'] . tab_info['file'] . tab_info['after']
-		endfor
-
-		let tab_line .= '%='
-
-		return tab_line
-	endfunction
-
-	set showtabline=2
-	set tabline=%!MyTabLine()
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -775,3 +605,49 @@ let g:rainbow_conf = {
 \}
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nmap <F8> :TagbarToggle<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:syntastic_error_symbol = ''
+let g:syntastic_warning_symbol = '>>'
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_auto_jump = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_always_populate_loc_list = 1
+
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore=E501'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Airline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#close_symbol = ''
+function! AirlineInit()
+	let g:airline_section_x = airline#section#create(['%4b│0x%-4B'])        " Character number
+	let g:airline_section_y = airline#section#create(['%P of %L'])        " Position
+	let g:airline_section_z = airline#section#create(['%(%2.l:%-3c%'])        " Line/column
+endfunction
+autocmd VimEnter * call AirlineInit()
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ '' : 'V',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ }
