@@ -257,7 +257,7 @@ endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open multiple files in tabs/windows in one command
-" 
+"
 " Usage:
 "   :Etabs module/*.py
 "   :Ewindows client.h client.cpp
@@ -484,7 +484,7 @@ au FileType erlang setlocal expandtab
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': '\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output\|^var$',
+	\ 'dir': '^\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output\|^var$',
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
@@ -563,10 +563,10 @@ vnoremap <leader>bb :call <sid>DataUriSelectedFilename()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! <sid>ScratchBuffer()
-	  botright new
-	  resize 10
-	  setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile
-	  setlocal nowrap number
+	botright new
+	resize 10
+	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile
+	setlocal nowrap number
 endfunction
 
 nnoremap <leader>s :call <sid>ScratchBuffer()<CR>
