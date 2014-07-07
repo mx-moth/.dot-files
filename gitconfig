@@ -56,6 +56,6 @@
 [pager]
 	status = true
 [push]
-	default = nothing
+	default = current
 [include]
 	path = ~/.gitconfig.local  # Put your credentials in here
