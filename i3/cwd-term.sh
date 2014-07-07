@@ -15,19 +15,19 @@ function cwdterm() {
 
 	# Get last child process (shell, vim, etc)
 	if [ -n "$PID" ]; then
-	  TREE=$(pstree -lpnA "$PID" | tail -n 1)
-	  PID=$(echo "$TREE" | awk -F'---' '{print $NF}' | sed -re 's/[^0-9]//g')
+		TREE=$(pstree -lpnA "$PID" | tail -n 1)
+		PID=$(echo "$TREE" | awk -F'---' '{print $NF}' | sed -re 's/[^0-9]//g')
 
-	  # If we find the working directory, run the command in that directory
-	  if [ -e "/proc/$PID/cwd" ]; then
-		CWD=$(readlink "/proc/$PID/cwd")
-	  fi
+		# If we find the working directory, run the command in that directory
+		if [ -e "/proc/$PID/cwd" ]; then
+			CWD=$(readlink "/proc/$PID/cwd")
+		fi
 	fi
 
 	if [ -n "$CWD" ] && [ "$CWD" != "/" ]; then
-	  cd "$CWD" && exec "$CMD" "$@" &
+		cd "$CWD" && exec "$CMD" "$@" &
 	else
-	  cd ~ && exec "$CMD" "$@" &
+		cd ~ && exec "$CMD" "$@" &
 	fi
 }
 
