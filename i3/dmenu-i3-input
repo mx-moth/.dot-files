@@ -12,21 +12,22 @@ eval set -- "$ARGS";
 
 i3msG='i3-msg'
 format='%s'
-zenity_opts=('--entry')
+dmenu_opts=()
+input=/dev/null
 
 while true; do case "$1" in
 -s) i3msg="$i3msg $1 $2" ; shift 2 ;;
 -F) format="$2"
 	shift 2
 	;;
--l) limit=$2 ; shift 2 ;;
--P) zenity_opts+=("--text" "$2")
+-P) dmenu_opts+=("-p" "$2")
 	shift 2
 	;;
 --) shift ; break ;;
+*) echo "Unknown argument '$1'" >&2 ; exit 1 ;;
 esac ; done
 
-out=$( zenity "${zenity_opts[@]}" )
+out=$( dmenu < "$input" "${dmenu_opts[@]}" )
 if [ $? -eq 0 ] && [[ -n "$out" ]] ; then
 	i3-msg "${format//%s/$out}"
 fi

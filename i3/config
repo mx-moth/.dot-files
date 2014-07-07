@@ -11,7 +11,9 @@ set $exec_script exec --no-startup-id
 set $exec_cwd exec --no-startup-id ~/.i3/cwd-term.sh
 set $run_on_workspace exec --no-startup-id ~/.i3/run-on-workspace
 set $switch_or_run exec --no-startup-id ~/.i3/switch-or-run
-set $input exec --no-startup-id ~/.i3/zenity-i3-input
+set $input exec --no-startup-id ~/.i3/dmenu-i3-input
+
+set $term urxvt
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -65,10 +67,10 @@ $exec_script i3-msg workspace 🌐
 bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+Control+minus scratchpad show
-# starting a specially named term automatically 
-$exec_script urxvt -name scratchpad -e /usr/bin/vim ~/.scratchpad
+# starting a specially named term automatically
+$exec_script $term -t scratchpad -e /usr/bin/vim ~/.scratchpad
 # move this to scratchpad, if active
-for_window [class="URxvt" instance="scratchpad"] move scratchpad
+for_window [class=$term instance="scratchpad"] move scratchpad
 
 bindsym $mod+Control+Left move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
@@ -91,7 +93,7 @@ bindsym $mod+n $input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 # mod+Control+N to create a new named workspace
 bindsym $mod+Control+n $input -F 'workspace "%s"' -P 'Create workspace: '
 # mod+Shift+N to move container to new named workspace
-bindsym $mod+Shift+n $exec_script "~/.i3/zenity-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
+bindsym $mod+Shift+n $exec_script "~/.i3/dmenu-i3-input -F 'move container to workspace %s; workspace %s' -P 'Move to workspace:'"
 
 # mod+Enter to create a new workspace
 bindsym $mod+Return exec  ~/.i3/make-new-workspace 'workspace %s'
@@ -190,10 +192,8 @@ bar {
 # ---------
 
 # start a terminal
-bindsym $mod+slash $exec_cwd urxvt
-bindsym $mod+shift+slash $exec_cwd urxvt -geometry 80x25 -name 'popup' -title 'popup'
-# Make all urxvts use a 1-pixel border
-# for_window [class="URxvt"] border 1pixel
+bindsym $mod+slash $exec_cwd $term
+bindsym $mod+shift+slash $exec_cwd $term -title 'popup' -g 80x25
 
 # Start some apps using shortcuts
 bindsym $mod+c exec chromium
@@ -204,9 +204,9 @@ bindsym Print exec --no-startup-id xfce4-screenshooter
 bindsym $mod+Shift+c $run_on_workspace '🌐' chromium
 bindsym $mod+Shift+h $run_on_workspace '💬' hipchat
 bindsym $mod+Shift+s $run_on_workspace '🚂' steam
-bindsym $mod+Shift+p $switch_or_run '♫' urxvt -name ncmpcpp -e ncmpcpp
-bindsym $mod+Shift+m $switch_or_run '@' urxvt -name mutt -e mutt
-bindsym $mod+Shift+d $switch_or_run '⚙' urxvt -cd "$HOME/.dot-files"
+bindsym $mod+Shift+p $switch_or_run '♫' $term -t ncmpcpp -e ncmpcpp
+bindsym $mod+Shift+m $switch_or_run '@' $term -t mutt -e mutt
+bindsym $mod+Shift+d $switch_or_run '⚙' $term -cd "$HOME/.dot-files"
 
 # Make some things float by default
 for_window [class="Gpick"] floating enable # GPick
@@ -214,7 +214,7 @@ for_window [title="File Operation Progress"] floating enable # Thunar
 for_window [class="Pavucontrol"] floating enable # PulseAudio volume control
 for_window [class="Steam" title="* - Properties"] floating enable
 for_window [class="Steam"] new_float pixel 1
-for_window [class="URxvt" title="popup"] floating enable
+for_window [title="popup"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="qemu"] floating enable
 for_window [window_role="pop-up"] floating enable
