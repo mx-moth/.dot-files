@@ -480,12 +480,14 @@ let g:python_no_builtin_highlight = 1
 " Erlang settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 au FileType erlang setlocal expandtab
+let g:erlangCompletionGrep='zgrep'
+let g:erlangManSuffix='erl\.gz'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': '^\.git$\|\.svn$\|\.hg$\|build$\|venv\|^output\|^var$',
+	\ 'dir': '^\.git$\|\.svn$\|\.hg$\|build$\|venv\|node_modules\|^output\|^var$',
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
