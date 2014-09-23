@@ -13,7 +13,7 @@
 [format]
 	pretty = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d
 [alias]
-	hist = log --graph --date=short --all --date-order
+	hist = !git log --graph --date=short --date-order ${@:---all}
 	sync = !git pull --rebase && git push
 	wdiff = diff --color-words
 	st = status -sb
