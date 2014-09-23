@@ -36,7 +36,7 @@ function prompt-level() {
 	host='@\[\e[38;5;13m\]\h\[\e[0m\]'
 	path=':\[\e[38;5;202m\]\w\[\e[0m\]'
 	vcprompt='$( ${VCPROMPT} -f "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")'
-	venv='$( if [[ x"$VIRTUAL_ENV" != x ]] ; then dir="${VIRTUAL_ENV%%/venv}"; dir="${dir##*/}" ; echo "⚒\[\e[38;5;51m\]$dir\[\e[0m\]" ; fi )'
+	venv='$( if [[ x"$VENV_DIR" != x ]] ; then dir="${VENV_DIR##*/}" ; echo "⚒\[\e[38;5;51m\]$dir\[\e[0m\]" ; fi )'
 	running='$( ! [ -z "$_PARENT_PROCESS_LIST" ] && echo "↳\[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\]" )'
 	level=$1
 	case $level in

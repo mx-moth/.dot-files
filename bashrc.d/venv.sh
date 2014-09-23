@@ -8,32 +8,50 @@ function venv.get_filesystem() {
 
 # Quickly activate a venv in a standard location
 function ++venv() {
-	cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
-	path="${1:-"$cwd"}"
-	locations=( 'venv' '.hsenv_main' )
+	local cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
+	local dir="${1:-"$cwd"}"
+	local locations=( 'venv/bin' '.hsenv_main/bin' '.cabal-sandbox/bin' 'node_modules/.bin' )
 
-	initial_filesystem="$( venv.get_filesystem "$path" )"
+	local initial_filesystem="$( venv.get_filesystem "$dir" )"
 
-	while ! [ -z "$path" ] ; do
+	while ! [ -z "$dir" ] ; do
 
-		for location in "${locations[@]}" ; do
-			if [[ -d "$path"/$location ]] ; then
-				echo "Activating $path/$location"
-				source "$path"/$location/bin/activate
-				return 0
-			fi
-		done
+		local found=false
+		local env=()
+		local path="$PATH"
 
-		new_path=$( dirname "$path" )
-		if [ "$initial_filesystem" != "$( venv.get_filesystem "$new_path" )" ] ; then
-			echo  "Could not find venv to activate, crossed file system boundary at $path" >&2
+		if [[ -d "$dir/venv" ]] ; then
+			echo "Using Python virtualenv: $dir/venv"
+			env+=("VIRTUAL_ENV=$dir/venv")
+			path="$dir/venv/bin:$path"
+			found=true
+		fi
+		if [[ -d "$dir/node_modules" ]] ; then
+			echo "Using node envionment: $dir/node_modules"
+			path="$dir/node_modules/.bin:$path"
+			found=true
+		fi
+		if [[ -d "$dir/.cabal-sandbox" ]] ; then
+			echo "Using Haskell sandbox: $dir/.cabal-sandbox"
+			path="$dir/.cabal-sandbox/bin:$path"
+			found=true
+		fi
+
+		if $found ; then
+			env VENV_DIR="$dir" PATH="$path" "${env[@]}" $SHELL
+			return 0
+		fi
+
+		new_dir=$( dirname "$dir" )
+		if [ "$initial_filesystem" != "$( venv.get_filesystem "$new_dir" )" ] ; then
+			echo  "Could not find venv to activate, crossed file system boundary at $dir" >&2
 			return 2
 		fi
-		if [ "$path" == "/" ] && [ "$new_path" == "/" ] ; then
+		if [ "$dir" == "/" ] && [ "$new_dir" == "/" ] ; then
 			echo 'Could not find venv to activate' >&2
 			return 1
 		fi
-		path="$new_path"
+		dir="$new_dir"
 	done
 
 	echo 'Could not find venv to activate' >&2
@@ -42,9 +60,5 @@ function ++venv() {
 
 # Deacticate a venv, assuming it is standard and uses `deactivate()`
 function --venv() {
-	if command -V 'deactivate' &>/dev/null ; then
-		deactivate
-	elif command -V 'deactivate_hsenv' &>/dev/null ; then
-		deactivate_hsenv
-	fi
+	exit
 }
