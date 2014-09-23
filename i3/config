@@ -67,10 +67,6 @@ $exec_script i3-msg workspace 🌐
 bindsym $mod+Shift+minus move scratchpad
 # Show the first scratchpad window
 bindsym $mod+Control+minus scratchpad show
-# starting a specially named term automatically
-$exec_script $term -t scratchpad -e /usr/bin/vim ~/.scratchpad
-# move this to scratchpad, if active
-for_window [class=$term instance="scratchpad"] move scratchpad
 
 bindsym $mod+Control+Left move workspace to output left
 bindsym $mod+Control+Right move workspace to output right
