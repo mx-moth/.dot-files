@@ -89,6 +89,7 @@ set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=40
 set nowrap
 set linebreak
+set formatoptions+=l
 
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_
@@ -245,12 +246,12 @@ function! HardMode(...)
 		let width = 79
 	end
 
+	setlocal textwidth=0
 	if width == 0
-		setlocal textwidth=0
+		setlocal colorcolumn=0
 	else
-		exec "setlocal textwidth=".l:width
 		if exists("+colorcolumn")
-			setlocal colorcolumn=+1
+			exec "setlocal colorcolumn=" . (l:width + 1)
 		endif
 	endif
 endfunction
