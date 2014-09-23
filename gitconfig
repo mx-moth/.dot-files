@@ -46,6 +46,7 @@
 	merge-to = "!f() { local DEST=$1 ; shift ; local CURRENT=`git rev-parse --abbrev-ref HEAD` && git checkout "$DEST" && git merge "$CURRENT" $@ && git checkout "$CURRENT"; unset CURRENT; }; f"
 	with = "!f() { local CURRENT=`git rev-parse --abbrev-ref HEAD` && git checkout $@  && bash && git checkout $CURRENT; }; f"
 	fuck-it = "! git add -A ; git commit -em 'fuck it, commit everything'"
+	add-pr = "!f() { local pr=$1 ; local remote=${2:-origin} ; git config --add remote.$remote.fetch +refs/pull/$pr/head:refs/remotes/$remote/pull/$pr ; }; f"
 [merge]
 	log = true
 [core]
