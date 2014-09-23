@@ -73,3 +73,9 @@
 [submodule "vim/bundle/airline"]
 	path = vim/bundle/airline
 	url = https://github.com/bling/vim-airline
+[submodule "vim/bundle/jade"]
+	path = vim/bundle/jade
+	url = https://github.com/digitaltoad/vim-jade
+[submodule "vim/bundle/purescript"]
+	path = vim/bundle/purescript
+	url = https://github.com/raichoo/purescript-vim.git
