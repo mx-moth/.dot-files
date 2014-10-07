@@ -15,11 +15,11 @@ status.ignored = black
 
 [ui]
 username = Tim Heap <tim@takeflight.com.au>
-ignore = $HOME/.hg/hgignore
+ignore = $HOME/.hgrc.d/hgignore
 merge = vimdiff
 
 [alias]
-hist = glog --style=$HOME/.hg/format-short-graph.txt -r "not closed()"
+hist = glog --style=$HOME/.hgrc.d/format-short-graph.txt -r "not closed()"
 
 [pager]
 pager = LESS='FRXS' less
