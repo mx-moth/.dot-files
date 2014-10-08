@@ -225,4 +225,4 @@ bindsym XF86AudioNext $mpc next
 bindsym XF86AudioPrev $mpc prev
 bindsym XF86AudioPlay $mpc toggle
 bindsym XF86AudioStop $mpc stop
-bindsym XF86Sleep $exec_script dbus-send --system  --print-reply --dest="org.freedesktop.UPower" /org/freedesktop/UPower org.freedesktop.UPower.Suspend
+bindsym XF86Sleep $exec_script systemctl suspend
