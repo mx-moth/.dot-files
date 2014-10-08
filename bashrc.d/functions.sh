@@ -320,19 +320,23 @@ function svc-restart() {
 	svc-up "$1"
 }
 
+export _font_size=""
+_adjust_font_size() {
+	if [ -z "$_font_size" ] ; then
+		_font_size=$( xrdb -query | grep URxvt.*font | cut -d'	' -f2 | grep -o '[0-9]\+' | head -n1 )
+	fi
+	_set_font_size $(( _font_size + $1 ))
+}
 _set_font_size() {
+	local font=$( xrdb -query | grep URxvt.*font | cut -d'	' -f2 )
+	local font_size=$( grep -o '[0-9]\+' <<<"$font" | head -n1 )
 	local font_size="$1"
 	_font_size=$font_size
 	echo "Setting font size to $font_size" >&2
-	printf '\33]50;%s%d\007' "xft:Terminus:pixelsize=" $font_size
+	printf '\33]50;%s%d\007' "$( sed <<<"$font" "s/[0-9]\+/$font_size/" )"
 }
-export _font_size=12
-++font() {
-	_set_font_size $(( $_font_size + 2 ))
-}
---font() {
-	_set_font_size $(( $_font_size - 2 ))
-}
+++font() { _adjust_font_size 2 ; }
+--font() { _adjust_font_size -2 ; }
 
 function adjust-font() {
 	while read -rsN1 char ; do
