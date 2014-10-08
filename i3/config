@@ -74,7 +74,8 @@ bindsym $mod+Control+Up move workspace to output up
 bindsym $mod+Control+Down move workspace to output down
 
 # Use mod + </> to switch outputs (monitors)
-bindsym $mod+comma focus output right
+bindsym $mod+comma focus output left
+bindsym $mod+period focus output right
 # Use mod + [/] to cycle workspaces
 bindsym $mod+bracketleft workspace prev_on_output
 bindsym $mod+bracketright workspace next_on_output
