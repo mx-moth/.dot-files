@@ -1,81 +1,81 @@
-[submodule "vim/bundle/coffee"]
-	path = vim/bundle/coffee
+[submodule "home/vim/bundle/coffee"]
+	path = home/vim/bundle/coffee
 	url = git://github.com/kchmck/vim-coffee-script.git
-[submodule "vim/bundle/sparkup"]
-	path = vim/bundle/sparkup
+[submodule "home/vim/bundle/sparkup"]
+	path = home/vim/bundle/sparkup
 	url = https://github.com/bingaman/vim-sparkup.git
-[submodule "vim/bundle/ack"]
-	path = vim/bundle/ack
+[submodule "home/vim/bundle/ack"]
+	path = home/vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "vim/bundle/fugitive"]
-	path = vim/bundle/fugitive
+[submodule "home/vim/bundle/fugitive"]
+	path = home/vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule "vim/bundle/gundo"]
-	path = vim/bundle/gundo
+[submodule "home/vim/bundle/gundo"]
+	path = home/vim/bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git
-[submodule "vim/bundle/unimpaired"]
-	path = vim/bundle/unimpaired
+[submodule "home/vim/bundle/unimpaired"]
+	path = home/vim/bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "vim/bundle/less"]
-	path = vim/bundle/less
+[submodule "home/vim/bundle/less"]
+	path = home/vim/bundle/less
 	url = https://github.com/groenewege/vim-less.git
-[submodule "vim/bundle/argtextobject"]
-	path = vim/bundle/argtextobject
+[submodule "home/vim/bundle/argtextobject"]
+	path = home/vim/bundle/argtextobject
 	url = https://github.com/inkarkat/argtextobj.vim.git
-[submodule "vim/bundle/css3"]
-	path = vim/bundle/css3
+[submodule "home/vim/bundle/css3"]
+	path = home/vim/bundle/css3
 	url = https://github.com/hail2u/vim-css3-syntax.git
-[submodule "vim/bundle/ctrlp"]
-	path = vim/bundle/ctrlp
+[submodule "home/vim/bundle/ctrlp"]
+	path = home/vim/bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim
-[submodule "vim/bundle/surround"]
-	path = vim/bundle/surround
+[submodule "home/vim/bundle/surround"]
+	path = home/vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "vim/bundle/pastebin"]
-	path = vim/bundle/pastebin
+[submodule "home/vim/bundle/pastebin"]
+	path = home/vim/bundle/pastebin
 	url = https://github.com/mattn/pastebin-vim.git
-[submodule "vim/bundle/css-color"]
-	path = vim/bundle/css-color
+[submodule "home/vim/bundle/css-color"]
+	path = home/vim/bundle/css-color
 	url = https://github.com/ap/vim-css-color.git
-[submodule "vim/bundle/repeat"]
-	path = vim/bundle/repeat
+[submodule "home/vim/bundle/repeat"]
+	path = home/vim/bundle/repeat
 	url = git://github.com/tpope/vim-repeat.git
-[submodule "vim/bundle/jedi"]
-	path = vim/bundle/jedi
+[submodule "home/vim/bundle/jedi"]
+	path = home/vim/bundle/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
-[submodule "vim/bundle/vdebug"]
-	path = vim/bundle/vdebug
+[submodule "home/vim/bundle/vdebug"]
+	path = home/vim/bundle/vdebug
 	url = https://github.com/joonty/vdebug.git
-[submodule "vim/bundle/rainbow"]
-	path = vim/bundle/rainbow
+[submodule "home/vim/bundle/rainbow"]
+	path = home/vim/bundle/rainbow
 	url = https://github.com/luochen1990/rainbow.git
-[submodule "vim/bundle/vimerl"]
-	path = vim/bundle/vimerl
+[submodule "home/vim/bundle/vimerl"]
+	path = home/vim/bundle/vimerl
 	url = https://github.com/oscarh/vimerl.git
-[submodule "vim/bundle/typescript"]
-	path = vim/bundle/typescript
+[submodule "home/vim/bundle/typescript"]
+	path = home/vim/bundle/typescript
 	url = https://github.com/leafgarland/typescript-vim.git
-[submodule "urxvt/urxvt-perls"]
-	path = urxvt/urxvt-perls
+[submodule "home/urxvt/urxvt-perls"]
+	path = home/urxvt/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
-[submodule "vim/bundle/javascript"]
-	path = vim/bundle/javascript
+[submodule "home/vim/bundle/javascript"]
+	path = home/vim/bundle/javascript
 	url = https://github.com/pangloss/vim-javascript.git
-[submodule "vim/bundle/tagbar"]
-	path = vim/bundle/tagbar
+[submodule "home/vim/bundle/tagbar"]
+	path = home/vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar
-[submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
+[submodule "home/vim/bundle/syntastic"]
+	path = home/vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "vim/bundle/markdown"]
-	path = vim/bundle/markdown
+[submodule "home/vim/bundle/markdown"]
+	path = home/vim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown.git
-[submodule "vim/bundle/airline"]
-	path = vim/bundle/airline
+[submodule "home/vim/bundle/airline"]
+	path = home/vim/bundle/airline
 	url = https://github.com/bling/vim-airline
-[submodule "vim/bundle/jade"]
-	path = vim/bundle/jade
+[submodule "home/vim/bundle/jade"]
+	path = home/vim/bundle/jade
 	url = https://github.com/digitaltoad/vim-jade
-[submodule "vim/bundle/purescript"]
-	path = vim/bundle/purescript
+[submodule "home/vim/bundle/purescript"]
+	path = home/vim/bundle/purescript
 	url = https://github.com/raichoo/purescript-vim.git

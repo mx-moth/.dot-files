@@ -1,7 +1,6 @@
 #!/bin/bash
 
-do_not_link=("config" "Readme.md" "docs" "create-links" "update-dot-files")
-
+do_not_link=("Readme.md" ".gitignore")
 
 here=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
@@ -60,8 +59,9 @@ link_files () {
 }
 
 
-link_files "$here" "$HOME" "." "${do_not_link[@]}"
+# Link ./home/* to ~/.*
+link_files "$here/home" "$HOME" "." "${do_not_link[@]}"
 
+# Link ./config/* to ~/.config/*
 mkdir -p "$HOME/.config"
-link_files "$here/config" "$HOME/.config" ''
-
+link_files "$here/config" "$HOME/.config" '' "${do_not_link[@]}"

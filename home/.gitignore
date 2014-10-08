@@ -1,0 +1,4 @@
+vim/view/*
+vim/.netrwhist
+vim/bundle/*/doc/tags
+i3/startup.local
