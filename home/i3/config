@@ -36,6 +36,8 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+period move container to output right; focus output right
+bindsym $mod+Shift+comma move container to output left; focus output left
 
 # split in an orientation
 # Much like tmux: | for two windows next to each other
