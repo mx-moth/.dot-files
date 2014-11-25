@@ -26,7 +26,7 @@ highlight Keyword   ctermfg=91  cterm=NONE
 highlight Exception ctermfg=165 ctermbg=None
 
 " Functions and identifiers get bluey colours
-highlight Identifier ctermfg=12 cterm=NONE
+highlight Identifier ctermfg=25 cterm=NONE
 highlight Function ctermfg=26 cterm=NONE
 highlight Label ctermfg=24 cterm=NONE
 
