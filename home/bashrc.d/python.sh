@@ -9,7 +9,7 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Warn about using the global pip. This usually means we forgot to activate a
 # virtualenv
-system_pip=`which pip`
+system_pip=`env -i which pip`
 last_pip_time=0
 pip_cooldown=300 # five minutes
 function pip() {
