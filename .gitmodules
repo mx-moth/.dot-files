@@ -79,3 +79,6 @@
 [submodule "home/vim/bundle/purescript"]
 	path = home/vim/bundle/purescript
 	url = https://github.com/raichoo/purescript-vim.git
+[submodule "home/vim/bundle/python-pep8-indent"]
+	path = home/vim/bundle/python-pep8-indent
+	url = https://github.com/hynek/vim-python-pep8-indent.git
