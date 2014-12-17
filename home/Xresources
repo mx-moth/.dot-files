@@ -7,11 +7,11 @@ URxvt*.foreground:        [100]#B2B2B2
 ! X11 Unicode font, from http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 ! Monospace, from debian core
 URxvt*.font:              xft:Terminess Powerline:size=14;xft:Symbola:antialias=true,-misc-fixed-medium-r-*-*-15-*-*-*-*-*-iso10646-*,xft:Monospace:size=12:antialias=true
-URxvt*.xftAutoHint:       true
+URxvt*.xftAutoHint:       false
 URxvt*.letterSpace:       0
 
 Xft*dpi:              96
-Xft*antialias:        True
+Xft*antialias:        true
 
 ! The default icon is butt-ugly!
 URxvt*.iconFile:          /usr/share/icons/Tango/scalable/apps/terminal.svg
