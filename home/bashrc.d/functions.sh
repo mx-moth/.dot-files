@@ -392,3 +392,8 @@ function mutt() {
 	/usr/bin/mutt
 	offlineimap -oqu Quiet &>>~/mutt.log &
 }
+
+function mkpasswd() {
+	cat /dev/urandom | base64 | head -c${1:-30}
+	echo
+}
