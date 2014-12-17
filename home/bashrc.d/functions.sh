@@ -386,3 +386,9 @@ function ips() {
 
 	for interface in "${interfaces[@]}" ; do echo "$interface" ; done | column -t
 }
+
+function mutt() {
+	offlineimap -oqu Quiet &>>~/mutt.log &
+	/usr/bin/mutt
+	offlineimap -oqu Quiet &>>~/mutt.log &
+}
