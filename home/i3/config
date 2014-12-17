@@ -193,12 +193,12 @@ bindsym $mod+slash $exec_cwd $term
 bindsym $mod+shift+slash $exec_cwd $term -title 'popup' -g 80x25
 
 # Start some apps using shortcuts
-bindsym $mod+c exec chromium
+bindsym $mod+c exec iceweasel
 bindsym $mod+Shift+f $exec_cwd thunar
 bindsym Print exec --no-startup-id xfce4-screenshooter
 
 # Start some apps on a workspace
-bindsym $mod+Shift+c $run_on_workspace '🌐' chromium
+bindsym $mod+Shift+c $run_on_workspace '🌐' iceweasel
 bindsym $mod+Shift+h $run_on_workspace '💬' hipchat
 bindsym $mod+Shift+s $run_on_workspace '🚂' steam
 bindsym $mod+Shift+p $switch_or_run '♫' $term -t ncmpcpp -e ncmpcpp
