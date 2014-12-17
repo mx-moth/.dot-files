@@ -397,3 +397,67 @@ function mkpasswd() {
 	cat /dev/urandom | base64 | head -c${1:-30}
 	echo
 }
+
+function pass() {
+	pass_bin=$( env which pass )
+	if [[ $# -eq 2 ]] && [[ $1 == "for" ]] ; then
+		which=$2
+		$pass_bin show "$which" | tail -n+2 | sed '/./,$!d'
+		echo ""
+		read -p "Press Enter to copy password"
+		$pass_bin show -c "$which"
+	else
+		$pass_bin "$@"
+	fi
+}
+
+# Overwrite the completion function for pass to include 'for', defined above
+source /usr/share/bash-completion/completions/pass
+function _pass() {
+	COMPREPLY=()
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	local commands="init ls find grep show for insert generate edit rm mv cp git help version"
+	if [[ $COMP_CWORD -gt 1 ]]; then
+		local lastarg="${COMP_WORDS[$COMP_CWORD-1]}"
+		case "${COMP_WORDS[1]}" in
+			init)
+				if [[ $lastarg == "-p" || $lastarg == "--path" ]]; then
+					_pass_complete_folders
+				else
+					COMPREPLY+=($(compgen -W "-p --path" -- ${cur}))
+					_pass_complete_keys
+				fi
+				;;
+			ls|list|edit)
+				_pass_complete_entries
+				;;
+			show|for|-*)
+				COMPREPLY+=($(compgen -W "-c --clip" -- ${cur}))
+				_pass_complete_entries 1
+				;;
+			insert)
+				COMPREPLY+=($(compgen -W "-e --echo -m --multiline -f --force" -- ${cur}))
+				_pass_complete_entries
+				;;
+			generate)
+				COMPREPLY+=($(compgen -W "-n --no-symbols -c --clip -f --force -i --in-place" -- ${cur}))
+				_pass_complete_entries
+				;;
+			cp|copy|mv|rename)
+				COMPREPLY+=($(compgen -W "-f --force" -- ${cur}))
+				_pass_complete_entries
+				;;
+			rm|remove|delete)
+				COMPREPLY+=($(compgen -W "-r --recursive -f --force" -- ${cur}))
+				_pass_complete_entries
+				;;
+			git)
+				COMPREPLY+=($(compgen -W "init push pull config log reflog rebase" -- ${cur}))
+				;;
+		esac
+	else
+		COMPREPLY+=($(compgen -W "${commands}" -- ${cur}))
+		_pass_complete_entries 1
+	fi
+}
+complete -o filenames -o nospace -F _pass pass
