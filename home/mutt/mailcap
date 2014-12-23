@@ -1,3 +1,4 @@
-text/html; chromium --new-window %s & sleep 2; test=test -n "$DISPLAY" && which chromium; nametemplate=%s.html
-text/html; x-www-browser %s & sleep 2; test=test -n "$DISPLAY"; nametemplate=%s.html
+text/html; iceweasel --new-window %s & sleep 2; test=RunningX && which iceweasel >/dev/null; nametemplate=%s.html
+text/html; chromium --new-window %s & sleep 2; test=RunningX && which chromium >/dev/null; nametemplate=%s.html
+text/html; x-www-browser %s & sleep 2; test=RunningX; nametemplate=%s.html
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
