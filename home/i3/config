@@ -7,6 +7,7 @@
 
 # Modifier is the Super (Win) key
 set $mod Mod4
+set $alt Mod1
 set $exec_script exec --no-startup-id
 set $exec_cwd exec --no-startup-id ~/.i3/cwd-term.sh
 set $run_on_workspace exec --no-startup-id ~/.i3/run-on-workspace
@@ -81,6 +82,8 @@ bindsym $mod+period focus output right
 # Use mod + [/] to cycle workspaces
 bindsym $mod+bracketleft workspace prev_on_output
 bindsym $mod+bracketright workspace next_on_output
+bindsym $alt+Shift+Tab workspace prev_on_output
+bindsym $alt+Tab workspace next_on_output
 # Use mod + [/] to move windows through workspaces
 bindsym $mod+shift+bracketleft move container to workspace prev_on_output; workspace prev_on_output
 bindsym $mod+shift+bracketright move container to workspace next_on_output; workspace next_on_output
