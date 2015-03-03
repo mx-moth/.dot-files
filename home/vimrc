@@ -18,8 +18,15 @@ if has("autocmd")
 	filetype plugin indent on
 endif
 
+set nocompatible
+set backspace=2
+
 " Show (partial) command in status line.
 set showcmd
+
+set backup
+set writebackup
+set backupdir=~/.cache/vim,/tmp
 
 " Open a maximum of 30 tabs on start up
 set tabpagemax=30
@@ -487,7 +494,12 @@ let g:erlangManSuffix='erl\.gz'
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': '^\.git$\|\.svn$\|\.hg$\|build$\|venv\|node_modules\|^output\|^var$',
+	\ 'dir': join([
+	\     '^\.git$', '^\.svn$', '^\.hg$',
+	\     '^build$', '^output', '^var$',
+	\     'venv$', 'node_modules$', '^__pycache__$',
+	\     'frontend\/static$',
+	\ ], '\|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
@@ -670,4 +682,14 @@ augroup END
 augroup jade
 	au!
 	au FileType jade :setlocal noexpandtab
+augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Ruby
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup ruby
+	au!
+	au FileType ruby setlocal expandtab
+	au FileType ruby setlocal shiftwidth=2
+	au FileType ruby setlocal tabstop=2
 augroup END
