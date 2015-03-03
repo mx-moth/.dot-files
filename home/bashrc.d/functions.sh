@@ -368,6 +368,7 @@ function movie-time() {
 	xset -dpms
 }
 
+# Print the ips of all network interfaces
 function ips() {
 	local interfaces=()
 	local current_interface=""
@@ -389,21 +390,27 @@ function ips() {
 	for interface in "${interfaces[@]}" ; do echo "$interface" ; done | column -t
 }
 
+# Start mutt, syncing with offlineimap before and after mutt runs
 function mutt() {
 	offlineimap -oqu Quiet &>>~/mutt.log &
 	/usr/bin/mutt
 	offlineimap -oqu Quiet &>>~/mutt.log &
 }
 
+# Make a random long password without too many awkward symbols
 function mkpasswd() {
 	cat /dev/urandom | base64 | head -c${1:-30}
 	echo
 }
 
+# Add extra command `pass` command: `for`
+# `pass for [file]` will print out the data of a password file,
+# wait for the user to press 'Enter', and then copy the password to the clipboard.
+# This allows users to easily copy details in to the 
 function pass() {
-	pass_bin=$( env which pass )
+	local pass_bin=$( env which pass )
 	if [[ $# -eq 2 ]] && [[ $1 == "for" ]] ; then
-		which=$2
+		local which=$2
 		$pass_bin show "$which" | tail -n+2 | sed '/./,$!d'
 		echo ""
 		read -p "Press Enter to copy password"
