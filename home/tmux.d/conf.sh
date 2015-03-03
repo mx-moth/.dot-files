@@ -45,10 +45,10 @@ $T $SET_OPTION status-left-fg colour$TMUX_ACTIVE
 $T $SET_OPTION status-left-bg black
 
 
-$T $SET_OPTION status-right '#(~/.tmux.d/music.sh)#(~/.tmux.d/battery.sh )'
-$T $SET_OPTION status-right-length 100
+$T $SET_OPTION status-right ''
+$T $SET_OPTION status-right-length 0
 
-$T $SET_OPTION status-interval 5
+$T $SET_OPTION status-interval 0
 
 $T $SET_OPTION pane-active-border-fg colour$TMUX_ACTIVE
 $T $SET_OPTION pane-border-fg colour$TMUX_FILL
@@ -127,18 +127,6 @@ $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 
 
 ### Quick program launching
-
-# PREFIX ^S: config panel
-$T bind-key ^s run-shell '~/.tmux.d/activate-or-new-window.sh -t "⚙"'
-
-# PREFIX ^i: IRC
-$T bind-key ^i run-shell '~/.tmux.d/activate-or-new-window.sh -t "irc" "weechat-curses"'
-
-# PREFIX S: SSH to a host
-$T bind-key S command-prompt -p 'host:' "new-window -n '»%1' 'ssh %1'"
-
-# PREFIX ^E: Edit a file
-$T bind-key ^E command-prompt -p 'file:' 'new-window -n "%1" "vim -p %1"'
 
 # PREFIX S-_: Open small terminal below or above
 $T bind-key "_" split-window -vp 20
