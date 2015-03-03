@@ -31,3 +31,5 @@ source "$HOME/.bashrc.d/installers.sh"
 if [[ -e ~/.bashrc.local ]] ; then
 	source ~/.bashrc.local
 fi
+
+source "$HOME/.bashrc.d/startup.sh"

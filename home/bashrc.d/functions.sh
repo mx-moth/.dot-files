@@ -72,6 +72,8 @@ alias yn='yeaaaaaaah || flip-table'
 
 alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
 
+alias tmuxs='tmux new-session -As'
+
 
 # Handy functions
 # ---------------
@@ -461,3 +463,26 @@ function _pass() {
 	fi
 }
 complete -o filenames -o nospace -F _pass pass
+
+# Complete tmux session names for `tmuxs` alias
+function _tmux-sessions {
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+	COMPREPLY=()
+	COMPREPLY+=($(compgen -W "$( tmux list-sessions -F '#S' 2>/dev/null )" -- "${cur}" ))
+}
+complete -F _tmux-sessions tmuxs
+
+
+# Print out a list of unattached tmux sessions, if you are not already in one.
+function check-for-tmux {
+	if [[ -n "$TMUX" ]] ; then return ; fi
+	if ! which tmux &>/dev/null ; then return ; fi
+
+	local sessions=$( tmux -q list-sessions 2>/dev/null | grep -v '(attached)' )
+	local code=$!
+	if [[ "$code" -ne 0 ]] ; then return ; fi
+	if [[ -z "$sessions" ]] ; then return ; fi
+
+	printf "\e[1m%s\e[0m\n" "Detached tmux sessions:"
+	echo "$sessions"
+}
