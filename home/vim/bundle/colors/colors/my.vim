@@ -53,11 +53,19 @@ highlight ColorColumn ctermbg=52 ctermfg=black cterm=NONE
 " Invert TODO tags
 highlight TODO 	ctermfg=black ctermbg=LightBlue cterm=NONE
 
+" diffsplit highlighting
 " Green/red/blue backgrounds for diff add/delete/change
 highlight DiffAdd ctermbg=155 ctermfg=black
 highlight DiffDelete ctermbg=210 ctermfg=210
 highlight DiffChange ctermbg=136 ctermfg=black
 highlight DiffText ctermbg=202 ctermfg=black cterm=NONE
+
+" Diff file highlighting
+highlight diffFile ctermfg=32
+highlight diffLine ctermfg=244
+highlight diffAdded ctermfg=118
+highlight diffRemoved ctermfg=209
+highlight diffChanged ctermfg=219
 
 highlight DiffChange ctermbg=153 ctermfg=black cterm=NONE
 highlight DiffText ctermbg=105 ctermfg=black cterm=NONE
@@ -69,7 +77,6 @@ highlight SignColumn ctermbg=None
 highlight SyntasticErrorSign ctermbg=red ctermfg=black
 highlight SyntasticWarningSign ctermbg=yellow ctermfg=black
 " highlight DiffText	ctermfg=grey
-" highlight diffAdded	ctermfg=grey
 " highlight diffBDiffer	ctermfg=grey
 " highlight diffChanged	ctermfg=grey
 " highlight diffComment	ctermfg=grey
