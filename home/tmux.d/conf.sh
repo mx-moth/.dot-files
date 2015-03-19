@@ -31,6 +31,10 @@ $T $SET_OPTION escape-time 0
 
 $T $SET_OPTION allow-rename off
 $T $SET_OPTION display-time 3000
+$T $SET_OPTION mode-mouse on
+$T $SET_OPTION mouse-resize-pane on
+$T $SET_OPTION mouse-select-pane on
+$T $SET_OPTION mouse-select-window on
 
 # Status bar style
 # The coloura scheme is purple:
@@ -106,6 +110,10 @@ $T unbind '"'
 
 # Prefix C-Q for last pane
 $T bind ^Q last-pane
+
+# Prefix F for fullscreen
+$T bind ^F resize-pane -Z
+$T unbind 'z'
 
 # Disable repeatable keys when switching panes
 $T bind-key Up    select-pane -U
