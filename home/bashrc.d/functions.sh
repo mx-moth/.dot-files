@@ -499,3 +499,22 @@ function check-for-tmux {
 	printf "\e[1m%s\e[0m\n" "Detached tmux sessions:"
 	echo "$sessions"
 }
+
+# Find all migrations not currently in git, delete them, and remake them
+function remake-migrations {
+	if [[ $# -lt 1 ]] ; then
+		echo "Usage: $0 project-base"
+		return
+	fi
+	return
+
+	local IFS=$'\n'
+	IFS=$'\0' readarray migration_dirs <( find $1 -name 'migrations' -print0 )
+	local apps=()
+	for dir in $migration_dirs ; do
+		apps+=($( basename "$( dirname "$dir")" ))
+		local unknown=$( git status --porcelain "$dir" | grep '^??' | sed 's/^??//' )
+		rm -i $unknown
+	done
+	./manage.py makemigrations "${apps[@]}"
+}
