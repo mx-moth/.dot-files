@@ -5,9 +5,6 @@
 # Program alias'
 # --------------
 
-# Start vim with tabs, instead of that :next rubbish
-alias vi='vim -p'
-
 # Human readable, coloured ls
 alias ls='ls -hF --color=auto'
 
@@ -94,7 +91,7 @@ function trim() {
 
 # Opens all matching files in vim, searching via ack-grep
 function ack-edit() {
-	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c 'vim -p "$@" < /dev/tty' ''
+	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c '$EDITOR -p "$@" < /dev/tty' ''
 }
 
 # Print out all arguments as they are supplied, separated by the null character.
