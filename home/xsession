@@ -13,7 +13,4 @@ test -x ~/.xsession.local && ~/.xsession.local
 # Window manager
 exec \
 	ck-launch-session \
-	gpg-agent --enable-ssh-support \
-		--write-env-file "${HOME}/.gpg-agent-info" \
-		--daemon \
 	i3
