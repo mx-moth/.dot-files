@@ -82,3 +82,6 @@
 [submodule "home/vim/bundle/editorconfig"]
 	path = home/vim/bundle/editorconfig
 	url = https://github.com/timheap/editorconfig-vim.git
+[submodule "home/vim/bundle/jsx"]
+	path = home/vim/bundle/jsx
+	url = https://github.com/mxw/vim-jsx.git
