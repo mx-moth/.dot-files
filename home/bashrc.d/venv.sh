@@ -9,7 +9,13 @@ function venv.get_filesystem() {
 # Quickly activate a venv in a standard location
 function ++venv() {
 	local cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
-	local dir="${1:-"$cwd"}"
+	if [[ $# -ge 1 ]] ; then
+		local search_upwards="false"
+		local dir="$( realpath -eLP "${1%%/}" )"
+	else
+		local search_upwards="true"
+		local dir="$( pwd )"
+	fi
 	local locations=( 'venv/bin' '.hsenv_main/bin' '.cabal-sandbox/bin' 'node_modules/.bin' )
 
 	local initial_filesystem="$( venv.get_filesystem "$dir" )"
@@ -22,7 +28,12 @@ function ++venv() {
 
 		if [[ -d "$dir/venv" ]] ; then
 			echo "Using Python virtualenv: $dir/venv"
+			local site_packages_dirs=("$dir"/venv/lib/python*/site-packages)
+			local IFS=":"
+			local site_packages="${site_packages_dirs[*]}"
+			unset IFS
 			env+=("VIRTUAL_ENV=$dir/venv")
+			env+=("PYTHONPATH=${site_packages}")
 			path="$dir/venv/bin:$path"
 			found=true
 		fi
@@ -42,13 +53,18 @@ function ++venv() {
 			return 0
 		fi
 
-		new_dir=$( dirname "$dir" )
-		if [ "$initial_filesystem" != "$( venv.get_filesystem "$new_dir" )" ] ; then
-			echo  "Could not find venv to activate, crossed file system boundary at $dir" >&2
-			return 2
-		fi
-		if [ "$dir" == "/" ] && [ "$new_dir" == "/" ] ; then
-			echo 'Could not find venv to activate' >&2
+		if [[ "$search_upwards" == "true" ]] ; then
+			new_dir=$( dirname "$dir" )
+			if [ "$initial_filesystem" != "$( venv.get_filesystem "$new_dir" )" ] ; then
+				echo  "Could not find venv to activate, crossed file system boundary at $dir" >&2
+				return 2
+			fi
+			if [ "$dir" == "/" ] && [ "$new_dir" == "/" ] ; then
+				echo 'Could not find venv to activate' >&2
+				return 1
+			fi
+		else
+			echo 'Could not find venv to activate in' "$1" >&2
 			return 1
 		fi
 		dir="$new_dir"
