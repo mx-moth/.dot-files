@@ -8,12 +8,11 @@
 [color "diff"]
 	whitespace = "red reverse"
 
-[cola]
-	tabwidth = 4
-[format]
-	pretty = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d
+[pretty]
+	hist = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d
+
 [alias]
-	hist = !git log --graph --date=short --date-order ${@:---all}
+	hist = !git log --graph --date=short --date-order --format=hist ${@:---all}
 	sync = !git pull --rebase && git push
 	wdiff = diff --color-words
 	st = status -sb
