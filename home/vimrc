@@ -498,7 +498,7 @@ let g:ctrlp_custom_ignore = {
 	\     '^\.git$', '^\.svn$', '^\.hg$',
 	\     '^build$', '^output', '^var$',
 	\     'venv$', 'node_modules$', '^__pycache__$',
-	\     'frontend\/static$',
+	\     'frontend\/static$', '^build$',
 	\ ], '\|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }

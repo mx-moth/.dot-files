@@ -1,4 +1,4 @@
-main_window_color = "grey"
+# main_window_color = "gray"
 
 song_list_format = "$8{$3%a$9 │ }{$2%4y$9 | }{$4%b$9 │ }{$7(%n, disc %d)$9 }|{$7(%n)$9 }{%t}|{$8%f$9}$R{$3(%l)$9}"
 
