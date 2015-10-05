@@ -12,7 +12,7 @@ endif
 "colorscheme default
 let g:colors_name = "my"
 
-highlight Normal  ctermfg=gray ctermbg=None guifg=#ffffff guibg=#111122
+highlight Normal  ctermfg=249 ctermbg=None guifg=#ffffff guibg=#111122
 
 " Pinky values for values
 highlight Constant  ctermfg=165 ctermbg=None
