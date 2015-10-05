@@ -1,6 +1,6 @@
 ! Black transparent background
 URxvt*.depth:             32
-URxvt*.background:        [70]#000000
+URxvt*.background:        [80]#000000
 URxvt*.foreground:        [100]#B2B2B2
 
 ! Terminus font, installed from apt,
@@ -10,8 +10,13 @@ URxvt*.font:              xft:Terminess Powerline:size=14;xft:Symbola:antialias=
 URxvt*.xftAutoHint:       false
 URxvt*.letterSpace:       0
 
-Xft*dpi:              96
-Xft*antialias:        true
+Xft.dpi:       96
+Xft.antialias: true
+Xft.autohint:  false
+Xft.hinting:   true
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+Xft.rgba:      bgr
 
 ! The default icon is butt-ugly!
 URxvt*.iconFile:          /usr/share/icons/Tango/scalable/apps/terminal.svg
@@ -22,8 +27,9 @@ URxvt*.loginShell:        true
 ! Nice and large, no window decorations
 URxvt*.geometry:          160x40
 URxvt*.scrollBar:         false
-URxvt*externalBorder:     0
-URxvt*internalBorder:     0
+URxvt*.externalBorder:     0
+URxvt*.internalBorder:     0
+URxvt*.borderLess:         1
 
 ! Dont blank the cursor - ever
 URxvt*pointerBlankDelay:  987654321
