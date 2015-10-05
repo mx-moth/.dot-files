@@ -69,7 +69,14 @@ alias yn='yeaaaaaaah || flip-table'
 
 alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
 
-alias tmuxs='tmux new-session -As'
+function tmuxs {
+	if [[ -z "$TMUX" ]] ; then
+		tmux new-session -As "$@"
+	else
+		tmux switch-client -t "$@"
+	fi
+}
+
 function tmuxd {
 	if [[ $# -gt 0 ]] ; then
 		local dir=$( realpath -s "$1" )
@@ -77,7 +84,12 @@ function tmuxd {
 		local dir=$( pwd )
 	fi
 	local dirname=$( basename "$dir" )
-	tmuxs "$dirname" -c "$dir"
+	if [[ -z "$TMUX" ]] ; then
+		tmuxs "$dirname" -c "$dir"
+	else
+		TMUX= tmuxs "$dirname" -d -c "$dir"
+		tmux switch-client -t "$dirname"
+	fi
 }
 
 
