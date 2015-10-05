@@ -43,9 +43,6 @@
 [submodule "home/vim/bundle/jedi"]
 	path = home/vim/bundle/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
-[submodule "home/vim/bundle/rainbow"]
-	path = home/vim/bundle/rainbow
-	url = https://github.com/luochen1990/rainbow.git
 [submodule "home/vim/bundle/vimerl"]
 	path = home/vim/bundle/vimerl
 	url = https://github.com/oscarh/vimerl.git
