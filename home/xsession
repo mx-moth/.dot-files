@@ -13,4 +13,4 @@ test -x ~/.xsession.local && ~/.xsession.local
 # Window manager
 exec \
 	ck-launch-session \
-	i3
+	startxfce4
