@@ -22,7 +22,7 @@ alias datestamp='date "+%Y-%m-%d"'
 alias datetimestamp='date "+%Y-%m-%d-%H%m"'
 
 # Start a simple static file server
-alias serve="python -mSimpleHTTPServer"
+alias serve="python2 -mSimpleHTTPServer"
 
 # Source the system-wide bach completion scripts.
 # These take a second or two to run, so you have to enable them yourself.
