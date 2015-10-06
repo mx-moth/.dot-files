@@ -25,7 +25,7 @@ URxvt*.iconFile:          /usr/share/icons/Tango/scalable/apps/terminal.svg
 URxvt*.loginShell:        true
 
 ! Nice and large, no window decorations
-URxvt*.geometry:          160x40
+URxvt*.geometry:          80x30
 URxvt*.scrollBar:         false
 URxvt*.externalBorder:     0
 URxvt*.internalBorder:     0
