@@ -4,6 +4,9 @@
 # Settings for python shells
 export PYTHONSTARTUP=~/.pythonrc
 
+# Locally installed python packages
+export PYTHONPATH="$HOME/.local/lib/python2.7/site-packages"
+
 # Cache pip downloads, for faster installs
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
