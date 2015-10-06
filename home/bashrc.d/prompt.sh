@@ -8,7 +8,7 @@ export VCPROMPT_MODIFIED='*'
 export VCPROMPT_UNTRACKED='?'
 
 sep="╱"
-list=$( ppids  "$sep" "tmux" "urxvt" "init" "sh" "exo-helper-1" "x-terminal-emulator" "systemd")
+list=$( ppids  "$sep" "tmux" "urxvt" "init" "sh" "exo-helper-1" "x-terminal-emulator" "systemd" "xfsettingsd")
 if [ -n "$LC_SSH_PPLIST" ] && [[ "${list}" = sshd"${sep}"* ]] ; then
 	list="${LC_SSH_PPLIST}${sep}${list##*sshd${sep}}"
 fi
