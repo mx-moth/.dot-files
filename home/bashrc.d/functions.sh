@@ -433,6 +433,10 @@ function pass() {
 		echo ""
 		read -p "Press Enter to copy password"
 		$pass_bin show -c "$which"
+	elif [[ $# -eq 2 ]] && [[ $1 == "qr" ]] ; then
+		local which=$2
+		local pass_line="$( $pass_bin show "$which" | head -n1 )"
+		echo -n "${pass_line}" | qr
 	else
 		$pass_bin "$@"
 	fi
@@ -458,7 +462,7 @@ function _pass() {
 			ls|list|edit)
 				_pass_complete_entries
 				;;
-			show|for|-*)
+			show|for|qr|-*)
 				COMPREPLY+=($(compgen -W "-c --clip" -- ${cur}))
 				_pass_complete_entries 1
 				;;
