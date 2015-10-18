@@ -37,8 +37,15 @@ function pip() {
 
 # Make and source a virtualenv in the current directory
 function mkvenv.python() {
-	dir="${1:-`pwd`}"
+	local dir="${1:-`pwd`}"
+	local pip="${dir}/venv/bin/pip"
 	python3 -mvenv "$dir/venv"
-	[ -e "${dir}/requirements.txt" ] && "${dir}/bin/pip" install -r "${dir}/requirements.txt"
+
+	"$pip" install --upgrade pip
+	"$pip" install --upgrade wheel
+
+	[ -e "${dir}/requirements.txt" ] && "$pip" install -r "${dir}/requirements.txt"
+	[ -e "${dir}/setup.py" ] && "$pip" install -e "${dir}"
+
 	++venv "$dir"
 }
