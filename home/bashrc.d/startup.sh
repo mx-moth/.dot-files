@@ -1,2 +1,4 @@
 # Print a list of detached tmux sessions
-check-for-tmux
+if [[ $- == *i* ]] ; then
+	check-for-tmux
+fi
