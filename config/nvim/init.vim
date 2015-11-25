@@ -700,3 +700,12 @@ augroup ruby
 	au FileType ruby setlocal shiftwidth=2
 	au FileType ruby setlocal tabstop=2
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" reStructredText
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup rst
+	au!
+	au FileType rst setlocal wrap
+	au FileType rst setlocal spell
+augroup END
