@@ -23,6 +23,28 @@ else
 	SET_OPTION="set-option -gs"
 fi
 
+# Import some environment variables
+function import_env() {
+	local env_var="$1"
+	local env_default="$2"
+
+	# If the environment variable is not set already
+	if ! tmux show-environment "$env_var" &>/dev/null ; then
+		if tmux show-environment -g "$env_var" &>/dev/null ; then
+			# Get the variable from the global environment
+			$T set-environment "$env_var" "$( tmux show-environment -g "$env_var" )"
+		elif [[ $# -ge 2 ]] ; then
+			# Otherwise use the default
+			$T set-environment "$env_var" "$env_default"
+		fi
+	fi
+}
+import_env "DISPLAY" ":0"
+import_env "SSH_AGENT_PID"
+import_env "SSH_AUTH_SOCK"
+import_env "GPG_AGENT_INFO"
+import_env "DBUS_SESSION_BUS_ADDRESS"
+
 # Control-q for prefix. Bugger all uses it, and it is close
 $T $SET_OPTION prefix "C-q"
 
