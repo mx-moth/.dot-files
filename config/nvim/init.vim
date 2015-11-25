@@ -593,11 +593,12 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM Jedi configuration for python autocomplete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:jedi#popup_on_dot = 0
-let g:jedi#documentation_command = "<F1>"
-let g:jedi#show_call_signatures = 0
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#force_py_version = '3'
+let g:jedi#documentation_command = "<F1>"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 0
+let g:jedi#use_tabs_not_buffers = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
