@@ -78,7 +78,7 @@
 	url = https://github.com/hynek/vim-python-pep8-indent.git
 [submodule "config/nvim/bundle/editorconfig"]
 	path = config/nvim/bundle/editorconfig
-	url = https://github.com/timheap/editorconfig-vim.git
+	url = https://github.com/editorconfig/editorconfig-vim.git
 [submodule "config/nvim/bundle/jsx"]
 	path = config/nvim/bundle/jsx
 	url = https://github.com/mxw/vim-jsx.git
