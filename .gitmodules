@@ -85,3 +85,6 @@
 [submodule "config/nvim/bundle/isort"]
 	path = config/nvim/bundle/isort
 	url = https://github.com/fisadev/vim-isort.git
+[submodule "home/tmux.d/tmux-yank"]
+	path = home/tmux.d/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank

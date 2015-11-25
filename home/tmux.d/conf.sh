@@ -170,6 +170,8 @@ $T bind-key "<" new-window -dn '__split__' '\;' move-pane -hbp 70 -s ':__split__
 $T bind-key C-y run-shell "tmux save-buffer - | DISPLAY=${DISPLAY:-:0} xclip -i -selection clipboard"
 $T bind-key C-p run-shell "DISPLAY=${DISPLAY:-:0} xclip -i -selection clipboard | tmux load-buffer -" '\;' paste-buffer
 
+$T run-shell "~/.tmux.d/tmux-yank/yank.tmux"
+
 
 
 # Source local tmux commands
