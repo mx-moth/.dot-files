@@ -377,6 +377,10 @@ autocmd FileType objc setlocal foldmethod=syntax foldnestmax=1
 " Markdown settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType markdown call HardMode(79)
+let g:markdown_fenced_languages = [
+			\'coffee', 'css', 'erb=eruby', 'javascript',
+			\'js=javascript', 'json=javascript', 'ruby', 'sass', 'xml'
+			\]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Git settings
