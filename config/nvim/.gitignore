@@ -1,1 +1,4 @@
 spell/
+view/*
+.netrwhist
+bundle/*/doc/tags
