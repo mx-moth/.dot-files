@@ -69,6 +69,22 @@ alias yn='yeaaaaaaah || flip-table'
 
 alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
 
+# Start ssh-agent, cache the environment variables so other shells can use them
+_ssh_agent() {
+	command -v ssh-agent >/dev/null || return
+
+	local info=$HOME/.cache/ssh-agent-info
+
+	[ -f $info ] && . $info >/dev/null
+
+	[ "$SSH_AGENT_PID" ] && kill -0 $SSH_AGENT_PID 2>/dev/null || {
+		mkdir -p $(dirname $info)
+		ssh-agent >$info
+		. $info >/dev/null
+	}
+}
+
+
 function tmuxs {
 	if [[ -z "$TMUX" ]] ; then
 		tmux new-session -As "$@"
