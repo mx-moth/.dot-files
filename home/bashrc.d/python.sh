@@ -5,7 +5,11 @@
 export PYTHONSTARTUP=~/.pythonrc
 
 # Locally installed python packages
-export PYTHONPATH="$HOME/.local/lib/python2.7/site-packages"
+local_python="$HOME/.local/lib/python2.7/site-packages"
+if [[ -d "$local_python" ]] && ! [[ "$PYTHONPATH" == *"$local_python"* ]] ; then
+	export PYTHONPATH="${PYTHONPATH:+$PYTHONPATH:}$local_python"
+fi
+unset local_python
 
 # Warn about using the global pip. This usually means we forgot to activate a
 # virtualenv
