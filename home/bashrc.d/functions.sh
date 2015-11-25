@@ -93,18 +93,22 @@ function tmuxs {
 	fi
 }
 
+function _tmux_sanitise_name {
+	tr -s '.' '-' | sed 's/^-|-$//'
+}
+
 function tmuxd {
 	if [[ $# -gt 0 ]] ; then
 		local dir=$( realpath -s "$1" )
 	else
 		local dir=$( pwd )
 	fi
-	local dirname=$( basename "$dir" )
+	local session_name=$( basename "$dir" | _tmux_sanitise_name )
 	if [[ -z "$TMUX" ]] ; then
-		tmuxs "$dirname" -c "$dir"
+		tmuxs "$session_name" -c "$dir"
 	else
-		TMUX= tmuxs "$dirname" -d -c "$dir"
-		tmux switch-client -t "$dirname"
+		TMUX= tmuxs "$session_name" -d -c "$dir"
+		tmux switch-client -t "$session_name"
 	fi
 }
 
