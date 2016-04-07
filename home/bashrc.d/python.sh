@@ -40,8 +40,7 @@ function mkvenv.python() {
 	local pip="${dir}/venv/bin/pip"
 	python3 -mvenv "$dir/venv"
 
-	"$pip" install --upgrade pip
-	"$pip" install --upgrade wheel
+	"$pip" install --upgrade pip wheel
 
 	[ -e "${dir}/requirements.txt" ] && "$pip" install -r "${dir}/requirements.txt"
 	[ -e "${dir}/setup.py" ] && "$pip" install -e "${dir}"
