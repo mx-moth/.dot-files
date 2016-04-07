@@ -39,11 +39,13 @@ function import_env() {
 		fi
 	fi
 }
-import_env "DISPLAY" ":0"
-import_env "SSH_AGENT_PID"
-import_env "SSH_AUTH_SOCK"
-import_env "GPG_AGENT_INFO"
-import_env "DBUS_SESSION_BUS_ADDRESS"
+if tmux has-session ; then
+	import_env "DISPLAY" ":0"
+	import_env "SSH_AGENT_PID"
+	import_env "SSH_AUTH_SOCK"
+	import_env "GPG_AGENT_INFO"
+	import_env "DBUS_SESSION_BUS_ADDRESS"
+fi
 
 # Control-q for prefix. Bugger all uses it, and it is close
 $T $SET_OPTION prefix "C-q"
