@@ -82,9 +82,12 @@
 [submodule "config/nvim/bundle/jsx"]
 	path = config/nvim/bundle/jsx
 	url = https://github.com/mxw/vim-jsx.git
-[submodule "config/nvim/bundle/isort"]
-	path = config/nvim/bundle/isort
-	url = https://github.com/fisadev/vim-isort.git
 [submodule "home/tmux.d/tmux-yank"]
 	path = home/tmux.d/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
+[submodule "config/nvim/bundle/deoplete.nvim"]
+	path = config/nvim/bundle/deoplete.nvim
+	url = https://github.com/Shougo/deoplete.nvim
+[submodule "config/nvim/bundle/deoplete-jedi"]
+	path = config/nvim/bundle/deoplete-jedi
+	url = https://github.com/zchee/deoplete-jedi

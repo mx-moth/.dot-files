@@ -1,0 +1,4 @@
+flake8==2.5.4
+isort==4.2.5
+jedi==0.9.0
+neovim>=0

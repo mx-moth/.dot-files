@@ -167,6 +167,11 @@ augroup ResizeRebalance
 	autocmd VimResized * call ResizeRebalance()
 augroup END
 
+let g:deoplete#enable_at_startup = 1
+
+let g:python3_venv = $HOME . "/.config/nvim/venv"
+let g:python3_host_prog = g:python3_venv . "/bin/python"
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -402,83 +407,21 @@ autocmd FileType vim call HardMode(79)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Python settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! PythonSuper()
-	let l:found = 0
-	let l:line = line('.')
-	let l:defName = ''
-	let l:className = ''
-
-	let l:shiftwidth = &sw
-
-	while getline(l:line) == ''
-		let l:line = l:line - 1
-	endwhile
-	let l:currentIndent = len(matchstr(getline(line), '^ *')) / shiftwidth
-	if getline(line) =~ (repeat(' ', currentIndent * shiftwidth).'def ')
-		let l:currentIndent = l:currentIndent + 1
-	endif
-
-	let l:defIndent = currentIndent - 1
-	let l:classIndent = currentIndent - 2
-
-	let l:defPatt = '^'.repeat(' ', l:defIndent * l:shiftwidth).'def '
-	let l:classPatt = '^'.repeat(' ', l:classIndent * l:shiftwidth).'class '
-
-	while l:found == 0
-		if l:line < 0
-			return
-		endif
-		if getline(l:line) =~ l:defPatt
-			let l:defMatch = matchlist(getline(l:line), defPatt.'\([a-zA-Z0-9_]*\)')
-			let l:defName = l:defMatch[1]
-			let l:found = 1
-			break
-		endif
-		let l:line = l:line - 1
-	endwhile
-
-	let l:found = 0
-	while l:found == 0
-		if l:line < 0
-			return
-		endif
-		if getline(l:line) =~ l:classPatt
-			let l:classMatch = matchlist(getline(l:line), classPatt.'\([a-zA-Z0-9_]*\)')
-			let l:className = l:classMatch[1]
-			let l:found = 1
-			break
-		endif
-		let l:line = l:line - 1
-	endwhile
-
-	let l:super = 'super('.l:className.', self).'.l:defName.'('
-
-	" Various possible cases:
-	" 1. On an empty (or white-space only)
-	" 2. At the end of a line: val = super(...)
-	" 3. In the middle of a line: val = fn(super(...))
-	if getline('.') =~ '^\s*$'
-		call setline(line('.'), repeat(' ', l:currentIndent * &sw).l:super)
-		call cursor(line('.'), col('$'))
-	elseif col('.') == col('$') - 1
-		call setline(line('.'), getline('.').l:super)
-		call cursor(line('.'), col('$') - 1)
-	else
-		let currentLine = getline('.')
-		let currentColumn = col('.') - 1
-		let newLine = currentLine[0:(l:currentColumn - 1)] . l:super . ')' . currentLine[(l:currentColumn):]
-		call setline(line('.'), newLine)
-		call cursor(line('.'), currentColumn + len(super) + 1)
-	end
-endfunction
-
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
 	call HardMode(79)
-	nnoremap <leader>s :call PythonSuper()<CR>
-	nnoremap <localleader>s :call PythonSuper()<CR>
+	setlocal omnifunc<
 endfunction
+
+function! s:Isort()
+	let l:isort = g:python3_venv . "/bin/isort"
+	let l:line = line('.')
+	exe "%! " . l:isort . " -"
+	call setpos(".", [0, l:line, 0, 0])
+endfunction
+
+command! -nargs=0 Isort call s:Isort()
 
 au FileType python call s:PythonInit()
 
@@ -486,6 +429,14 @@ let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
 let g:python_no_builtin_highlight = 1
+
+let g:jedi#documentation_command = "<F1>"
+let g:jedi#completions_enabled = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 2
+let g:jedi#use_tabs_not_buffers = '1'
+let g:jedi#smart_auto_mappings = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Erlang settings
@@ -593,16 +544,6 @@ nnoremap <leader>s :call <sid>ScratchBuffer()<CR>
 if filereadable($HOME . "/.vimrc.local")
 	source ~/.vimrc.local
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" VIM Jedi configuration for python autocomplete
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#documentation_command = "<F1>"
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#show_call_signatures = 0
-let g:jedi#use_tabs_not_buffers = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
