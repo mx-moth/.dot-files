@@ -170,7 +170,11 @@ augroup END
 let g:deoplete#enable_at_startup = 1
 
 let g:python3_venv = $HOME . "/.config/nvim/venv"
-let g:python3_host_prog = g:python3_venv . "/bin/python"
+let g:python3_bin = g:python3_venv . "/bin"
+let g:python3_host_prog = g:python3_bin . "/python"
+
+let g:EditorConfig_core_mode = "external_command"
+let g:EditorConfig_exec_path = g:python3_bin . "/editorconfig"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
