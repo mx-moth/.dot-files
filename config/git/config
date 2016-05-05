@@ -9,7 +9,7 @@
 	whitespace = "red reverse"
 
 [pretty]
-	hist = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d
+	hist = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d%Creset
 
 [alias]
 	hist = !git log --graph --date=short --date-order --format=hist ${@:---all}
