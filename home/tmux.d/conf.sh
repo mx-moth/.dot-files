@@ -32,7 +32,7 @@ function import_env() {
 	if ! tmux show-environment "$env_var" &>/dev/null ; then
 		if tmux show-environment -g "$env_var" &>/dev/null ; then
 			# Get the variable from the global environment
-			$T set-environment "$env_var" "$( tmux show-environment -g "$env_var" )"
+			$T set-environment "$env_var" "$( tmux show-environment -g "$env_var" | sed 's/^[^=]*=//' )"
 		elif [[ $# -ge 2 ]] ; then
 			# Otherwise use the default
 			$T set-environment "$env_var" "$env_default"
