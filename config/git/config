@@ -50,7 +50,7 @@
 [merge]
 	log = true
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/global_ignore
 
 [rebase]
 	autosquash = on
