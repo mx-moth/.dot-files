@@ -58,9 +58,6 @@
 [submodule "config/nvim/bundle/tagbar"]
 	path = config/nvim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar
-[submodule "config/nvim/bundle/syntastic"]
-	path = config/nvim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
 [submodule "config/nvim/bundle/markdown"]
 	path = config/nvim/bundle/markdown
 	url = https://github.com/tpope/vim-markdown.git
@@ -91,3 +88,6 @@
 [submodule "config/nvim/bundle/deoplete-jedi"]
 	path = config/nvim/bundle/deoplete-jedi
 	url = https://github.com/zchee/deoplete-jedi
+[submodule "config/nvim/bundle/neomake"]
+	path = config/nvim/bundle/neomake
+	url = https://github.com/benekastah/neomake.git

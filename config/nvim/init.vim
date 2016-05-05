@@ -578,18 +578,21 @@ nmap <F8> :TagbarToggle<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Syntastic
+" Neomake
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_error_symbol = ''
-let g:syntastic_warning_symbol = '>>'
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_auto_jump = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_always_populate_loc_list = 1
-
-let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore=E501'
-let g:syntastic_rst_checkers = ['sphinx']
+au BufRead * Neomake
+au BufWritePost * Neomake
+let g:neomake_python_flake8_exe = g:python3_bin . "flake8"
+let g:neomake_python_python_exe = g:python3_bin . "python3"
+let g:neomake_python_pyflakes_exe = "pyflakes3"
+let g:neomake_error_sign = {
+\ 'text': '',
+\ 'texthl': 'ErrorMsg',
+\ }
+let g:neomake_warning_sign = {
+\ 'text': '!!',
+\ 'texthl': 'ErrorMsg',
+\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
