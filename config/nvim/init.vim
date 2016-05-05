@@ -576,6 +576,7 @@ au BufWritePost * Neomake
 let g:neomake_python_flake8_exe = g:python3_bin . "flake8"
 let g:neomake_python_python_exe = g:python3_bin . "python3"
 let g:neomake_python_pyflakes_exe = "pyflakes3"
+let g:neomake_verbose = 0
 let g:neomake_error_sign = {
 \ 'text': '',
 \ 'texthl': 'ErrorMsg',
