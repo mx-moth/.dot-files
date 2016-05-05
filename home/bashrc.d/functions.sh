@@ -457,6 +457,7 @@ function pass() {
 		local which=$2
 		local pass_line="$( $pass_bin show "$which" | head -n1 )"
 		echo -n "${pass_line}" | qr
+		$pass_bin show "$which" | tail -n+2 | sed '/./,$!d'
 	else
 		$pass_bin "$@"
 	fi
