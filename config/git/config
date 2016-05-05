@@ -58,5 +58,7 @@
 	status = true
 [push]
 	default = current
+[pull]
+	ff = only
 [include]
-	path = ~/.gitconfig.local  # Put your credentials in here
+	path = ~/.config/git/config.local  # Put your credentials in here
