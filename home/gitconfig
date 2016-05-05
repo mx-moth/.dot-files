@@ -17,6 +17,7 @@
 	wdiff = diff --color-words
 	st = status -sb
 	ff = merge --ff-only
+	force-push = push --force-with-lease
 
 	quick-amend = !VISUAL=/bin/true git commit --amend
 
