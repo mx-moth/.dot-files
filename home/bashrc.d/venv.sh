@@ -49,7 +49,7 @@ function ++venv() {
 		fi
 		if [[ -f "$dir/.env.sh" ]] ; then
 			echo "Using environment variables: $dir/.env.sh"
-			IFS=$'\r\n' GLOBIGNORE='*' command eval  'env+=($(cat "$dir/.env.sh"))'
+			mapfile -O "${#env[@]}" -t env < "$dir/.env.sh"
 			found=true
 		fi
 
