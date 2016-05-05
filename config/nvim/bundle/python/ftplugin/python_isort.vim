@@ -10,8 +10,21 @@ endfunction
 command! -nargs=0 Isort :call Isort()
 
 
+function! s:is_automatic()
+	let l:vars = ['b:isort_automatic', 'w:isort_automatic', 't:isort_automatic', 'g:isort_automatic']
+	for l:var in l:vars
+		if exists(l:var)
+			return eval(l:var)
+		endif
+	endfor
+	return 0
+endfunction
+
+
 function! s:IsortAuto()
-	call Isort()
+	if s:is_automatic()
+		call Isort()
+	endif
 endfunction
 
 let g:isort_automatic = 1
