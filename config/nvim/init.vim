@@ -418,15 +418,6 @@ function! s:PythonInit()
 	setlocal omnifunc<
 endfunction
 
-function! s:Isort()
-	let l:isort = g:python3_venv . "/bin/isort"
-	let l:line = line('.')
-	exe "%! " . l:isort . " -"
-	call setpos(".", [0, l:line, 0, 0])
-endfunction
-
-command! -nargs=0 Isort call s:Isort()
-
 au FileType python call s:PythonInit()
 
 let g:pyindent_open_paren = '&sw'
