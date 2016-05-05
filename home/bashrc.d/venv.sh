@@ -47,6 +47,11 @@ function ++venv() {
 			path="$dir/.cabal-sandbox/bin:$path"
 			found=true
 		fi
+		if [[ -f "$dir/.env.sh" ]] ; then
+			echo "Using environment variables: $dir/.env.sh"
+			IFS=$'\r\n' GLOBIGNORE='*' command eval  'env+=($(cat "$dir/.env.sh"))'
+			found=true
+		fi
 
 		if $found ; then
 			env VENV_DIR="$dir" PATH="$path" "${env[@]}" $SHELL
