@@ -55,7 +55,7 @@ $T $SET_OPTION escape-time 0
 
 $T $SET_OPTION allow-rename off
 $T $SET_OPTION display-time 3000
-$T $SET_OPTION mode-mouse on
+$T $SET_OPTION mouse on
 $T $SET_OPTION mouse-resize-pane on
 $T $SET_OPTION mouse-select-pane on
 $T $SET_OPTION mouse-select-window on
