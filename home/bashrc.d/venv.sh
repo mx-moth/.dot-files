@@ -20,36 +20,41 @@ function ++venv() {
 
 	local initial_filesystem="$( venv.get_filesystem "$dir" )"
 
+	local py='.venv'
+	local node='node_modules'
+	local haskell='.cabal-sandbox'
+	local env='.env.sh'
+
 	while ! [ -z "$dir" ] ; do
 
 		local found=false
 		local env=()
 		local path="$PATH"
 
-		if [[ -d "$dir/venv" ]] ; then
-			echo "Using Python virtualenv: $dir/venv"
-			local site_packages_dirs=("$dir"/venv/lib/python*/site-packages)
+		if [[ -d "$dir/$py" ]] ; then
+			echo "Using Python virtualenv: $dir/$py"
+			local site_packages_dirs=("$dir"/$py/lib/python*/site-packages)
 			local IFS=":"
 			local site_packages="${site_packages_dirs[*]}"
 			unset IFS
-			env+=("VIRTUAL_ENV=$dir/venv")
+			env+=("VIRTUAL_ENV=$dir/$py")
 			env+=("PYTHONPATH=${site_packages}")
-			path="$dir/venv/bin:$path"
+			path="$dir/$py/bin:$path"
 			found=true
 		fi
-		if [[ -d "$dir/node_modules" ]] ; then
-			echo "Using node envionment: $dir/node_modules"
-			path="$dir/node_modules/.bin:$path"
+		if [[ -d "$dir/$node" ]] ; then
+			echo "Using node envionment: $dir/$node"
+			path="$dir/$node/.bin:$path"
 			found=true
 		fi
-		if [[ -d "$dir/.cabal-sandbox" ]] ; then
-			echo "Using Haskell sandbox: $dir/.cabal-sandbox"
-			path="$dir/.cabal-sandbox/bin:$path"
+		if [[ -d "$dir/$haskell" ]] ; then
+			echo "Using Haskell sandbox: $dir/$haskell"
+			path="$dir/$haskell/bin:$path"
 			found=true
 		fi
-		if [[ -f "$dir/.env.sh" ]] ; then
-			echo "Using environment variables: $dir/.env.sh"
-			mapfile -O "${#env[@]}" -t env < "$dir/.env.sh"
+		if [[ -f "$dir/$env" ]] ; then
+			echo "Using environment variables: $dir/$env"
+			mapfile -O "${#env[@]}" -t env < "$dir/$env"
 			found=true
 		fi
 

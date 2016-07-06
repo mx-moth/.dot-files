@@ -45,9 +45,10 @@ fi
 
 # Make and source a virtualenv in the current directory
 function mkvenv.python() {
+	local venv='.venv'
 	local dir="${1:-`pwd`}"
-	local pip="${dir}/venv/bin/pip"
-	python3 -mvenv "$dir/venv"
+	local pip="${dir}/$venv/bin/pip"
+	python3 -mvenv "$dir/$venv"
 
 	"$pip" install --upgrade pip wheel
 
