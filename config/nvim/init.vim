@@ -97,6 +97,8 @@ set scrolloff=40
 set nowrap
 set linebreak
 set formatoptions+=l
+set breakat-=/:
+set breakat+=>
 
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_
