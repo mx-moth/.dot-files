@@ -41,6 +41,11 @@ Thumbs.db
 
 /components/
 venv
+.venv
 .svn
 .hg
 *.back
+.env.sh
+docker-venv
+.nvimrc
+repos/
