@@ -16,7 +16,6 @@ if has("autocmd")
 	filetype plugin indent on
 endif
 
-set nocompatible
 set backspace=2
 set mouse=a
 
@@ -100,12 +99,22 @@ set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=20
-set nowrap
-set linebreak
-set formatoptions+=l
+
+" Breaking on >, and not on /, means HTML closing tags wrap better.
 set breakat-=/:
 set breakat+=>
 
+" Wrap long lines, keeping the indent level, with a -- mark to show it
+set wrap
+set breakindent
+set breakindentopt=sbr,min:20,shift:4
+set showbreak=\ --
+set linebreak
+
+" Sensibly wrap comments while writing them
+set formatoptions+=lcroqn1j
+
+" Show tabs, lines that dont fit, and trailing spaces
 set list
 set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_,eol:¬
 set cursorline
@@ -141,12 +150,13 @@ set fileformat=unix
 map <F7> <Esc>:set expandtab!<CR>
 imap <F7> <Esc>:set expandtab!<CR>i
 
-" Shift-Enter moves the rest of the line to a new line *above* the cursor
-imap <Esc>OM <Esc>lDO<C-o>p
+" Alt-Enter moves the rest of the line to a new line *above* the cursor
+imap <A-Return> <Esc>lDO<C-o>p
 
 if &term =~ '256color'
 	" Disable Background Color Erase (BCE) so that color schemes work properly
 	" when Vim is used inside tmux and GNU screen.
+	"
 	" See also http://snk.tuxfamily.org/log/vim-256color-bce.html
 	set t_ut=
 endif
@@ -167,14 +177,6 @@ if &term =~ '^screen'
 	execute "set <xLeft>=\e[1;*D"
 endif
 
-
-function! ResizeRebalance()
-	exec "normal \<C-w>="
-endfunction
-augroup ResizeRebalance
-	au!
-	autocmd VimResized * call ResizeRebalance()
-augroup END
 
 let g:deoplete#enable_at_startup = 1
 
@@ -201,7 +203,16 @@ map Q :cc<CR>
 nmap <F1> <Esc>
 imap <F1> <Nop>
 
+" Like J, but joins with the line above
 map K kJ
+
+" Visual navigation over line-based navigation
+nmap j gj
+nmap k gk
+nmap <up> gk
+nmap <down> gj
+imap <silent> <up> <C-o>gk
+imap <silent> <down> <C-o>gj
 
 noremap <silent> <Leader>r :source $MYVIMRC<cr>
 
@@ -218,34 +229,12 @@ vmap <silent> <C-up> :m'<-2<CR>`>my`<mzgv`yo`z
 " :W - Write then make. Usefull for compiling automatically
 command! -nargs=0 WM :w | :!make
 
-" Switch tabs using meta(alt)-left/right
-map <silent> <M-Left> gT
-map <silent> <M-right> gt
-imap <silent> <M-left> <Esc>gTi
-imap <silent> <M-right> <Esc>gti
-
-map <silent> <C-M-Left>  <C-w><Left>
-map <silent> <C-M-Right> <C-w><Right>
-map <silent> <C-M-Up>    <C-w><Up>
-map <silent> <C-M-Down>  <C-w><Down>
-
 " Split the view using | or -
 map <silent> <C-w><C-\> :botright vert new<cr>
-map <silent> <C-w><C--> :botright vert new<cr>
-map <silent> <C-w><C-_> :botright vert new<cr>
+map <silent> <C-w><C--> :botright new<cr>
+map <silent> <C-w><C-_> :botright new<cr>
 map <silent> <C-w>\ :botright vert new<cr>
 map <silent> <C-w>- :botright new<cr>
-
-" Switch to a numbered tab
-map <silent> <C-W>1 :tabn 1<Cr>
-map <silent> <C-W>2 :tabn 2<Cr>
-map <silent> <C-W>3 :tabn 3<Cr>
-map <silent> <C-W>4 :tabn 4<Cr>
-map <silent> <C-W>5 :tabn 5<Cr>
-map <silent> <C-W>6 :tabn 6<Cr>
-map <silent> <C-W>7 :tabn 7<Cr>
-map <silent> <C-W>8 :tabn 8<Cr>
-map <silent> <C-W>9 :tabn 9<Cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -476,7 +465,7 @@ let g:ctrlp_custom_ignore = {
 	\ 'dir': join([
 	\     '^\.git$', '^\.svn$', '^\.hg$',
 	\     '^build$', '^output', '^var$',
-	\     'venv$', 'node_modules$', '^__pycache__$',
+	\     'venv$', 'node_modules$', '^__pycache__$', '.tox',
 	\     'frontend\/static$', '^build$',
 	\ ], '\|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
@@ -643,11 +632,15 @@ let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#tab_min_count = 2
 function! AirlineInit()
-	let g:airline_section_x = airline#section#create(['%4b│0x%-4B'])        " Character number
-	let g:airline_section_y = airline#section#create(['%P of %L'])        " Position
-	let g:airline_section_z = airline#section#create(['%(%2.l:%-3c%'])        " Line/column
+	" Character number
+	let g:airline_section_x = airline#section#create(['%4b│0x%-4B'])
+	" Position in file
+	let g:airline_section_y = airline#section#create(['%P of %L'])
+	" Line/column
+	let g:airline_section_z = airline#section#create(['%(%2.l:%-3c%'])
 endfunction
 autocmd VimEnter * call AirlineInit()
+
 let g:airline_mode_map = {
       \ '__' : '-',
       \ 'n'  : 'N',
