@@ -571,22 +571,15 @@ nmap <F8> :TagbarToggle<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Neomake
+" ALE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-au BufRead * Neomake
-au BufWritePost * Neomake
-let g:neomake_python_flake8_exe = g:python3_bin . "flake8"
-let g:neomake_python_python_exe = g:python3_bin . "python3"
-let g:neomake_python_pyflakes_exe = "pyflakes3"
-let g:neomake_verbose = 0
-let g:neomake_error_sign = {
-\ 'text': '',
-\ 'texthl': 'ErrorMsg',
-\ }
-let g:neomake_warning_sign = {
-\ 'text': '!!',
-\ 'texthl': 'ErrorMsg',
-\ }
+" Dont use the quickfix or loclist windows for errors
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
+" Map [e/]e to prev/next errors from the linter
+nnoremap <silent> [e <Plug>(ale_previous_wrap)
+nnoremap <silent> ]e <Plug>(ale_previous_wrap)
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
