@@ -10,6 +10,7 @@
 
 [pretty]
 	hist = %Cblue%h%Creset %ad %Cgreen%an%Creset %s%C(yellow)%d%Creset
+	hist = %C(bold blue)%h%C(reset) %ai %C(245)(%ar)%C(reset) %C(green)%an%C(reset)%C(yellow)%d%C(reset)\n     %s
 
 [alias]
 	hist = !git log --graph --date=short --date-order --format=hist ${@:---all}
