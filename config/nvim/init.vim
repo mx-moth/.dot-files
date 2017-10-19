@@ -426,8 +426,24 @@ function! s:PythonInit()
 	call HardMode(79)
 	setlocal omnifunc<
 endfunction
-
 au FileType python call s:PythonInit()
+
+function! InitPy()
+	" Make the directory the current file is in first
+	call system(printf("mkdir -p %s", shellescape(expand('%:h'), 1)))
+
+	let l:dir = expand('%:h')
+	let l:init = '__init__.py'
+
+	" Search up the tree, making __init__.pys until a directory with an
+	" __init__.py is reached
+	while l:dir != '.' && l:dir != '/' && !glob(l:dir . '/' . l:init)
+		call system(printf("touch %s", shellescape(l:dir . '/' . l:init)))
+		let l:dir = fnamemodify('l:dir', ':h')
+	endwhile
+endfunction
+command! -nargs=0 InitPy call InitPy()
+
 
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
