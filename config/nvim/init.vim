@@ -567,6 +567,29 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" :Grep - Search files for a pattern in a new tab
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set grepprg=ag\ --vimgrep\ $*
+set grepformat=%f:%l:%c:%m
+function! <sid>Grep(args)
+	" Open a new tab if the current tab is not empty
+	let l:empty_tab = winnr('$') == 1 && bufname('%') == '' && !&modified
+	if !l:empty_tab
+		tabnew
+	endif
+
+	" Do the grep
+	exec 'silent! lgrep ' . a:args
+	redraw
+
+	" Go to the first result
+	lfirst
+endfunction
+command! -nargs=+ -complete=file Grep call <sid>Grep(<q-args>)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Rainbow parens
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
