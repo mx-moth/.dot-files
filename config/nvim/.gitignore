@@ -2,3 +2,5 @@ spell/
 view/*
 .netrwhist
 bundle/*/doc/tags
+venv2/
+venv3/

@@ -178,7 +178,11 @@ augroup END
 
 let g:deoplete#enable_at_startup = 1
 
-let g:python3_venv = $HOME . "/.config/nvim/venv"
+let g:python_venv = $HOME . "/.config/nvim/venv2"
+let g:python_bin = g:python_venv . "/bin"
+let g:python_host_prog = g:python_bin . "/python"
+
+let g:python3_venv = $HOME . "/.config/nvim/venv3"
 let g:python3_bin = g:python3_venv . "/bin"
 let g:python3_host_prog = g:python3_bin . "/python"
 
