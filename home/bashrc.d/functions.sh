@@ -516,11 +516,12 @@ complete -o filenames -o nospace -F _pass pass
 
 # Complete tmux session names for `tmuxs` alias
 function _tmux-sessions {
+	local IFS=$'\n'
 	local cur="${COMP_WORDS[COMP_CWORD]}"
 	COMPREPLY=()
 	COMPREPLY+=($(compgen -W "$( tmux list-sessions -F '#S' 2>/dev/null )" -- "${cur}" ))
 }
-complete -F _tmux-sessions tmuxs
+complete -o filenames -F _tmux-sessions tmuxs
 
 
 # Print out a list of unattached tmux sessions, if you are not already in one.
