@@ -1,8 +1,6 @@
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-
-call pathogen#infect()
-
 syntax on
+set nocompatible
+call pathogen#infect()
 
 if has("autocmd")
 	function! s:JumpToLastLine()
@@ -20,6 +18,7 @@ endif
 
 set nocompatible
 set backspace=2
+set mouse=a
 
 " Show (partial) command in status line.
 set showcmd
@@ -87,13 +86,20 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" Open the quickfix window when there is stuff to show
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+
 " Indentation settings
 set tabstop=4       " I like four space tabs for indenting
 set shiftwidth=4    " I like four space tabs for indenting
 set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
-set scrolloff=40
+set scrolloff=20
 set nowrap
 set linebreak
 set formatoptions+=l
@@ -101,10 +107,14 @@ set breakat-=/:
 set breakat+=>
 
 set list
-set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_
+set listchars=tab:│\ ,extends:❯,precedes:❮,trail:_,eol:¬
+set cursorline
 
 set foldlevelstart=99
 set fillchars=vert:║,fold:═
+
+set nojoinspaces
+
 
 " Custom filetype settings
 au BufNewFile,BufRead *.cjs setfiletype javascript
@@ -127,9 +137,6 @@ set secure
 
 " Default file type
 set fileformat=unix
-
-" Man page plugin
-runtime ftplugin/man.vim
 
 map <F7> <Esc>:set expandtab!<CR>
 imap <F7> <Esc>:set expandtab!<CR>i
@@ -586,9 +593,12 @@ nnoremap <silent> ]e <Plug>(ale_previous_wrap)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#close_symbol = ''
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#tab_min_count = 2
 function! AirlineInit()
 	let g:airline_section_x = airline#section#create(['%4b│0x%-4B'])        " Character number
 	let g:airline_section_y = airline#section#create(['%P of %L'])        " Position
