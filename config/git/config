@@ -48,6 +48,10 @@
 	with = "!f() { local CURRENT=`git rev-parse --abbrev-ref HEAD` && git checkout $@  && bash && git checkout $CURRENT; }; f"
 	fuck-it = "! git add -A ; git commit -em 'fuck it, commit everything'"
 	add-pr = "!f() { local pr=$1 ; local remote=${2:-origin} ; git config --add remote.$remote.fetch +refs/pull/$pr/head:refs/remotes/$remote/pull/$pr ; }; f"
+	# Prune all local branches that have been merged with origin/HEAD
+	prune-remote-branches = "!f() { remote=${1:-origin} ; git fetch origin --prune ; }; f"
+	prune-local-branches = "!f() { remote=${1:-origin} ; git branch --merged $remote/HEAD --no-contains $remote/HEAD | cut -c '3-' | xargs -r -- git branch -d ; }; f"
+	prune-branches = "!f() { remote=${1:-origin} ; git prune-remote-branches \"$1\" ; git prune-local-branches \"$1\" ; }; f"
 [merge]
 	log = true
 [core]
