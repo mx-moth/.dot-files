@@ -467,7 +467,8 @@ let g:ctrlp_custom_ignore = {
 	\ 'dir': '\v' . join([
 	\     '^\.git$', '^\.svn$', '^\.hg$',
 	\     '^build$', '^output', '^var$',
-	\     'venv$', 'node_modules$', '^__pycache__$', '.tox',
+	\     'venv$', '.venv', $PYTHON_VENV_NAME, '^__pycache__$', '.tox',
+	\     'node_modules$',
 	\     'frontend\/static$', '^build$',
 	\ ], '|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',

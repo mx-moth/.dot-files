@@ -4,6 +4,7 @@
 # Settings for python shells
 export PYTHONSTARTUP=~/.pythonrc
 export PYTHONDONTWRITEBYTECODE=1
+export PYTHON_VENV_NAME=".venv"
 
 # Locally installed python packages
 if [[ -z "$PYTHONPATH" ]] ; then
@@ -47,7 +48,7 @@ fi
 # Make and source a virtualenv in the current directory
 alias mkvenv.python=_mkvenv_python
 function _mkvenv_python() {
-	local venv='.venv'
+	local venv="$PYTHON_VENV_NAME"
 	local dir="${1:-`pwd`}"
 	local pip="${dir}/$venv/bin/pip"
 	python3 -mvenv "$dir/$venv"

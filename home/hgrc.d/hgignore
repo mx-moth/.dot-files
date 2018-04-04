@@ -43,3 +43,5 @@ Thumbs.db
 venv
 .svn
 .git
+python_env
+.tox

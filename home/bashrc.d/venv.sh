@@ -21,7 +21,7 @@ function _venv_up() {
 
 	local initial_filesystem="$( _venv_get_filesystem "$dir" )"
 
-	local py='.venv'
+	local py="$PYTHON_VENV_NAME"
 	local node='node_modules'
 	local haskell='.cabal-sandbox'
 	local env='.env.sh'
