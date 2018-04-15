@@ -3,7 +3,7 @@
 
 # Warn about using the global cabal. This usually means we forgot to activate a
 # virtualenv
-system_cabal=`which cabal &2>/dev/null`
+system_cabal=`which cabal &>/dev/null`
 if [[ -n "$system_cabal" ]] ; then
 	last_cabal_time=0
 	cabal_cooldown=300 # five minutes
