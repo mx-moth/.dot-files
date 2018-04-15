@@ -31,7 +31,8 @@ VCPROMPT="$HOME/.bashrc.d/vcprompt"
 #   virtualenv status
 # * 2, high, full: Prompt showing coloured information, including virtualenv
 #   and version control status
-function prompt-level() {
+alias prompt-level=_prompt_level
+function _prompt_level() {
 	user='\[\e[38;5;40m\]\u\[\e[0m\]'
 	host='@\[\e[38;5;13m\]\h\[\e[0m\]'
 	path=':\[\e[38;5;202m\]\w\[\e[0m\]'
@@ -64,14 +65,12 @@ function prompt-level() {
 	export PROMPT_LEVEL=$level
 }
 
-function ++prompt () {
-	level=$(( $PROMPT_LEVEL + 1))
-	prompt-level $level
+function _shift_prompt_level() {
+	local level= $(( $PROMPT_LEVEL + $1 ))
+	_prompt_level $level
 }
 
-function --prompt () {
-	level=$(( $PROMPT_LEVEL - 1))
-	prompt-level $level
-}
+alias -- ++prompt="_shift_promp_level 1"
+alias -- --prompt="_shift_promp_level -1"
 
 prompt-level "${PROMPT_LEVEL:-2}"

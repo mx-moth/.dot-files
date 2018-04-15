@@ -32,7 +32,8 @@ if [[ -n "$system_cabal" ]] ; then
 fi
 
 # Make and source a virtualenv in the current directory
-function mkvenv.haskell() {
+alias mkvenv.haskell=_mkvenv_haskell
+function _mkvenv_haskell() {
 	dir="${1:-.}"
 	( cd "$dir" && hsenv --name=main )
 	++venv "$dir"

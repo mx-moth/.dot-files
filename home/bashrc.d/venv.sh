@@ -1,13 +1,14 @@
 # Virtual environment helpers
 # ---------------------------
 
-function venv.get_filesystem() {
+function _venv_get_filesystem() {
 	df -PTh "$1" | tail -n1 | awk '{print $1 }'
 }
 
 
 # Quickly activate a venv in a standard location
-function ++venv() {
+alias -- ++venv=_venv_up
+function _venv_up() {
 	local cwd=$( cd "$( readlink -e "$( pwd )" )" && pwd )
 	if [[ $# -ge 1 ]] ; then
 		local search_upwards="false"
@@ -18,7 +19,7 @@ function ++venv() {
 	fi
 	local locations=( 'venv/bin' '.hsenv_main/bin' '.cabal-sandbox/bin' 'node_modules/.bin' )
 
-	local initial_filesystem="$( venv.get_filesystem "$dir" )"
+	local initial_filesystem="$( _venv_get_filesystem "$dir" )"
 
 	local py='.venv'
 	local node='node_modules'
@@ -65,7 +66,7 @@ function ++venv() {
 
 		if [[ "$search_upwards" == "true" ]] ; then
 			new_dir=$( dirname "$dir" )
-			if [ "$initial_filesystem" != "$( venv.get_filesystem "$new_dir" )" ] ; then
+			if [ "$initial_filesystem" != "$( _venv_get_filesystem "$new_dir" )" ] ; then
 				echo  "Could not find venv to activate, crossed file system boundary at $dir" >&2
 				return 2
 			fi
@@ -85,6 +86,7 @@ function ++venv() {
 }
 
 # Deacticate a venv, assuming it is standard and uses `deactivate()`
-function --venv() {
+alias -- --venv=_venv_down
+function _venv_down() {
 	exit
 }

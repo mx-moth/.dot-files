@@ -15,7 +15,7 @@ fi
 
 # Warn about using the global pip. This usually means we forgot to activate a
 # virtualenv
-system_pip=`env -i which pip &2>/dev/null`
+system_pip=`env -i bash -c which pip &>/dev/null`
 if [[ $? -eq 0 ]] ; then
 	last_pip_time=0
 	pip_cooldown=300 # five minutes
@@ -44,7 +44,8 @@ if [[ $? -eq 0 ]] ; then
 fi
 
 # Make and source a virtualenv in the current directory
-function mkvenv.python() {
+alias mkvenv.python=_mkvenv_python
+function _mkvenv_python() {
 	local venv='.venv'
 	local dir="${1:-`pwd`}"
 	local pip="${dir}/$venv/bin/pip"

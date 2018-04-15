@@ -69,21 +69,6 @@ alias yn='yeaaaaaaah || flip-table'
 
 alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
 
-# Start ssh-agent, cache the environment variables so other shells can use them
-_ssh_agent() {
-	command -v ssh-agent >/dev/null || return
-
-	local info=$HOME/.cache/ssh-agent-info
-
-	[ -f $info ] && . $info >/dev/null
-
-	[ "$SSH_AGENT_PID" ] && kill -0 $SSH_AGENT_PID 2>/dev/null || {
-		mkdir -p $(dirname $info)
-		ssh-agent >$info
-		. $info >/dev/null
-	}
-}
-
 
 function tmuxs {
 	if [[ -z "$TMUX" ]] ; then
@@ -122,7 +107,8 @@ function trim() {
 }
 
 # Opens all matching files in vim, searching via ack-grep
-function ack-edit() {
+alias ack-edit=_ack_edit
+function _ack_edit() {
 	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c '$EDITOR -p "$@" < /dev/tty' ''
 }
 
@@ -156,7 +142,7 @@ function nullinate() {
 #     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
-function ls-parents() {
+function _ls_parents() {
 	path=$( readlink -em ${1:-$( pwd )} )
 	paths="$path"
 
@@ -167,6 +153,7 @@ function ls-parents() {
 
 	echo -ne "$paths" | xargs -0 ls -ld
 }
+alias ls-parents="_ls_parents"
 
 # Launch a program, ignoring stdin, stdout, stderr
 # eg: `sequester noisy-gui-program`
@@ -286,7 +273,8 @@ function qrc() {
 
 # Reload ~/.Xresources, spawn a new rxvt-unicode, attach to current tmux
 # session, and then disconnect this terminal from the session.
-function reload-xresources() {
+alias reload-xresources=_reload_xresources
+function _reload_xresources() {
 	xrdb ~/.Xresources
 
 	if [[ -n "$TMUX" ]] ; then
@@ -336,7 +324,8 @@ function ppids() {
 	echo ${path}
 }
 
-function easy-svc() {
+alias easy-svc=_easy_svc
+function _easy_svc() {
 	path="${SVC_DIR:-/etc/service}"
 
 	command="$1"
@@ -345,15 +334,18 @@ function easy-svc() {
 	sudo svc "$command" "${path}/${name}"
 }
 
-function svc-down() {
+alias svc-down=_svc_down
+function _svc_down() {
 	easy-svc -d $1
 }
 
-function svc-up() {
+alias svc-up=_svc_up
+function _svc_up() {
 	easy-svc -o $1
 }
 
-function svc-restart() {
+alias svc-restart=_svc_restart
+function _svc_restart() {
 	name="$1"
 	svc-down "$1"
 	sleep 2
@@ -378,7 +370,8 @@ _set_font_size() {
 ++font() { _adjust_font_size 2 ; }
 --font() { _adjust_font_size -2 ; }
 
-function adjust-font() {
+alias adjust-font=_adjust_font
+function _adjust_font() {
 	while read -rsN1 char ; do
 		case "$char" in
 			[+=]) ++font 2>/dev/null ;;
@@ -400,7 +393,8 @@ function hr () {
 }
 
 # Turn off all screensavers, dpms, x-blanking, suspending, etc
-function movie-time() {
+alias movie-time=_movie_time
+function _movie_time() {
 	xset s off
 	xset s noblank
 	xset -dpms
@@ -515,7 +509,8 @@ function _pass() {
 complete -o filenames -o nospace -F _pass pass
 
 # Complete tmux session names for `tmuxs` alias
-function _tmux-sessions {
+alias _tmux-sessions=__tmux_sessions
+function __tmux_sessions {
 	local IFS=$'\n'
 	local cur="${COMP_WORDS[COMP_CWORD]}"
 	COMPREPLY=()
@@ -525,7 +520,8 @@ complete -o filenames -F _tmux-sessions tmuxs
 
 
 # Print out a list of unattached tmux sessions, if you are not already in one.
-function check-for-tmux {
+alias check-for-tmux=_check_for_tmux
+function _check_for_tmux {
 	if [[ -n "$TMUX" ]] ; then return ; fi
 	if ! which tmux &>/dev/null ; then return ; fi
 
@@ -539,7 +535,8 @@ function check-for-tmux {
 }
 
 # Find all migrations not currently in git, delete them, and remake them
-function remake-migrations {
+alias remake-migrations=_remake_migrations
+function _remake_migrations {
 	if [[ $# -lt 1 ]] ; then
 		echo "Usage: $0 project-base"
 		return
