@@ -451,6 +451,7 @@ let g:jedi#popup_select_first = 0
 let g:jedi#show_call_signatures = 2
 let g:jedi#use_tabs_not_buffers = '1'
 let g:jedi#smart_auto_mappings = 0
+let g:jedi#force_py_version = 3
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Erlang settings
@@ -463,12 +464,12 @@ let g:erlangManSuffix='erl\.gz'
 " Ctrl+p settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_custom_ignore = {
-	\ 'dir': join([
+	\ 'dir': '\v' . join([
 	\     '^\.git$', '^\.svn$', '^\.hg$',
 	\     '^build$', '^output', '^var$',
 	\     'venv$', 'node_modules$', '^__pycache__$', '.tox',
 	\     'frontend\/static$', '^build$',
-	\ ], '\|'),
+	\ ], '|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
 
@@ -555,8 +556,8 @@ endfunction
 
 nnoremap <leader>s :call <sid>ScratchBuffer()<CR>
 
-if filereadable($HOME . "/.vimrc.local")
-	source ~/.vimrc.local
+if filereadable($HOME . "/.nvimrc.local")
+	source ~/.nvimrc.local
 endif
 
 
