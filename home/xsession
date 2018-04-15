@@ -11,6 +11,6 @@ test -e "$HOME/.Xresources.local" && xrdb -merge /home/tim/.Xresources.local
 test -x ~/.xsession.local && ~/.xsession.local
 
 # Window manager
+	# ck-launch-session \
 exec \
-	ck-launch-session \
 	startxfce4

@@ -3,7 +3,7 @@
 # PATH is set in ~/.profile
 
 # Source in some reused environment variables, incase we are SSHing in
-source ~/.xsessionrc
+# source ~/.xsessionrc
 
 # less: Quit if little text, Colours, fold, do not clear screen
 export LESS='FRSX'
