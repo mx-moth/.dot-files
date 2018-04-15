@@ -3,6 +3,7 @@
 
 # Settings for python shells
 export PYTHONSTARTUP=~/.pythonrc
+export PYTHONDONTWRITEBYTECODE=1
 
 # Locally installed python packages
 if [[ -z "$PYTHONPATH" ]] ; then
@@ -57,4 +58,9 @@ function _mkvenv_python() {
 	[ -e "${dir}/setup.py" ] && "$pip" install -e "${dir}"
 
 	++venv "$dir"
+}
+
+# Find all .pyc and __pycache__ files and delete them
+function rmpycache() {
+	find "${1:-.}" '(' -name __pycache__ -o -name '*.pyc' ')' -exec rm -rf '{}' '+' -prune
 }

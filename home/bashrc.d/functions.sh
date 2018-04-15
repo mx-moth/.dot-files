@@ -6,7 +6,7 @@
 # --------------
 
 # Human readable, coloured ls
-alias ls='ls -hF --color=auto'
+alias ls='ls -hF --color=auto --group-directories-first'
 
 # Copy to the clipboard, for ctrl+v pasting
 alias xclip='xclip -selection "clipboard"'
@@ -44,6 +44,8 @@ alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
 # I always forget if it is column/columns, and the -t flag trips me up.
 # eg: run-script | table
 alias table='column -t -s"	"'
+
+alias nv='nvim -p'
 
 # Quick directory traversal
 alias ..='cd ..'
