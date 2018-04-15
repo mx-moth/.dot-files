@@ -24,6 +24,7 @@ set showcmd
 
 set backup
 set writebackup
+set backupcopy=yes
 set backupdir=~/.cache/vim,/tmp
 
 " Open a maximum of 30 tabs on start up
