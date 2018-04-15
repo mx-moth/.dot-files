@@ -158,6 +158,9 @@ $T bind-key -n S-M-Right select-pane -R
 # Reload this conf file
 $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 
+# Don't exit copy mode when selecting with the mouse
+$T bind -tvi-copy MouseDragEnd1Pane copy-selection -s
+
 
 ### Quick program launching
 
