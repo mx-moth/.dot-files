@@ -26,7 +26,7 @@ alias serve="python2 -mSimpleHTTPServer"
 
 # Source the system-wide bach completion scripts.
 # These take a second or two to run, so you have to enable them yourself.
-alias ++magic=". /etc/bash_completion"
+alias ++magic=". /usr/share/bash-completion/bash_completion"
 
 # Tail syslog. I was typing this quite a lot, so alias.
 alias syslog="sudo tail -f /var/log/syslog"
