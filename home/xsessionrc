@@ -1,9 +1,0 @@
-# Global environment variables inherited by everything
-# ----------------------------------------------------
-
-# Thats where I live!
-export TZ='Australia/Hobart'
-
-# Yay vim
-export VISUAL='/usr/bin/vim'
-export EDITOR='/usr/bin/vim'
