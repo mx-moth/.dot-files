@@ -91,3 +91,6 @@
 [submodule "config/nvim/bundle/ale"]
 	path = config/nvim/bundle/ale
 	url = https://github.com/w0rp/ale
+[submodule "config/nvim/bundle/emoji-complete"]
+	path = config/nvim/bundle/emoji-complete
+	url = https://github.com/nshtg/vim-emoji-complete
