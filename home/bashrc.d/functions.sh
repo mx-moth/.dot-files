@@ -33,7 +33,7 @@ alias syslog="sudo tail -f /var/log/syslog"
 
 # Prettify a json chunk
 # eg `curl http://example.com/api/user/1.json | pretty-json`
-alias pretty-json="python -mjson.tool"
+alias pretty-json="python3 -mjson.tool"
 
 alias command?="command -pv &>/dev/null"
 
