@@ -147,15 +147,26 @@ function nullinate() {
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
 function _ls_parents() {
-	path=$( readlink -em ${1:-$( pwd )} )
-	paths="$path"
+	local path=
 
-	while [[ $path != '/' ]] ; do
-		path=$( dirname "$path" )
-		paths=$"$path\0$paths"
+	local args=( "$@" )
+	if [[ "${#args}" -eq 0 ]] ; then
+		args=( "$( pwd )" )
+	fi
+
+	local path
+	for arg in "${args[@]}" ; do
+		path=$( readlink -em "${arg}" )
+		local paths=( "$path" )
+
+		while [[ "${path}" != '/' ]] ; do
+			path=$( dirname "$path" )
+			paths+=( "$path" )
+		done
+
+		echo "${arg}"
+		printf '%s\0' "${paths[@]}" | xargs -0 ls -ld
 	done
-
-	echo -ne "$paths" | xargs -0 ls -ld
 }
 alias ls-parents="_ls_parents"
 
