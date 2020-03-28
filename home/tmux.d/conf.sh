@@ -1,6 +1,12 @@
 #!/bin/bash
 
-set -e
+set -eE -o functrace
+failure() {
+	local lineno=$1
+	local msg=$2
+	echo "Failed at $lineno: $msg"
+}
+trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
 source ~/.bashrc.d/colours.sh
 
@@ -65,12 +71,11 @@ $T $SET_OPTION mouse-select-window on
 # * colour219 (bright) for focused items
 # * colour125 (mid) for other items
 # * colour053 (dark) for spacing/padding
-$T $SET_OPTION status-bg colour$TMUX_FILL
+$T $SET_OPTION status-style bg=colour$TMUX_FILL
 is_version "1.7" && $T $SET_OPTION status-position top
 
 $T $SET_OPTION status-left ' #S '
-$T $SET_OPTION status-left-fg colour$TMUX_ACTIVE
-$T $SET_OPTION status-left-bg black
+$T $SET_OPTION status-left-style "fg=colour$TMUX_ACTIVE bg=black"
 $T $SET_OPTION status-left-length 30
 
 
@@ -79,21 +84,17 @@ $T $SET_OPTION status-right-length 0
 
 $T $SET_OPTION status-interval 0
 
-$T $SET_OPTION pane-active-border-fg colour$TMUX_ACTIVE
-$T $SET_OPTION pane-border-fg colour$TMUX_FILL
+$T $SET_OPTION pane-active-border-style fg=colour$TMUX_ACTIVE
+$T $SET_OPTION pane-border-style fg=colour$TMUX_FILL
 
-$T $SET_OPTION window-status-current-fg black
-$T $SET_OPTION window-status-current-bg colour$TMUX_ACTIVE
+$T $SET_OPTION window-status-current-style "fg=black bg=colour$TMUX_ACTIVE"
 $T $SET_OPTION window-status-current-format "❨#I│#W❩"
 
-$T $SET_OPTION window-status-fg black
-$T $SET_OPTION window-status-bg colour$TMUX_INACTIVE
+$T $SET_OPTION window-status-style "fg=black bg=colour$TMUX_INACTIVE"
 $T $SET_OPTION window-status-format " #I│#W "
 
-$T $SET_OPTION message-command-fg colour$TMUX_ACTIVE
-$T $SET_OPTION message-command-bg black
-$T $SET_OPTION message-fg black
-$T $SET_OPTION message-bg colour$TMUX_ACTIVE
+$T $SET_OPTION message-command-style "fg=colour$TMUX_ACTIVE bg=black"
+$T $SET_OPTION message-style "fg=black bg=colour$TMUX_ACTIVE"
 
 
 ### tmux bindings
@@ -159,7 +160,7 @@ $T bind-key -n S-M-Right select-pane -R
 $T bind ^r run-shell "~/.tmux.d/conf.sh 1>/dev/null"
 
 # Don't exit copy mode when selecting with the mouse
-$T bind -tvi-copy MouseDragEnd1Pane copy-selection -s
+# $T bind -tvi-copy MouseDragEnd1Pane copy-selection -s
 
 
 ### Quick program launching
