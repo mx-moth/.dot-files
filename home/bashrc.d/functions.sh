@@ -567,3 +567,15 @@ function _remake_migrations {
 	done
 	./manage.py makemigrations "${apps[@]}"
 }
+
+
+function prettyxml() {
+	local readonly imports="import sys; import xml.dom.minidom as x"
+	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
+	python3 -c "$imports; $script"
+}
+
+function fix-bandcamp-download() {
+	local dir=${1:-.}
+	rename 's/^.* - (\d\d) (.*\.[a-zA-Z0-9]+)$/$1 - $2/' "${dir}"/*
+}
