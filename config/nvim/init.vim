@@ -696,3 +696,13 @@ augroup rst
 	au FileType rst setlocal wrap
 	au FileType rst setlocal spell
 augroup END
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YAML
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup yaml
+	au!
+	au FileType yaml setlocal expandtab
+	au FileType yaml setlocal shiftwidth=2
+	au FileType yaml setlocal tabstop=2
+augroup END
