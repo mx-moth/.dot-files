@@ -471,6 +471,8 @@ let g:ctrlp_custom_ignore = {
 	\     'venv$', '.venv', $PYTHON_VENV_NAME, '^__pycache__$', '.tox',
 	\     'node_modules$',
 	\     'frontend\/static$', '^build$',
+	\     'docs\/build$',
+	\     'repos$',
 	\ ], '|'),
 	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
 	\ }
