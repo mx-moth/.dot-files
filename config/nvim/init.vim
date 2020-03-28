@@ -417,6 +417,7 @@ autocmd FileType vim call HardMode(79)
 function! s:PythonInit()
 	setlocal expandtab
 	setlocal nosmartindent
+	setlocal comments=b:#,b:#:,fb:-,fb:*
 	call HardMode(79)
 	setlocal omnifunc<
 endfunction
@@ -439,10 +440,10 @@ endfunction
 command! -nargs=0 InitPy call InitPy()
 
 
+let g:python_highlight_all = 1
 let g:pyindent_open_paren = '&sw'
 let g:pyindent_nested_paren = '&sw'
 let g:pyindent_continue = '&sw'
-let g:python_no_builtin_highlight = 1
 
 let g:jedi#documentation_command = "<F1>"
 let g:jedi#completions_enabled = 0
