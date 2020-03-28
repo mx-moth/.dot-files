@@ -94,7 +94,9 @@ function tmuxd {
 	if [[ -z "$TMUX" ]] ; then
 		tmuxs "$session_name" -c "$dir"
 	else
-		TMUX= tmuxs "$session_name" -d -c "$dir"
+		if ! tmux has-session -t="$session_name" 2>/dev/null ; then
+			TMUX= tmux new-session -ds "$session_name" -c "$dir"
+		fi
 		tmux switch-client -t "$session_name"
 	fi
 }
