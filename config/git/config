@@ -50,8 +50,13 @@
 	add-pr = "!f() { local pr=$1 ; local remote=${2:-origin} ; git config --add remote.$remote.fetch +refs/pull/$pr/head:refs/remotes/$remote/pull/$pr ; }; f"
 	# Prune all local branches that have been merged with origin/HEAD
 	prune-remote-branches = "!f() { remote=${1:-origin} ; git fetch origin --prune ; }; f"
-	prune-local-branches = "!f() { remote=${1:-origin} ; git branch --merged $remote/HEAD --no-contains $remote/HEAD | cut -c '3-' | xargs -r -- git branch -d ; }; f"
-	prune-branches = "!f() { remote=${1:-origin} ; git prune-remote-branches \"$1\" ; git prune-local-branches \"$1\" ; }; f"
+	prune-local-branches = "!f() { remote=${1:-origin/master} ; git branch --merged $remote --no-contains $remote | cut -c '3-' | xargs -r -- git branch -d ; }; f"
+	prune-branches = "!f() { git prune-remote-branches ; git prune-local-branches ; }; f"
+
+	# From https://stackoverflow.com/questions/8475448/find-merge-commit-which-include-a-specific-commit:w
+	find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+	show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+
 [merge]
 	log = true
 [core]
