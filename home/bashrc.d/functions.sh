@@ -465,7 +465,7 @@ function pass() {
 	elif [[ $# -eq 2 ]] && [[ $1 == "qr" ]] ; then
 		local which=$2
 		local pass_line="$( $pass_bin show "$which" | head -n1 )"
-		echo -n "${pass_line}" | qr
+		printf '%s' "${pass_line}" | qrc
 		$pass_bin show "$which" | tail -n+2 | sed '/./,$!d'
 	else
 		$pass_bin "$@"
