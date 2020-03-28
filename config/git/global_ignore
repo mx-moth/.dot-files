@@ -26,6 +26,7 @@
 ~$*
 .sass-cache
 *.kra
+docker-compose.override.yml
 
 # Logs and databases #
 ######################
@@ -49,4 +50,4 @@ python_env
 .env.sh
 docker-venv
 .nvimrc
-repos/
+*.egg-info/
