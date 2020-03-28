@@ -87,7 +87,7 @@
 	url = https://github.com/Shougo/deoplete.nvim
 [submodule "config/nvim/bundle/deoplete-jedi"]
 	path = config/nvim/bundle/deoplete-jedi
-	url = https://github.com/zchee/deoplete-jedi
+	url = https://github.com/deoplete-plugins/deoplete-jedi
 [submodule "config/nvim/bundle/ale"]
 	path = config/nvim/bundle/ale
 	url = https://github.com/w0rp/ale
