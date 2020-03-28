@@ -58,7 +58,7 @@ function _mkvenv_python() {
 	[ -e "${dir}/requirements.txt" ] && "$pip" install -r "${dir}/requirements.txt"
 	[ -e "${dir}/setup.py" ] && "$pip" install -e "${dir}"
 
-	++venv "$dir"
+	_venv_up "$dir"
 }
 
 # Find all .pyc and __pycache__ files and delete them
