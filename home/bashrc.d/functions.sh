@@ -569,7 +569,6 @@ function _remake_migrations {
 	./manage.py makemigrations "${apps[@]}"
 }
 
-
 function prettyxml() {
 	local readonly imports="import sys; import xml.dom.minidom as x"
 	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
@@ -579,4 +578,36 @@ function prettyxml() {
 function fix-bandcamp-download() {
 	local dir=${1:-.}
 	rename 's/^.* - (\d\d) (.*\.[a-zA-Z0-9]+)$/$1 - $2/' "${dir}"/*
+}
+
+# Rename a bunch of files using a sed substitution. The first argument should
+# be a sed 's/re/sub/' extended regexp pattern. The remaining arguments are
+# files to be renamed.
+#
+#     rename 's/foo/bar/' *.txt
+function rename {
+	if [[ $# -lt 2 || $# -eq 1 && ( "$1" == "-h" || "$1" == "--help" ) ]] ; then
+		cat <<-USAGE
+		Usage:
+		    rename <sed-pattern> <files...>
+
+		Renames a bunch of files based upon a sed pattern
+
+		    rename 's/foo/bar/' *.txt
+		USAGE
+	fi
+	local pattern="$1"
+	shift
+	local srcs=( "$@" )
+
+	for src in "${srcs[@]}" ; do
+		dest="$( echo "$src" | sed --regexp-extended "$pattern" )"
+		if [[ "$src" != "$dest" ]] ; then
+			printf '"%s" -> "%s"\n' "$src" "$dest"
+			mv \
+				--no-clobber \
+				--no-target-directory \
+				"$src" "$dest"
+		fi
+	done
 }
