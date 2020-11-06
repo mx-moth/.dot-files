@@ -100,6 +100,7 @@ function tmuxd {
 		tmux switch-client -t "$session_name"
 	fi
 }
+++tmux() { tmuxd "$@" ; }
 
 
 # Handy functions

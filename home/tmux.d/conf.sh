@@ -14,6 +14,7 @@ T="tmux -q"
 VERSION=`tmux -V | cut -d' ' -f2`
 SESSION_NAME="$1"
 
+# True if the tmux version is at least the version passed in, or higher.
 function is_version() {
 	test_version=$1
 	actual_version=$VERSION
@@ -23,11 +24,11 @@ function is_version() {
 	[[ "$best_version" == "$actual_version" ]]
 }
 
-if is_version "1.7" ; then
-	SET_OPTION="set-option -gqs"
-else
-	SET_OPTION="set-option -gs"
-fi
+function t-set-option() {
+	$T set-option -gqs "$@"
+}
+
+SET_OPTION="set-option -gqs"
 
 # Import some environment variables
 function import_env() {
@@ -54,47 +55,47 @@ if tmux has-session ; then
 fi
 
 # Control-q for prefix. Bugger all uses it, and it is close
-$T $SET_OPTION prefix "C-q"
+t-set-option prefix "C-q"
 
 # Using vim + tmux requires instant escape codes
-$T $SET_OPTION escape-time 0
+t-set-option escape-time 0
 
-$T $SET_OPTION allow-rename off
-$T $SET_OPTION display-time 3000
-$T $SET_OPTION mouse on
-$T $SET_OPTION mouse-resize-pane on
-$T $SET_OPTION mouse-select-pane on
-$T $SET_OPTION mouse-select-window on
+t-set-option allow-rename off
+t-set-option display-time 3000
+t-set-option mouse on
+t-set-option mouse-resize-pane on
+t-set-option mouse-select-pane on
+t-set-option mouse-select-window on
 
 # Status bar style
-# The coloura scheme is purple:
+# The colour scheme is purple:
 # * colour219 (bright) for focused items
 # * colour125 (mid) for other items
 # * colour053 (dark) for spacing/padding
-$T $SET_OPTION status-style bg=colour$TMUX_FILL
-is_version "1.7" && $T $SET_OPTION status-position top
+t-set-option status-style bg=colour$TMUX_FILL
+t-set-option status-position top
 
-$T $SET_OPTION status-left ' #S '
-$T $SET_OPTION status-left-style "fg=colour$TMUX_ACTIVE bg=black"
-$T $SET_OPTION status-left-length 30
+t-set-option status-left ' #S '
+t-set-option status-left-style "fg=colour$TMUX_ACTIVE bg=black"
+t-set-option status-left-length 30
 
 
-$T $SET_OPTION status-right ''
-$T $SET_OPTION status-right-length 0
+t-set-option status-right ''
+t-set-option status-right-length 0
 
-$T $SET_OPTION status-interval 0
+t-set-option status-interval 0
 
-$T $SET_OPTION pane-active-border-style fg=colour$TMUX_ACTIVE
-$T $SET_OPTION pane-border-style fg=colour$TMUX_FILL
+t-set-option pane-active-border-style fg=colour$TMUX_ACTIVE
+t-set-option pane-border-style fg=colour$TMUX_FILL
 
-$T $SET_OPTION window-status-current-style "fg=black bg=colour$TMUX_ACTIVE"
-$T $SET_OPTION window-status-current-format "❨#I│#W❩"
+t-set-option window-status-current-style "fg=black bg=colour$TMUX_ACTIVE"
+t-set-option window-status-current-format "❨#I│#W❩"
 
-$T $SET_OPTION window-status-style "fg=black bg=colour$TMUX_INACTIVE"
-$T $SET_OPTION window-status-format " #I│#W "
+t-set-option window-status-style "fg=black bg=colour$TMUX_INACTIVE"
+t-set-option window-status-format " #I│#W "
 
-$T $SET_OPTION message-command-style "fg=colour$TMUX_ACTIVE bg=black"
-$T $SET_OPTION message-style "fg=black bg=colour$TMUX_ACTIVE"
+t-set-option message-command-style "fg=colour$TMUX_ACTIVE bg=black"
+t-set-option message-style "fg=black bg=colour$TMUX_ACTIVE"
 
 
 ### tmux bindings
