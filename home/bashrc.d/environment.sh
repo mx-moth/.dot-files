@@ -20,5 +20,3 @@ if [ -z "$LC_ORIGIN_HOST" ] || [ "$LC_ORIGIN_HOST" == "$HOSTNAME" ] ; then
 else
 	export IS_REMOTE_CONNECTION=1
 fi
-
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
