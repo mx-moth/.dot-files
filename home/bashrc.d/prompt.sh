@@ -1,6 +1,8 @@
 # Set up the bash prompt nicely
 # -----------------------------
 
+if [ -z "$PS1" ] ; then return 0 ; fi
+
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 export VCPROMPT_STAGED='+'
@@ -74,4 +76,4 @@ function _shift_prompt_level() {
 alias -- ++prompt="_shift_promp_level 1"
 alias -- --prompt="_shift_promp_level -1"
 
-prompt-level "${PROMPT_LEVEL:-2}"
+_prompt_level "${PROMPT_LEVEL:-2}"
