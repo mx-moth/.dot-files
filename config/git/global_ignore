@@ -32,6 +32,7 @@ docker-compose.override.yml
 ######################
 *.log
 *.sqlite
+.docker-volumes
 
 # OS generated files #
 ######################
