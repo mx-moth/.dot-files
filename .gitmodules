@@ -1,9 +1,3 @@
-[submodule "config/nvim/bundle/coffee"]
-	path = config/nvim/bundle/coffee
-	url = git://github.com/kchmck/vim-coffee-script.git
-[submodule "config/nvim/bundle/sparkup"]
-	path = config/nvim/bundle/sparkup
-	url = https://github.com/bingaman/vim-sparkup.git
 [submodule "config/nvim/bundle/ack"]
 	path = config/nvim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
@@ -16,24 +10,12 @@
 [submodule "config/nvim/bundle/unimpaired"]
 	path = config/nvim/bundle/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
-[submodule "config/nvim/bundle/less"]
-	path = config/nvim/bundle/less
-	url = https://github.com/groenewege/vim-less.git
-[submodule "config/nvim/bundle/argtextobject"]
-	path = config/nvim/bundle/argtextobject
-	url = https://github.com/inkarkat/argtextobj.vim.git
-[submodule "config/nvim/bundle/css3"]
-	path = config/nvim/bundle/css3
-	url = https://github.com/hail2u/vim-css3-syntax.git
 [submodule "config/nvim/bundle/ctrlp"]
 	path = config/nvim/bundle/ctrlp
-	url = https://github.com/kien/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim
 [submodule "config/nvim/bundle/surround"]
 	path = config/nvim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "config/nvim/bundle/pastebin"]
-	path = config/nvim/bundle/pastebin
-	url = https://github.com/mattn/pastebin-vim.git
 [submodule "config/nvim/bundle/css-color"]
 	path = config/nvim/bundle/css-color
 	url = https://github.com/ap/vim-css-color.git
@@ -43,12 +25,6 @@
 [submodule "config/nvim/bundle/jedi"]
 	path = config/nvim/bundle/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
-[submodule "config/nvim/bundle/vimerl"]
-	path = config/nvim/bundle/vimerl
-	url = https://github.com/oscarh/vimerl.git
-[submodule "config/nvim/bundle/typescript"]
-	path = config/nvim/bundle/typescript
-	url = https://github.com/leafgarland/typescript-vim.git
 [submodule "home/urxvt/urxvt-perls"]
 	path = home/urxvt/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
@@ -64,21 +40,12 @@
 [submodule "config/nvim/bundle/airline"]
 	path = config/nvim/bundle/airline
 	url = https://github.com/bling/vim-airline
-[submodule "config/nvim/bundle/jade"]
-	path = config/nvim/bundle/jade
-	url = https://github.com/digitaltoad/vim-jade
-[submodule "config/nvim/bundle/purescript"]
-	path = config/nvim/bundle/purescript
-	url = https://github.com/raichoo/purescript-vim.git
 [submodule "config/nvim/bundle/python-pep8-indent"]
 	path = config/nvim/bundle/python-pep8-indent
 	url = https://github.com/hynek/vim-python-pep8-indent.git
 [submodule "config/nvim/bundle/editorconfig"]
 	path = config/nvim/bundle/editorconfig
 	url = https://github.com/editorconfig/editorconfig-vim.git
-[submodule "config/nvim/bundle/jsx"]
-	path = config/nvim/bundle/jsx
-	url = https://github.com/mxw/vim-jsx.git
 [submodule "home/tmux.d/tmux-yank"]
 	path = home/tmux.d/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
@@ -94,3 +61,6 @@
 [submodule "config/nvim/bundle/emoji-complete"]
 	path = config/nvim/bundle/emoji-complete
 	url = https://github.com/nshtg/vim-emoji-complete
+[submodule "config/nvim/bundle/targets.vim"]
+	path = config/nvim/bundle/targets.vim
+	url = git://github.com/wellle/targets.vim.git

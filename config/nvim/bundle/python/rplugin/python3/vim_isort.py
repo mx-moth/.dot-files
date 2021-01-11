@@ -1,5 +1,7 @@
+import pathlib
+
+import isort.api
 import neovim
-from isort import SortImports
 
 
 @neovim.plugin
@@ -14,7 +16,8 @@ class Isort(object):
     def sort_current_buffer(self):
         current_buffer = '\n'.join(self.vim.current.buffer[:])
         # output always has an extra newline appended. We can safely trim it
-        sorted = SortImports(file_contents=current_buffer).output[:-1]
+        sorted = isort.api.sort_code_string(current_buffer, file_path=pathlib.Path(self.vim.current.buffer.name))
+        # sorted = isort.api.sort_code_string(current_buffer)[:-1]
 
         # If sorting the file results in modifications...
         if current_buffer != sorted:
@@ -33,4 +36,4 @@ class Isort(object):
     @neovim.autocmd('BufWrite', pattern='*.py', sync=True)
     def sort_if_automatic(self):
         if self.is_automatic():
-            self.sort_current_buffer()
+            self.sort_current_buffer

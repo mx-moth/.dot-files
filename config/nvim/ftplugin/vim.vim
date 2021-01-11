@@ -1,0 +1,1 @@
+call HardMode(79)
