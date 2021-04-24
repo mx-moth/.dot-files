@@ -11,3 +11,9 @@ for fixer in ['black', 'isort']
 		call add(b:ale_fixers, fixer)
 	endif
 endfor
+
+" Use pflake8 if it is available. pflake8 draws settings from pyproject.toml
+if executable('pflake8')
+	let g:ale_python_flake8_executable = 'pflake8'
+	let g:ale_python_flake8_use_global = 1
+endif

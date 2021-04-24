@@ -9,6 +9,7 @@ editorconfig==0.12.3
 flake8==3.9.1
     # via
     #   -r requirements.in
+    #   pyproject-flake8
 greenlet==1.0.0
     # via pynvim
 isort==5.8.0
@@ -27,3 +28,7 @@ pyflakes==2.3.1
     # via flake8
 pynvim==0.4.3
     # via -r requirements.in
+pyproject-flake8==0.0.1a2
+    # via -r requirements.in
+toml==0.10.2
+    # via pyproject-flake8
