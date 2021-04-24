@@ -1,6 +1,5 @@
 syntax on
 set nocompatible
-call pathogen#infect()
 
 if has("autocmd")
 	filetype plugin indent on

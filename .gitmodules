@@ -1,66 +1,66 @@
 [submodule "config/nvim/bundle/ack"]
-	path = config/nvim/bundle/ack
+	path = config/nvim/pack/plugins/start/ack
 	url = https://github.com/mileszs/ack.vim.git
 [submodule "config/nvim/bundle/fugitive"]
-	path = config/nvim/bundle/fugitive
+	path = config/nvim/pack/plugins/start/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 [submodule "config/nvim/bundle/gundo"]
-	path = config/nvim/bundle/gundo
+	path = config/nvim/pack/plugins/start/gundo
 	url = https://github.com/sjl/gundo.vim.git
 [submodule "config/nvim/bundle/unimpaired"]
-	path = config/nvim/bundle/unimpaired
+	path = config/nvim/pack/plugins/start/unimpaired
 	url = https://github.com/tpope/vim-unimpaired.git
 [submodule "config/nvim/bundle/ctrlp"]
-	path = config/nvim/bundle/ctrlp
+	path = config/nvim/pack/plugins/start/ctrlp
 	url = https://github.com/ctrlpvim/ctrlp.vim
 [submodule "config/nvim/bundle/surround"]
-	path = config/nvim/bundle/surround
+	path = config/nvim/pack/plugins/start/surround
 	url = https://github.com/tpope/vim-surround.git
 [submodule "config/nvim/bundle/css-color"]
-	path = config/nvim/bundle/css-color
+	path = config/nvim/pack/plugins/start/css-color
 	url = https://github.com/ap/vim-css-color.git
 [submodule "config/nvim/bundle/repeat"]
-	path = config/nvim/bundle/repeat
+	path = config/nvim/pack/plugins/start/repeat
 	url = git://github.com/tpope/vim-repeat.git
 [submodule "config/nvim/bundle/jedi"]
-	path = config/nvim/bundle/jedi
+	path = config/nvim/pack/plugins/start/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
 [submodule "home/urxvt/urxvt-perls"]
 	path = home/urxvt/urxvt-perls
 	url = https://github.com/muennich/urxvt-perls.git
 [submodule "config/nvim/bundle/javascript"]
-	path = config/nvim/bundle/javascript
+	path = config/nvim/pack/plugins/start/javascript
 	url = https://github.com/pangloss/vim-javascript.git
 [submodule "config/nvim/bundle/tagbar"]
-	path = config/nvim/bundle/tagbar
+	path = config/nvim/pack/plugins/start/tagbar
 	url = https://github.com/majutsushi/tagbar
 [submodule "config/nvim/bundle/markdown"]
-	path = config/nvim/bundle/markdown
+	path = config/nvim/pack/plugins/start/markdown
 	url = https://github.com/tpope/vim-markdown.git
 [submodule "config/nvim/bundle/airline"]
-	path = config/nvim/bundle/airline
+	path = config/nvim/pack/plugins/start/airline
 	url = https://github.com/bling/vim-airline
 [submodule "config/nvim/bundle/python-pep8-indent"]
-	path = config/nvim/bundle/python-pep8-indent
+	path = config/nvim/pack/plugins/start/python-pep8-indent
 	url = https://github.com/hynek/vim-python-pep8-indent.git
 [submodule "config/nvim/bundle/editorconfig"]
-	path = config/nvim/bundle/editorconfig
+	path = config/nvim/pack/plugins/start/editorconfig
 	url = https://github.com/editorconfig/editorconfig-vim.git
 [submodule "home/tmux.d/tmux-yank"]
 	path = home/tmux.d/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
 [submodule "config/nvim/bundle/deoplete.nvim"]
-	path = config/nvim/bundle/deoplete.nvim
+	path = config/nvim/pack/plugins/start/deoplete.nvim
 	url = https://github.com/Shougo/deoplete.nvim
 [submodule "config/nvim/bundle/deoplete-jedi"]
-	path = config/nvim/bundle/deoplete-jedi
+	path = config/nvim/pack/plugins/start/deoplete-jedi
 	url = https://github.com/deoplete-plugins/deoplete-jedi
 [submodule "config/nvim/bundle/ale"]
-	path = config/nvim/bundle/ale
+	path = config/nvim/pack/plugins/start/ale
 	url = https://github.com/w0rp/ale
 [submodule "config/nvim/bundle/emoji-complete"]
-	path = config/nvim/bundle/emoji-complete
+	path = config/nvim/pack/plugins/start/emoji-complete
 	url = https://github.com/nshtg/vim-emoji-complete
 [submodule "config/nvim/bundle/targets.vim"]
-	path = config/nvim/bundle/targets.vim
+	path = config/nvim/pack/plugins/start/targets.vim
 	url = git://github.com/wellle/targets.vim.git
