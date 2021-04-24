@@ -72,3 +72,5 @@
 	ff = only
 [include]
 	path = ~/.config/git/config.local  # Put your credentials in here
+[init]
+	defaultBranch = main
