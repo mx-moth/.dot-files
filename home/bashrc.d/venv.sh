@@ -22,45 +22,49 @@ function _venv_up() {
 	local initial_filesystem="$( _venv_get_filesystem "$dir" )"
 
 	local py="$PYTHON_VENV_NAME"
+	local conda=".conda"
 	local node='node_modules'
 	local haskell='.cabal-sandbox'
-	local env='.env.sh'
+
+	local path=()
+	local activate=()
 
 	while ! [ -z "$dir" ] ; do
 
 		local found=false
-		local env=()
-		local path="$PATH"
 
 		if [[ -d "$dir/$py" ]] ; then
 			echo "Using Python virtualenv: $dir/$py"
-			local site_packages_dirs=("$dir"/$py/lib/python*/site-packages)
-			local IFS=":"
-			local site_packages="${site_packages_dirs[*]}"
-			unset IFS
-			env+=("VIRTUAL_ENV=$dir/$py")
-			env+=("PYTHONPATH=${site_packages}")
-			path="$dir/$py/bin:$path"
+			activate+=( "$( printf 'source %q/%q/bin/activate' "$dir" "$py" )" )
+			found=true
+		fi
+		if [[ -d "$dir/$conda" ]] ; then
+			echo "Using conda environment: $dir/$conda"
+			activate+=( "$( printf 'conda activate %q/%q' "$dir" "$conda" )" )
 			found=true
 		fi
 		if [[ -d "$dir/$node" ]] ; then
 			echo "Using node envionment: $dir/$node"
-			path="$dir/$node/.bin:$path"
+			path+=( "$dir/$node/.bin" )
 			found=true
 		fi
 		if [[ -d "$dir/$haskell" ]] ; then
 			echo "Using Haskell sandbox: $dir/$haskell"
-			path="$dir/$haskell/bin:$path"
-			found=true
-		fi
-		if [[ -f "$dir/$env" ]] ; then
-			echo "Using environment variables: $dir/$env"
-			mapfile -O "${#env[@]}" -t env < "$dir/$env"
+			path+=( "$dir/$haskell/bin" )
 			found=true
 		fi
 
 		if $found ; then
-			env VENV_DIR="$dir" PATH="$path" "${env[@]}" $SHELL
+			(
+				if [[ "${#path}" -gt 0 ]] ; then
+					export PATH="$(IFS=':' ; echo "${path[*]}"):$PATH" ;
+				fi
+				for cmd in "${activate[@]}" ; do
+					eval "$cmd" ;
+				done
+				export VENV_DIR="$dir"
+				exec $SHELL
+			)
 			return 0
 		fi
 

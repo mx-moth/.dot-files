@@ -5,6 +5,7 @@
 export PYTHONSTARTUP=~/.pythonrc
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHON_VENV_NAME=".venv"
+export CONDA_PREFIX_NAME=".conda"
 
 # Locally installed python packages
 if [[ -z "$PYTHONPATH" ]] ; then
@@ -64,4 +65,17 @@ function _mkvenv_python() {
 # Find all .pyc and __pycache__ files and delete them
 function rmpycache() {
 	find "${1:-.}" '(' -name __pycache__ -o -name '*.pyc' ')' -exec rm -rf '{}' '+' -prune
+}
+
+alias mkvenv.conda=_mkvenv_conda
+function _mkvenv_conda() {
+	local conda="$CONDA_PREFIX_NAME"
+	local dir="$( pwd )"
+
+	conda run -n base \
+		mamba env create \
+			--prefix "$dir/$conda" \
+			"$@"
+
+	_venv_up "$dir"
 }
