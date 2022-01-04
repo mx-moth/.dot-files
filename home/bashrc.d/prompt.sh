@@ -5,26 +5,12 @@ if [ -z "$PS1" ] ; then return 0 ; fi
 
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
-export VCPROMPT_STAGED='+'
-export VCPROMPT_MODIFIED='*'
-export VCPROMPT_UNTRACKED='?'
 
-sep="╱"
-list=$( ppids  "$sep" "tmux" "urxvt" "init" "sh" "exo-helper-1" "x-terminal-emulator" "systemd" "xfsettingsd" "xfce4-terminal")
-if [ -n "$LC_SSH_PPLIST" ] && [[ "${list}" = sshd"${sep}"* ]] ; then
-	list="${LC_SSH_PPLIST}${sep}${list##*sshd${sep}}"
+if [[ -z "$PROMPT_ORIGIN" ]] ; then
+	export PROMPT_ORIGIN="${LC_SSH_ORIGIN}»"
+	export LC_SSH_ORIGIN="${LC_SSH_ORIGIN}$( hostname )»"
 fi
 
-list=$( sed "s#$( basename "$SHELL" )#"'$'"#g" <<<"$list" )
-
-if [ "$list" != '$' ] ; then
-	export _PARENT_PROCESS_LIST="$list"
-else
-	export _PARENT_PROCESS_LIST=""
-fi
-export LC_SSH_PPLIST="${list}${sep}»$( hostname )"
-
-VCPROMPT="$HOME/.bashrc.d/vcprompt"
 
 # Set PS1. Levels are:
 # * 0, low, minimal: Minimal PS1. Useful for slow systems, or systems with
@@ -32,33 +18,35 @@ VCPROMPT="$HOME/.bashrc.d/vcprompt"
 # * 1, medium, normal: Prompt showing coloured information, including
 #   virtualenv status
 # * 2, high, full: Prompt showing coloured information, including virtualenv
-#   and version control status
+function _prompt_color() {
+	local color="$1"
+	local text="$2"
+	printf '\[\e[%sm\]%s\[\e[0m\]' "$color" "$text"
+}
+
 alias prompt-level=_prompt_level
 function _prompt_level() {
-	local user='\[\e[38;5;40m\]\u\[\e[0m\]'
-	local host='@\[\e[38;5;13m\]\h\[\e[0m\]'
-	local path=':\[\e[38;5;202m\]\w\[\e[0m\]'
-	local vcprompt='$( ${VCPROMPT} -f "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]" --format-git "ᛘ\[\e[38;5;130m\]%n\[\e[0m\]:\[\e[38;5;214m\]%b\[\e[0m\]\[\e[38;5;239m\][\[\e[0m\]\[\e[32m\]%a\[\e[0m\]\[\e[31m\]%m\[\e[0m\]\[\e[38;5;33m\]%u\[\e[0m\]\[\e[38;5;239m\]]\[\e[0m\]")'
-	local venv='$( if [[ x"$VENV_DIR" != x ]] ; then dir="${VENV_DIR##*/}" ; echo "⚒\[\e[38;5;51m\]$dir\[\e[0m\]" ; fi )'
-	local env='$( if [[ -n "$ENVIRONMENT" ]] ; then echo "%\[\e[1;37m\]$ENVIRONMENT\[\e[0m\]" ; fi )'
-	local running='$( ! [ -z "$_PARENT_PROCESS_LIST" ] && echo "↳\[\e[38;5;93m\]$_PARENT_PROCESS_LIST\[\e[0m\]" )'
 	local level=$1
 	case $level in
 	0|off|none)
 		level=0
 		export PS1='\$ '
 		;;
-	1|low|minimal)
+	1|minimal)
 		level=1
-		export PS1='[\u@\h:\W] \$ '
+		local user="$( _prompt_color '32' '\u' )"
+		local host="@$( _prompt_color '35' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' '\h' )"
+		local path=":$( _prompt_color '33' '\w' )"
+		export PS1="[$user$host$path] \\$ "
 		;;
-	2|medium|normal)
+	2|normal)
 		level=2
-		export PS1='\n['"$user$host$env$venv$running$path"']\n\$ '
-		;;
-	3|high|full)
-		level=3
-		export PS1='\n['"$user$host$env$vcprompt$venv$running$path"']\n\$ '
+		local user="$( _prompt_color '38;5;40' '\u' )"
+		local host="@$( _prompt_color '38;5;246' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' '\h' )"
+		local path=":$( _prompt_color '38;5;202' '\w' )"
+		local venv_content="⚒$( _prompt_color "38;5;51" '${VENV_DIR##*/}' )"
+		local venv='$( if [[ -n "$VENV_DIR" ]] ; then echo "'"${venv_content}"'" ; fi )'
+		export PS1='\n['"$user$host$venv$path"']\n\$ '
 		;;
 	*)
 		echo "Unknown prompt-level: $1"
@@ -69,11 +57,15 @@ function _prompt_level() {
 }
 
 function _shift_prompt_level() {
-	local level= $(( $PROMPT_LEVEL + $1 ))
+	local level=$(( $PROMPT_LEVEL + $1 ))
 	_prompt_level $level
 }
 
-alias -- ++prompt="_shift_promp_level 1"
-alias -- --prompt="_shift_promp_level -1"
+alias -- ++prompt="_shift_prompt_level 1"
+alias -- --prompt="_shift_prompt_level -1"
 
-_prompt_level "${PROMPT_LEVEL:-2}"
+if [[ "$(tty)" == '/dev/tty'[0-9]* ]] ; then
+	_prompt_level 1
+else
+	_prompt_level "${PROMPT_LEVEL:-2}"
+fi

@@ -34,3 +34,4 @@ if [[ -e ~/.bashrc.local ]] ; then
 fi
 
 source "$HOME/.bashrc.d/startup.sh"
+
