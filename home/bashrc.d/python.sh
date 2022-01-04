@@ -56,8 +56,16 @@ function _mkvenv_python() {
 
 	"$pip" install --upgrade pip wheel
 
-	[ -e "${dir}/requirements.txt" ] && "$pip" install -r "${dir}/requirements.txt"
-	[ -e "${dir}/setup.py" ] && "$pip" install -e "${dir}"
+	args=()
+	if [ -e "${dir}/requirements.txt" ] ; then
+		args+=(-r "${dir}/requirements.txt")
+	fi
+	if [ -e "${dir}/setup.py" ] || [ -e "${dir}/setup.cfg" ] ; then
+		args+=(-e "${dir}")
+	fi
+	if [[ "${#args[@]}" -gt 0 ]] ; then
+		"$pip" install "${args[@]}"
+	fi
 
 	_venv_up "$dir"
 }
