@@ -3,7 +3,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 function! <sid>Grep(args)
-	let l:command="ag --vimgrep \$* " . a:args
+	let l:command="ag --vimgrep \$* " . a:args . " | sort"
 
 	" Status message
 	echohl WarningMsg
