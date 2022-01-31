@@ -148,25 +148,36 @@ function nullinate() {
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
 function _ls_parents() {
-	local path=
-
-	local args=( "$@" )
-	if [[ "${#args}" -eq 0 ]] ; then
+	local single="$( [[ $# -ge 2 ]] ; echo $? )"
+	local args
+	if [[ "$#" -eq 0 ]] ; then
+		single="true"
 		args=( "$( pwd )" )
+	else
+		single=$( [[ "$#" -eq 1 ]] && echo "true" || echo "false" )
+		args=( "$@" )
 	fi
 
 	local path
 	for arg in "${args[@]}" ; do
-		path=$( readlink -em "${arg}" )
+		path="$arg"
 		local paths=( "$path" )
 
+		# Find all the parents, up to the root directory
 		while [[ "${path}" != '/' ]] ; do
 			path=$( dirname "$path" )
-			paths+=( "$path" )
+			# prepend to the list, so items are listed from root to leaf
+			paths=( "$path" "${paths[@]}" )
 		done
 
-		echo "${arg}"
-		printf '%s\0' "${paths[@]}" | xargs -0 ls -ld
+		if ! "$single" ; then
+			# Print out the directory being listed.
+			# Use `ls` so the path gets coloured and shell-escaped
+			ls -d "${arg%%/}"
+		fi
+
+		# List all the parents
+		ls --sort=none --directory -l "${paths[@]}"
 	done
 }
 alias ls-parents="_ls_parents"
