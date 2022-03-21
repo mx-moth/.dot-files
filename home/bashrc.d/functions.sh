@@ -19,7 +19,7 @@ alias noop='echo -n ""'
 
 # Use like `command > output-from-command-`datestamp``
 alias datestamp='date "+%Y-%m-%d"'
-alias datetimestamp='date "+%Y-%m-%d-%H%m"'
+alias datetimestamp='date "+%Y-%m-%d-%H%M"'
 
 # Start a simple static file server
 alias serve="python2 -mSimpleHTTPServer"
