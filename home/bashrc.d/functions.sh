@@ -351,34 +351,6 @@ function ppids() {
 	echo ${path}
 }
 
-alias easy-svc=_easy_svc
-function _easy_svc() {
-	path="${SVC_DIR:-/etc/service}"
-
-	command="$1"
-	name="$2"
-
-	sudo svc "$command" "${path}/${name}"
-}
-
-alias svc-down=_svc_down
-function _svc_down() {
-	easy-svc -d $1
-}
-
-alias svc-up=_svc_up
-function _svc_up() {
-	easy-svc -o $1
-}
-
-alias svc-restart=_svc_restart
-function _svc_restart() {
-	name="$1"
-	svc-down "$1"
-	sleep 2
-	svc-up "$1"
-}
-
 export _font_size=""
 _adjust_font_size() {
 	if [ -z "$_font_size" ] ; then
