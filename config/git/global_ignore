@@ -52,3 +52,4 @@ python_env
 docker-venv
 .nvimrc
 *.egg-info/
+.conda
