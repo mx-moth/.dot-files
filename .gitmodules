@@ -21,7 +21,7 @@
 	url = https://github.com/ap/vim-css-color.git
 [submodule "config/nvim/bundle/repeat"]
 	path = config/nvim/pack/plugins/start/repeat
-	url = git://github.com/tpope/vim-repeat.git
+	url = https://github.com/tpope/vim-repeat.git
 [submodule "config/nvim/bundle/jedi"]
 	path = config/nvim/pack/plugins/start/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
@@ -60,4 +60,4 @@
 	url = https://github.com/nshtg/vim-emoji-complete
 [submodule "config/nvim/bundle/targets.vim"]
 	path = config/nvim/pack/plugins/start/targets.vim
-	url = git://github.com/wellle/targets.vim.git
+	url = https://github.com/wellle/targets.vim.git
