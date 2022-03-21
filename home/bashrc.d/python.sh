@@ -80,10 +80,11 @@ function _mkvenv_conda() {
 	local conda="$CONDA_PREFIX_NAME"
 	local dir="$( pwd )"
 
-	conda run -n base \
-		mamba env create \
-			--prefix "$dir/$conda" \
-			"$@"
+	conda create \
+		--yes --quiet \
+		--no-default-packages \
+		--prefix "$dir/$conda" \
+		"$@"
 
 	_venv_up "$dir"
 }
