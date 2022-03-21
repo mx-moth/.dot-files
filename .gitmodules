@@ -25,9 +25,6 @@
 [submodule "config/nvim/bundle/jedi"]
 	path = config/nvim/pack/plugins/start/jedi
 	url = https://github.com/davidhalter/jedi-vim.git
-[submodule "home/urxvt/urxvt-perls"]
-	path = home/urxvt/urxvt-perls
-	url = https://github.com/muennich/urxvt-perls.git
 [submodule "config/nvim/bundle/javascript"]
 	path = config/nvim/pack/plugins/start/javascript
 	url = https://github.com/pangloss/vim-javascript.git
