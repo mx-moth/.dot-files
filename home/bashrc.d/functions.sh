@@ -408,11 +408,12 @@ function _check_for_tmux {
 	echo "$sessions"
 }
 
-function prettyxml() {
+function _pretty_xml() {
 	local readonly imports="import sys; import xml.dom.minidom as x"
 	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
 	python3 -c "$imports; $script"
 }
+alias pretty-xml="_pretty_xml"
 
 function fix-bandcamp-download() {
 	local dir=${1:-.}
