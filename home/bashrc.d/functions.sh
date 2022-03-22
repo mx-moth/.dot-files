@@ -41,9 +41,6 @@ alias pretty-json="python3 -mjson.tool"
 
 alias command?="command -pv &>/dev/null"
 
-# Shortcut for launching `dolphin` in the current directory
-alias eeee='sequester dolphin "$( pwd )" &>/dev/null'
-
 # Print tab-delimited input as a table
 # I always forget if it is column/columns, and the -t flag trips me up.
 # eg: run-script | table
@@ -302,27 +299,6 @@ function qrc() {
 	qrencode -t ANSI -o - "$@"
 }
 
-# Reload ~/.Xresources, spawn a new rxvt-unicode, attach to current tmux
-# session, and then disconnect this terminal from the session.
-alias reload-xresources=_reload_xresources
-function _reload_xresources() {
-	xrdb ~/.Xresources
-
-	if [[ -n "$TMUX" ]] ; then
-		TMUX= rxvt-unicode -e tmux attach &
-		tmux detach
-	elif tmux has-session ; then
-		rxvt-unicode -e tmux attach &
-		sleep 0.2
-		tmux display-message \
-			"You did not seem to be running tmux, so I could not just reattach to the current session. Have a fresh terminal attached to some random tmux session."
-		exit
-	else
-		rxvt-unicode &
-		exit
-	fi
-}
-
 # elementIn "one" ("one" "two" "three")
 elementIn () {
 	local e
@@ -353,36 +329,6 @@ function ppids() {
 	done
 
 	echo ${path}
-}
-
-export _font_size=""
-_adjust_font_size() {
-	if [ -z "$_font_size" ] ; then
-		_font_size=$( xrdb -query | grep URxvt.*font | cut -d'	' -f2 | grep -o '[0-9]\+' | head -n1 )
-	fi
-	_set_font_size $(( _font_size + $1 ))
-}
-_set_font_size() {
-	local font=$( xrdb -query | grep URxvt.*font | cut -d'	' -f2 )
-	local font_size=$( grep -o '[0-9]\+' <<<"$font" | head -n1 )
-	local font_size="$1"
-	_font_size=$font_size
-	echo "Setting font size to $font_size" >&2
-	printf '\33]50;%s%d\007' "$( sed <<<"$font" "s/[0-9]\+/$font_size/" )"
-}
-++font() { _adjust_font_size 2 ; }
---font() { _adjust_font_size -2 ; }
-
-alias adjust-font=_adjust_font
-function _adjust_font() {
-	while read -rsN1 char ; do
-		case "$char" in
-			[+=]) ++font 2>/dev/null ;;
-			[-_]) --font 2>/dev/null ;;
-			[qQ]) break ;;
-			*) ;;
-		esac
-	done
 }
 
 # Draw a ========== line across your terminal to mark something
@@ -460,26 +406,6 @@ function _check_for_tmux {
 
 	printf "\e[1m%s\e[0m\n" "Detached tmux sessions:"
 	echo "$sessions"
-}
-
-# Find all migrations not currently in git, delete them, and remake them
-alias remake-migrations=_remake_migrations
-function _remake_migrations {
-	if [[ $# -lt 1 ]] ; then
-		echo "Usage: $0 project-base"
-		return
-	fi
-	return
-
-	local IFS=$'\n'
-	IFS=$'\0' readarray migration_dirs <( find $1 -name 'migrations' -print0 )
-	local apps=()
-	for dir in $migration_dirs ; do
-		apps+=($( basename "$( dirname "$dir")" ))
-		local unknown=$( git status --porcelain "$dir" | grep '^??' | sed 's/^??//' )
-		rm -i $unknown
-	done
-	./manage.py makemigrations "${apps[@]}"
 }
 
 function prettyxml() {
