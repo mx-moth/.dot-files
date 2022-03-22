@@ -20,3 +20,8 @@ if [ -z "$LC_ORIGIN_HOST" ] || [ "$LC_ORIGIN_HOST" == "$HOSTNAME" ] ; then
 else
 	export IS_REMOTE_CONNECTION=1
 fi
+
+if which pass &>/dev/null ; then
+	export PASSWORD_STORE_ENABLE_EXTENSIONS=true
+	export PASSWORD_STORE_EXTENSIONS_DIR=$HOME/.local/share/password-store/extensions
+fi

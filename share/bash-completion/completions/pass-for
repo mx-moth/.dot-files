@@ -1,0 +1,7 @@
+# Overwrite the completion function for pass to include 'for', defined above
+
+PASSWORD_STORE_EXTENSION_COMMANDS+=(for)
+
+__password_store_extension_complete_for() {
+	_pass_complete_entries 1
+}
