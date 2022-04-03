@@ -61,3 +61,6 @@
 [submodule "config/nvim/bundle/targets.vim"]
 	path = config/nvim/pack/plugins/start/targets.vim
 	url = https://github.com/wellle/targets.vim.git
+[submodule "config/nvim/pack/plugins/start/python-isort"]
+	path = config/nvim/pack/plugins/start/python-isort
+	url = git@github.com:brentyi/isort.vim.git
