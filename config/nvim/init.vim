@@ -138,8 +138,9 @@ if &term =~ '^screen'
 	execute "set <xLeft>=\e[1;*D"
 endif
 
-
-let g:deoplete#enable_at_startup = 1
+if has('nvim')
+	let g:deoplete#enable_at_startup = 1
+endif
 
 let g:python_venv = $HOME . "/.config/nvim/venv2"
 let g:python_bin = g:python_venv . "/bin"
