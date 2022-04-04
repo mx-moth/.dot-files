@@ -1,6 +1,8 @@
 syntax on
 set nocompatible
 
+setglobal encoding=utf-8
+
 if has("autocmd")
 	filetype plugin indent on
 endif
