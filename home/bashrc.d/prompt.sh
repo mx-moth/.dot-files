@@ -6,9 +6,17 @@ if [ -z "$PS1" ] ; then return 0 ; fi
 # Build up PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 
+function _hostname() {
+	if command -v hostname &> /dev/null ; then
+		hostname
+	else
+		cat /proc/sys/kernel/hostname
+	fi
+}
+
 if [[ -z "$PROMPT_ORIGIN" ]] ; then
 	export PROMPT_ORIGIN="${LC_SSH_ORIGIN}»"
-	export LC_SSH_ORIGIN="${LC_SSH_ORIGIN}$( hostname )»"
+	export LC_SSH_ORIGIN="${LC_SSH_ORIGIN}$( _hostname )»"
 fi
 
 
