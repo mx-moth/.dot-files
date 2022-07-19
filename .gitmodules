@@ -22,9 +22,6 @@
 [submodule "config/nvim/bundle/repeat"]
 	path = config/nvim/pack/plugins/start/repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "config/nvim/bundle/jedi"]
-	path = config/nvim/pack/plugins/start/jedi
-	url = https://github.com/davidhalter/jedi-vim.git
 [submodule "config/nvim/bundle/javascript"]
 	path = config/nvim/pack/plugins/start/javascript
 	url = https://github.com/pangloss/vim-javascript.git
@@ -46,12 +43,6 @@
 [submodule "home/tmux.d/tmux-yank"]
 	path = home/tmux.d/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
-[submodule "config/nvim/bundle/deoplete.nvim"]
-	path = config/nvim/pack/plugins/start/deoplete.nvim
-	url = https://github.com/Shougo/deoplete.nvim
-[submodule "config/nvim/bundle/deoplete-jedi"]
-	path = config/nvim/pack/plugins/start/deoplete-jedi
-	url = https://github.com/deoplete-plugins/deoplete-jedi
 [submodule "config/nvim/bundle/ale"]
 	path = config/nvim/pack/plugins/start/ale
 	url = https://github.com/w0rp/ale
