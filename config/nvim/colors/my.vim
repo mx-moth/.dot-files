@@ -102,8 +102,8 @@ call SetFgColour("NonText", "239")
 " Pinky values for values
 call SetFgColour("Constant", "165")
 call SetFgColour("Tag", "165")
-call SetFgColour("String", "161")
-call SetFgColour("Character", "161")
+call SetFgColour("String", "162")
+call SetFgColour("Character", "162")
 call SetFgColour("Number", "127")
 call SetFgColour("Float", "127")
 call SetFgColour("Boolean", "129")
@@ -209,9 +209,9 @@ call SetFgColour("VertSplit", fill)
 
 call SetColour("TabLineInvert", {'ctermfg': inactive, 'ctermbg': '016', 'cterm': 'NONE'})
 
-call SetFgColour("LineNr", 238)
+call SetFgColour("LineNr", 242)
 highlight clear CursorLine
-call SetFgColour("CursorLineNr", 243)
+call SetFgColour("CursorLineNr", 248)
 call SetFgColour("Conceal", active)
 call SetColour("MatchParen", {'fg': '33', 'bg': active})
 
