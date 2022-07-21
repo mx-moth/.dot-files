@@ -1,6 +1,5 @@
-pyproject-flake8
-flake8~=3.9.1
-isort~=5.0
-jedi~=0.15.0
 pynvim>=0
 editorconfig~=0.12.0
+python-lsp-server[rope,pyflakes]
+pyls-isort
+# pyproject-flake8
