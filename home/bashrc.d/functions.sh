@@ -101,7 +101,7 @@ function tmuxd {
 		tmux switch-client -t "$session_name"
 	fi
 }
-++tmux() { tmuxd "$@" ; }
+alias ++tmux='tmuxd'
 
 
 # Handy functions
