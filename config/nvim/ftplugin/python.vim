@@ -10,4 +10,3 @@ setlocal nosmartindent
 setlocal comments=b:#,b:#:,fb:-,fb:*
 setlocal omnifunc<
 setlocal conceallevel=0
-call HardMode(79)
