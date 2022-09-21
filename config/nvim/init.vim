@@ -74,7 +74,6 @@ augroup END
 " Indentation settings
 set tabstop=4       " I like four space tabs for indenting
 set shiftwidth=4    " I like four space tabs for indenting
-set smartindent     " Syntax aware indenting
 set autoindent      " Auto indent
 set lbr             " Put line breaks at word ends, not in the middle of words
 set scrolloff=20
@@ -149,29 +148,6 @@ let g:python3_host_prog = g:python3_bin . "/python"
 let g:EditorConfig_core_mode = "external_command"
 let g:EditorConfig_exec_path = g:python3_bin . "/editorconfig"
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Enable hard mode
-"
-" 79 character columns, automatic text wrapping
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! HardMode(...)
-	" Hardcore mode: enabled
-	if a:0 > 0
-		let width = a:1
-	else
-		let width = 79
-	end
-
-	setlocal textwidth=0
-	if width == 0
-		setlocal colorcolumn=0
-	else
-		if exists("+colorcolumn")
-			exec "setlocal colorcolumn=" . (l:width + 1)
-		endif
-	endif
-endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
