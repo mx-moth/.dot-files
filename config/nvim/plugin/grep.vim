@@ -2,8 +2,16 @@
 " :Grep - Search files for a pattern in a new tab
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+function! <sid>GrepCommand(args)
+	if executable('ag')
+		return "ag --vimgrep \$* " . a:args . " | sort -V"
+	else
+		return "grep -nHr " . a:args . " | sort -V"
+	fi
+endfunction
+
 function! <sid>Grep(args)
-	let l:command="ag --vimgrep \$* " . a:args . " | sort -V"
+	let l:command=<sid>GrepCommand(a:args)
 
 	" Status message
 	echohl WarningMsg
