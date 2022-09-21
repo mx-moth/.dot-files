@@ -55,7 +55,18 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
-require('lspconfig')['pylsp'].setup{
+require('lspconfig')['pylsp'].setup {
 	on_attach = on_attach,
 	cmd = { vim.g.python3_bin .. "/pylsp" },
+	settings = {
+		pylsp = {
+			plugins = {
+				mccabe = { enabled = false },
+				flake8 = {
+					enabled = true,
+					ignore = { "W503", "E501", "C901" },
+				},
+			},
+		},
+	},
 }
