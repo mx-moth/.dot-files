@@ -19,8 +19,8 @@ function __hostname() {
 }
 
 if [[ -z "$PROMPT_ORIGIN" ]] ; then
-	export PROMPT_ORIGIN="${LC_SSH_ORIGIN}»"
-	export LC_SSH_ORIGIN="${LC_SSH_ORIGIN}$( __hostname )»"
+	PROMPT_ORIGIN="${LC_SSH_ORIGIN}»"
+	LC_SSH_ORIGIN="${LC_SSH_ORIGIN}$( __hostname )»"
 fi
 
 
@@ -42,14 +42,14 @@ function _prompt_level() {
 	case $level in
 	0|off|none)
 		level=0
-		export PS1='\$ '
+		PS1='\$ '
 		;;
 	1|minimal)
 		level=1
 		local user="$( _prompt_color '32' '\u' )"
 		local host="@$( _prompt_color '35' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' '\h' )"
 		local path=":$( _prompt_color '33' '\w' )"
-		export PS1="[$user$host$path] \\$ "
+		PS1="[$user$host$path] \\$ "
 		;;
 	2|normal)
 		level=2
@@ -58,14 +58,14 @@ function _prompt_level() {
 		local path=":$( _prompt_color '38;5;202' '\w' )"
 		local venv_content="⚒$( _prompt_color "38;5;51" '${VENV_DIR##*/}' )"
 		local venv='$( if [[ -n "$VENV_DIR" ]] ; then echo "'"${venv_content}"'" ; fi )'
-		export PS1='\n['"$user$host$venv$path"']\n\$ '
+		PS1='\n['"$user$host$venv$path"']\n\$ '
 		;;
 	*)
 		echo "Unknown prompt-level: $1"
 		return 1
 	esac
 
-	export PROMPT_LEVEL=$level
+	PROMPT_LEVEL=$level
 }
 
 function _shift_prompt_level() {

@@ -4,8 +4,9 @@
 # Settings for python shells
 export PYTHONSTARTUP=~/.pythonrc
 export PYTHONDONTWRITEBYTECODE=1
-export PYTHON_VENV_NAME=".venv"
-export CONDA_PREFIX_NAME=".conda"
+
+PYTHON_VENV_NAME=".venv"
+CONDA_PREFIX_NAME=".conda"
 
 # Locally installed python packages
 if [[ -z "$PYTHONPATH" ]] ; then
