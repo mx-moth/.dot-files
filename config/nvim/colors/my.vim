@@ -1,15 +1,9 @@
-" Vim color file
-" Maintainer:	Thorsten Maerz <info@netztorte.de>
-" Last Change:	2006 Dec 07
-" grey on black
-" optimized for TFT panels
-
 set background=dark
 hi clear
 if exists("syntax_on")
   syntax reset
 endif
-"colorscheme default
+
 let g:colors_name = "my"
 
 let s:xterm_colors = {
@@ -96,28 +90,28 @@ endfunction
 
 " highlight  guibg=NONE
 
-call SetColour("Normal", {'fg': '249', 'ctermbg': 'NONE', 'guibg': '#111122'})
+call SetColour("Normal", {'fg': '252', 'ctermbg': 'NONE', 'guibg': 'NONE'})
 call SetFgColour("NonText", "239")
 
 " Pinky values for values
 call SetFgColour("Constant", "165")
 call SetFgColour("Tag", "165")
-call SetFgColour("String", "162")
-call SetFgColour("Character", "162")
-call SetFgColour("Number", "127")
-call SetFgColour("Float", "127")
+call SetFgColour("String", "169")
+call SetFgColour("Character", "169")
+call SetFgColour("Number", "164")
+call SetFgColour("Float", "164")
 call SetFgColour("Boolean", "129")
-call SetFgColour("Keyword", "91")
+call SetFgColour("Keyword", "129")
 call SetColour("Exception", {'ctermfg': '165', 'guifg': '#d700ff', 'ctermbg': 'NONE'})
 
 " Functions and identifiers get bluey colours
-call SetFgColour("Identifier", "25")
+call SetFgColour("Identifier", "32")
 call SetFgColour("Function", "26")
 call SetFgColour("Label", "24")
 
 " Statements (if, while, case) and operators (+, -) get green colours
 call SetFgColour("Statement", "40")
-call SetFgColour("Conditional", "3")
+call SetFgColour("Conditional", "40")
 call SetFgColour("Operator", "70")
 call SetFgColour("Repeat", "40")
 call SetFgColour("Delimiter", "40")
@@ -140,20 +134,17 @@ call SetColour("TODO", {'ctermfg': 'black', 'ctermbg': 'LightBlue', 'cterm': 'NO
 
 " diffsplit highlighting
 " Green/red/blue backgrounds for diff add/delete/change
-call SetColour("DiffAdd", {'ctermbg': '155', 'ctermfg': 'black', 'guibg': '#003300', 'guifg': 'NONE', 'gui': 'NONE'})
-call SetColour("DiffDelete", {'ctermbg': '210', 'ctermfg': '210', 'guibg': '#330000', 'guifg': '#ff0000', 'gui': 'NONE'})
-call SetColour("DiffChange", {'ctermbg': '136', 'ctermfg': 'black', 'guibg': '#000055', 'guifg': 'NONE', 'gui': 'NONE'})
-call SetColour("DiffText", {'ctermbg': '202', 'ctermfg': 'black', 'cterm': 'NONE', 'guibg': '#000088', 'guifg': 'NONE', 'gui': 'NONE'})
+highlight DiffAdd ctermbg=22 guibg=#002200
+highlight DiffDelete ctermbg=52 guibg=#331111 guifg=#ff0000
+highlight DiffChange ctermbg=17 guibg=#000033
+highlight DiffText ctermbg=202 guibg=#333366
 
 " Diff file highlighting
-call SetColour("diffFile", {'ctermfg': '32'})
-call SetColour("diffLine", {'ctermfg': '244'})
-call SetColour("diffAdded", {'ctermfg': '118'})
-call SetColour("diffRemoved", {'ctermfg': '209'})
-call SetColour("diffChanged", {'ctermfg': '219'})
-
-call SetColour("DiffChange", {'ctermbg': '153', 'ctermfg': 'black', 'cterm': 'NONE'})
-call SetColour("DiffText", {'ctermbg': '105', 'ctermfg': 'black', 'cterm': 'NONE'})
+highlight diffAdded ctermbg=22 guibg=#002200
+highlight diffRemoved ctermbg=52 guibg=#331111
+highlight diffChanged ctermbg=17 guibg=#000033
+highlight diffFile ctermfg=32 guifg=32
+highlight diffLine ctermfg=244 guifg=244
 
 call SetFgColour("SpecialKey", "239")
 
@@ -214,44 +205,3 @@ highlight clear CursorLine
 call SetFgColour("CursorLineNr", 248)
 call SetFgColour("Conceal", active)
 call SetColour("MatchParen", {'fg': '33', 'bg': active})
-
-" highlight DiffText	ctermfg=grey
-" highlight diffBDiffer	ctermfg=grey
-" highlight diffChanged	ctermfg=grey
-" highlight diffComment	ctermfg=grey
-" highlight diffCommon	ctermfg=grey
-" highlight diffDiffer	ctermfg=grey
-" highlight diffFile	ctermfg=grey
-" highlight diffIdentical	ctermfg=grey
-" highlight diffIsA	ctermfg=grey
-" highlight diffLine	ctermfg=grey
-" highlight diffNewFile	ctermfg=grey
-" highlight diffNoEOL	ctermfg=grey
-" highlight diffOldFile	ctermfg=grey
-" highlight diffOnly	ctermfg=grey
-" highlight diffRemoved	ctermfg=grey
-" highlight diffSubname	ctermfg=grey
-
-" Available classes:
-" * PreProc Include Define Macro PreCondit
-" * StorageClass Structure Typedef
-" * SpecialChar SpecialComment Debug
-" * Ignore
-" * Todo
-
-" UI colour scheme: mostly blue
-" * colour 117 (bright) for focused items
-" * colour 27 (mid) for other items
-" * colour 17 (dark) for filler
-
-" only for vim 5
-if has("unix")
-	if v:version<600
-		highlight Normal  ctermfg=Grey ctermbg=Black cterm=NONE guifg=Grey80 guibg=Black gui=NONE
-		highlight Search  ctermfg=Black ctermbg=Red cterm=bold guifg=Black guibg=Red gui=bold
-		highlight Visual  ctermfg=Black ctermbg=yellow cterm=bold guifg=#404040 gui=bold
-		highlight Special ctermfg=LightBlue ctermbg=Black cterm=NONE guifg=LightBlue gui=NONE
-		highlight Comment ctermfg=Cyan ctermbg=Black cterm=NONE guifg=LightBlue gui=NONE
-	endif
-endif
-

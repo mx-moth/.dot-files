@@ -61,7 +61,9 @@ set laststatus=2
 " Appearance settings
 set background=dark
 set number          " Numbers in the margin
+autocmd BufRead,BufNewFile * setlocal signcolumn=number
 set diffopt=filler,foldcolumn:0
+set termguicolors
 colorscheme my
 
 " Open the quickfix window when there is stuff to show
