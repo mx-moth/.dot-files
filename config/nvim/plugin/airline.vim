@@ -10,6 +10,7 @@ let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#bufferline#enabled = 0
 
 function! AirlineInit()
+	let g:airline_section_b = airline#section#create([])
 	" Character number
 	let g:airline_section_x = airline#section#create(['%4b│0x%-4B'])
 	" Position in file
