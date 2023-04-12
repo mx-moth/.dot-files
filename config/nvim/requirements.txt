@@ -6,15 +6,17 @@
 #
 editorconfig==0.12.3
     # via -r requirements.in
-flake8==4.0.1
-    # via pyproject-flake8
+flake8==5.0.4
+    # via
+    #   -r requirements.in
+    #   pyproject-flake8
 greenlet==1.1.2
     # via pynvim
 isort==5.10.1
     # via pyls-isort
 jedi==0.18.1
     # via python-lsp-server
-mccabe==0.6.1
+mccabe==0.7.0
     # via flake8
 msgpack==1.0.4
     # via pynvim
@@ -24,23 +26,21 @@ parso==0.8.3
     # via jedi
 pluggy==1.0.0
     # via python-lsp-server
-pycodestyle==2.8.0
+pycodestyle==2.9.1
     # via flake8
-pyflakes==2.4.0
-    # via
-    #   flake8
-    #   python-lsp-server
+pyflakes==2.5.0
+    # via flake8
 pyls-isort==0.2.2
     # via -r requirements.in
 pynvim==0.4.3
     # via -r requirements.in
 pyparsing==3.0.9
     # via packaging
-pyproject-flake8==0.0.1a4
+pyproject-flake8==5.0.4.post1
     # via -r requirements.in
 python-lsp-jsonrpc==1.0.0
     # via python-lsp-server
-python-lsp-server[pyflakes,rope]==1.5.0
+python-lsp-server[rope]==1.5.0
     # via
     #   -r requirements.in
     #   pyls-isort
