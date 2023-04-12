@@ -58,3 +58,6 @@
 [submodule "config/nvim/pack/plugins/start/nvim-lspconfig"]
 	path = config/nvim/pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig/
+[submodule "config/nvim/pack/plugins/start/vim-caddyfile"]
+	path = config/nvim/pack/plugins/start/vim-caddyfile
+	url = https://github.com/isobit/vim-caddyfile
