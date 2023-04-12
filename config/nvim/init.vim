@@ -149,6 +149,7 @@ let g:python3_host_prog = g:python3_bin . "/python"
 
 let g:EditorConfig_core_mode = "external_command"
 let g:EditorConfig_exec_path = g:python3_bin . "/editorconfig"
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 
 
