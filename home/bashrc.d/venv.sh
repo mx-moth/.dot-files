@@ -21,10 +21,7 @@ function _venv_up() {
 
 	local initial_filesystem="$( _venv_get_filesystem "$dir" )"
 
-	local py="$PYTHON_VENV_NAME"
-	local conda=".conda"
-	local node='node_modules'
-	local haskell='.cabal-sandbox'
+	local NODE_VENV_NAME='node_modules'
 
 	local path=()
 	local activate=()
@@ -33,28 +30,33 @@ function _venv_up() {
 
 		local found=false
 
-		if [[ -d "$dir/$py" ]] ; then
-			echo "Using Python virtualenv: $dir/$py"
-			activate+=( "$( printf 'source %q/%q/bin/activate' "$dir" "$py" )" )
+		if [[ -v PYTHON_VENV_NAME && -d "$dir/$PYTHON_VENV_NAME" ]] ; then
+			echo "Using Python virtualenv: $dir/$PYTHON_VENV_NAME"
+			activate+=( "$( printf 'source %q/%q/bin/activate' "$dir" "$PYTHON_VENV_NAME" )" )
 			found=true
 		fi
-		if [[ -d "$dir/$conda" ]] ; then
-			echo "Using conda environment: $dir/$conda"
-			activate+=( "$( printf 'conda activate %q/%q' "$dir" "$conda" )" )
+		# Conda always creates a ~/.conda directory to store some state.
+		# Yes there are bug reports about it, no they don't seem to care.
+		# This will never be an actual environment so lets ignore that case
+		if [[ -v CONDA_PREFIX_NAME && -d "$dir/$CONDA_PREFIX_NAME" && "$dir" != "$HOME" ]] ; then
+			echo "Using conda environment: $dir/$CONDA_PREFIX_NAME"
+			activate+=( "$( printf 'conda activate %q/%q' "$dir" "$CONDA_PREFIX_NAME" )" )
 			found=true
 		fi
-		if [[ -d "$dir/$node" ]] ; then
-			echo "Using node envionment: $dir/$node"
-			path+=( "$dir/$node/.bin" )
+		if [[ -d "$dir/$NODE_VENV_NAME" ]] ; then
+			echo "Using node envionment: $dir/$NODE_VENV_NAME"
+			path+=( "$dir/$NODE_VENV_NAME/.bin" )
 			found=true
 		fi
-		if [[ -d "$dir/$haskell" ]] ; then
-			echo "Using Haskell sandbox: $dir/$haskell"
-			path+=( "$dir/$haskell/bin" )
+		if [[ -v HASKELL_VENV_NAME && -d "$dir/$HASKELL_VENV_NAME" ]] ; then
+			echo "Using Haskell sandbox: $dir/$HASKELL_VENV_NAME"
+			path+=( "$dir/$HASKELL_VENV_NAME/bin" )
 			found=true
 		fi
 
 		if $found ; then
+			# In a subshell, activate all the environments and then launch bash again.
+			# This only works with virtual environments that modify environment variables.
 			(
 				if [[ "${#path}" -gt 0 ]] ; then
 					export PATH="$(IFS=':' ; echo "${path[*]}"):$PATH" ;

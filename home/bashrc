@@ -9,29 +9,37 @@ umask 002
 
 source "$HOME/.bashrc.d/environment.sh"
 
-# Search backwards and forwards through history easier
-if [[ $-  == *i* ]] ; then
-	bind '"\e[A": history-search-backward'
-	bind '"\e[B": history-search-forward'
-
-
-	# Source in extra scripts
-	# -----------------------
-
-	# This could be automated, but I prefer to opt-in to scripts that I want.
-	source "$HOME/.bashrc.d/functions.sh"
-	source "$HOME/.bashrc.d/prompt.sh"
-	source "$HOME/.bashrc.d/python.sh"
-	source "$HOME/.bashrc.d/haskell.sh"
-	source "$HOME/.bashrc.d/venv.sh"
-	source "$HOME/.bashrc.d/colours.sh"
-	source "$HOME/.bashrc.d/installers.sh"
-	source "$HOME/.bashrc.d/ssh.sh"
-fi
-
 # Source in any local bashrc
 if [[ -e ~/.bashrc.local ]] ; then
 	source ~/.bashrc.local
 fi
 
-source "$HOME/.bashrc.d/startup.sh"
+# Check for an interactive session
+if [[ $-  == *i* ]] ; then
+
+	# Search backwards and forwards through history easier
+	bind '"\e[A": history-search-backward'
+	bind '"\e[B": history-search-forward'
+
+	# Source in extra scripts
+	source "$HOME/.bashrc.d/functions.sh"
+
+	# Unset TMOUT if TMOUT_BUST is set in ~/.bashrc.local
+	if [[ -v TMOUT_BUST ]] ; then
+		_tmout_bust
+		unset TMOUT_BUST
+	fi
+
+	source "$HOME/.bashrc.d/python.sh"
+	source "$HOME/.bashrc.d/conda.sh"
+	source "$HOME/.bashrc.d/haskell.sh"
+	source "$HOME/.bashrc.d/venv.sh"
+
+	source "$HOME/.bashrc.d/prompt.sh"
+	source "$HOME/.bashrc.d/colours.sh"
+
+	source "$HOME/.bashrc.d/tmux.sh"
+	source "$HOME/.bashrc.d/ssh.sh"
+
+	source "$HOME/.bashrc.d/startup.sh"
+fi

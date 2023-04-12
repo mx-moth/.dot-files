@@ -30,12 +30,17 @@ if [[ -n "$system_cabal" ]] ; then
 		fi
 	}
 fi
+unset system_cabal
 
-# Make and source a virtualenv in the current directory
-alias mkvenv.haskell=_mkvenv_haskell
-function _mkvenv_haskell() {
-	dir="${1:-.}"
-	( cd "$dir" && hsenv --name=main )
-	++venv "$dir"
-	[ -e "${dir}/cabal.config" ] && ( cd "$dir" && cabal install --dependencies-only )
-}
+if command? 'hsenv' ; then
+	HASKELL_VENV_NAME='.cabal-sandbox'
+
+	# Make and source a virtualenv in the current directory
+	alias mkvenv.haskell=_mkvenv_haskell
+	function _mkvenv_haskell() {
+		dir="${1:-.}"
+		( cd "$dir" && hsenv --name=main )
+		++venv "$dir"
+		[ -e "${dir}/cabal.config" ] && ( cd "$dir" && cabal install --dependencies-only )
+	}
+fi

@@ -1,10 +1,9 @@
-if [[ $- == *i* ]] ; then
-	# Unset TMOUT if TMOUT_BUST is set in ~/.bashrc.local
-	if [[ -v TMOUT_BUST ]] ; then
-		_tmout_bust
-		unset TMOUT_BUST
-	fi
-	# Print a list of detached tmux sessions
-	check-for-tmux
-	++magic
-fi
+# This file is sourced last.
+# These commands might have side effects in the shell that is being started,
+# such as printing things to the console.
+
+# Print a list of detached tmux sessions
+_check_for_tmux
+
+# Source bash completions
+++magic

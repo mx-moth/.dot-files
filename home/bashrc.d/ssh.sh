@@ -1,5 +1,10 @@
 # SSH shortcuts
 
+# Add all keys in ~/.ssh/keys to the keyring
+alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
+
+# Close a multiplexed connection to a server
+# Usage: `ssh-close-multiplexed-connection ssh.example.com`
 alias ssh-close-multiplexed-connection="ssh -O stop"
 
 function ssh-send-local-port() {

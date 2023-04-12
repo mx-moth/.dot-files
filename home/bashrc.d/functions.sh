@@ -1,9 +1,6 @@
-# Handy alias' and functions for doing all sorts of shit.
-# If a family of functions/alias' arises, they are put in a separate file.
+# Handy aliases and functions for doing all sorts of shit.
+# If a family of functions/aliases arises, they are put in a separate file.
 # This is the catch-all misc section.
-
-# Program alias'
-# --------------
 
 # Human readable, coloured ls
 alias ls='ls -hF --color=auto --group-directories-first'
@@ -35,10 +32,20 @@ alias ++magic="_enable_bash_completion"
 # Tail syslog. I was typing this quite a lot, so alias.
 alias syslog="sudo tail -f /var/log/syslog"
 
-# Prettify a json chunk
-# eg `curl http://example.com/api/user/1.json | pretty-json`
+# Prettify a JSON chunk
+# eg `curl https://example.com/api/user/1.json | pretty-json`
 alias pretty-json="python3 -mjson.tool"
 
+# Prettify an XML chunk
+# eg `curl https://example.com/api/user/1.xml | pretty-xml`
+alias pretty-xml="_pretty_xml"
+function _pretty_xml() {
+	local readonly imports="import sys; import xml.dom.minidom as x"
+	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
+	python3 -c "$imports; $script"
+}
+
+# Does a command exist
 alias command?="command -pv &>/dev/null"
 
 # Print tab-delimited input as a table
@@ -46,77 +53,37 @@ alias command?="command -pv &>/dev/null"
 # eg: run-script | table
 alias table='column -t -s"	"'
 
+# Start neovim with tabs
 alias nv='nvim -p'
 
-# Quick directory traversal
+# Quick upwards directory traversal
+# `..` - one level
+# `::` - two levels
+# `:::` - three levels
+# etc
 alias ..='cd ..'
-
-# alias ::='cd ../../'
+colon=':'
+dots='../'
 for i in $( seq 2 10 ) ; do
-	colon=''
-	dots=''
-
-	for a in $( seq 1 "$i" ) ; do
-		colon="$colon:"
-		dots="$dots../"
-	done
-
+	colon="${colon}:"
+	dots="${dots}../"
 	eval "alias $colon='cd $dots'"
 done
+unset colon dots
 
 
+# Show whether the previous command succeeded or not.
 # Example: fsck -y /dev/sdb1 && yn
 alias yeaaaaaaah='printf "\e[%dm%s\e[0m %s\n" 32 "•" "(⌐■_■)"'
 alias flip-table='printf "\e[%dm%s\e[0m %s\n" 31 "•" "(╯°□°)╯ ┻━┻"'
 alias yn='yeaaaaaaah || flip-table'
 
-alias ssh-add-all='ssh-add ~/.ssh/keys/*id_rsa'
-
-
-function tmuxs {
-	if [[ -z "$TMUX" ]] ; then
-		tmux new-session -As "$@"
-	else
-		tmux switch-client -t "$@"
-	fi
-}
-
-function _tmux_sanitise_name {
-	tr -s '.' '-' | sed 's/^-|-$//'
-}
-
-function tmuxd {
-	if [[ $# -gt 0 ]] ; then
-		local dir=$( realpath -s "$1" )
-	else
-		local dir=$( pwd )
-	fi
-	local session_name=$( basename "$dir" | _tmux_sanitise_name )
-	if [[ -z "$TMUX" ]] ; then
-		tmuxs "$session_name" -c "$dir"
-	else
-		if ! tmux has-session -t="$session_name" 2>/dev/null ; then
-			TMUX= tmux new-session -ds "$session_name" -c "$dir"
-		fi
-		tmux switch-client -t "$session_name"
-	fi
-}
-alias ++tmux='tmuxd'
-
-
-# Handy functions
-# ---------------
 
 # Trim whitespace from either end of stdin
 function trim() {
 	sed -e 's/^\\s\\+//;s/\\s\\+$//'
 }
 
-# Opens all matching files in vim, searching via ack-grep
-alias ack-edit=_ack_edit
-function _ack_edit() {
-	ack-grep -l --print0 "$@" | xargs -0 $SHELL -c '$EDITOR -p "$@" < /dev/tty' ''
-}
 
 # Print out all arguments as they are supplied, separated by the null character.
 # Useful when passing an array of file names to xargs or something. Example:
@@ -135,6 +102,7 @@ function nullinate() {
 	done
 }
 
+
 # List the heirarchy of directories leading to the named file/directory
 # If no argument is supplied, `pwd` is used. Example:
 #
@@ -148,6 +116,7 @@ function nullinate() {
 #     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
 #     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
 #     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
+alias ls-parents="_ls_parents"
 function _ls_parents() {
 	local single="$( [[ $# -ge 2 ]] ; echo $? )"
 	local args
@@ -181,13 +150,14 @@ function _ls_parents() {
 		ls --sort=none --directory -l "${paths[@]}"
 	done
 }
-alias ls-parents="_ls_parents"
 
-# Launch a program, ignoring stdin, stdout, stderr
+
+# Launch a program in the background, ignoring stdin, stdout, stderr.
 # eg: `sequester noisy-gui-program`
 function sequester() {
 	nohup "$@" &>/dev/null &
 }
+
 
 # Combination of pgrep and ps. Basically does `ps $( pgrep pattren )` but
 # behaves when no process' are found.
@@ -200,6 +170,7 @@ function psgrep() {
 	fi
 	ps $pids
 }
+
 
 # Put the date before every line in stdin
 # eg: `long-running-process | predate > log-file.txt`
@@ -217,29 +188,10 @@ function predate() {
 	done
 }
 
-# Highlight a pattern in stdin
-# eg: `foo -x bar.baz | highlight quux`
-function highlight() {
-	ack-grep --color --passthru "$@"
-}
 
 # Make a directory and cd in to it.
 function mkcd() {
 	mkdir -p "$1" && cd "$1"
-}
-
-# Compute the mathematical expression passed in on the command line.
-# Dont forget to quote your input if using functions like sin, log, etc; or if
-# using '*'.
-# eg: `c '1 + 2 * sin(3)'`
-function c() {
-	script="print $@"
-	if python -c 'import numpy' &>/dev/null ; then
-		script="from numpy import *; $script"
-	else
-		script="from math import *; $script"
-	fi
-	python -c "$script" | pxclip
 }
 
 
@@ -311,7 +263,7 @@ elementIn () {
 
 function ppids() {
 	pid=$$
-	sep=$1
+	sep=${1:-$'\n'}
 	path=""
 
 	while [ ${pid} -ne 0 ] ; do
@@ -328,7 +280,7 @@ function ppids() {
 		pid=$( ps -p ${pid} -o ppid= | trim )
 	done
 
-	echo ${path}
+	echo "${path}"
 }
 
 # Draw a ========== line across your terminal to mark something
@@ -360,23 +312,21 @@ function ips() {
 	for line in $( ip addr ) ; do
 		if [[ "$line" == "    "* ]] ; then
 			if [[ "$line" == "    inet"* ]] ; then
-				ip=$( sed 's!^    inet6\? \(.*\)/.*!\1!' <<< "$line" ) ;
-				interfaces+=("$current_interface $ip")
+				ip=$( sed 's!^    \(inet6\?\) \(.*\)/.*!\1\t\2!' <<< "$line" ) ;
+				interfaces+=("$current_interface	$ip")
 			fi
 		else
 			current_interface=$( cut -d' ' -f2 <<< "$line" )
+			current_interface="${current_interface%:}"
 		fi
 	done
 
-	for interface in "${interfaces[@]}" ; do echo "$interface" ; done | column -t
+	(
+		printf '%s\t%s\t%s\n' 'NAME' 'KIND' 'IP ADDRESS'
+		IFS="$nl" echo "${interfaces[*]}" | sort -n
+	) | column -s'	' -t -c "$COLUMNS"
 }
 
-# Start mutt, syncing with offlineimap before and after mutt runs
-function mutt() {
-	offlineimap -oqu Quiet &>>~/mutt.log &
-	/usr/bin/mutt
-	offlineimap -oqu Quiet &>>~/mutt.log &
-}
 
 # Make a random long password without too many awkward symbols
 function mkpasswd() {
@@ -384,36 +334,6 @@ function mkpasswd() {
 	echo
 }
 
-# Complete tmux session names for `tmuxs` alias
-function _tmux_sessions {
-	local IFS=$'\n'
-	local cur="${COMP_WORDS[COMP_CWORD]}"
-	COMPREPLY=()
-	COMPREPLY+=($(compgen -W "$( tmux list-sessions -F '#S' 2>/dev/null )" -- "${cur}" ))
-}
-complete -o filenames -F _tmux_sessions tmuxs
-
-# Print out a list of unattached tmux sessions, if you are not already in one.
-alias check-for-tmux=_check_for_tmux
-function _check_for_tmux {
-	if [[ -n "$TMUX" ]] ; then return ; fi
-	if ! which tmux &>/dev/null ; then return ; fi
-
-	local sessions=$( tmux -q list-sessions 2>/dev/null | grep -v '(attached)' )
-	local code=$!
-	if [[ "$code" -ne 0 ]] ; then return ; fi
-	if [[ -z "$sessions" ]] ; then return ; fi
-
-	printf "\e[1m%s\e[0m\n" "Detached tmux sessions:"
-	echo "$sessions"
-}
-
-function _pretty_xml() {
-	local readonly imports="import sys; import xml.dom.minidom as x"
-	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
-	python3 -c "$imports; $script"
-}
-alias pretty-xml="_pretty_xml"
 
 function fix-bandcamp-download() {
 	local dir=${1:-.}
