@@ -152,24 +152,6 @@ let g:EditorConfig_exec_path = g:python3_bin . "/editorconfig"
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ctrl+p settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ctrlp_custom_ignore = {
-	\ 'dir': '\v' . join([
-	\     '^\.git$', '^\.svn$', '^\.hg$',
-	\     '^build$', '^output', '^var$',
-	\     'venv$', '.venv', $PYTHON_VENV_NAME, '^__pycache__$', '.tox',
-	\     'node_modules$',
-	\     'frontend\/static$', '^build$',
-	\     'docs\/build$',
-	\     'repos$',
-	\     'htmlmypy$', 'htmlcov$',
-	\ ], '|'),
-	\ 'file': '\.pyc$\|\.so$\|\.class$\|.swp$\|\.pid\|\.beam$',
-	\ }
-
 if filereadable($HOME . "/.nvimrc.local")
 	source ~/.nvimrc.local
 endif
