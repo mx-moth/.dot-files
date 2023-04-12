@@ -10,7 +10,7 @@ umask 002
 source "$HOME/.bashrc.d/environment.sh"
 
 # Search backwards and forwards through history easier
-if echo "$-" | grep -q 'i' ; then
+if [[ $-  == *i* ]] ; then
 	bind '"\e[A": history-search-backward'
 	bind '"\e[B": history-search-forward'
 

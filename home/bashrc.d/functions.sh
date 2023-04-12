@@ -451,3 +451,86 @@ function rename {
 		fi
 	done
 }
+
+# Create a named file with specific permissions.
+# Creation is atomic - either the file is created with the permissions as set,
+# or the call fails.
+# The call fails if the file already exists,
+# or if the file was unable to be created with the requested permissions.
+#
+# Usage:
+#
+#     atomic-create-file <path> <mode>
+#
+#     <path> is the path to the file to create,
+#     <mode> is the symbolic permissions for the new file
+#
+# To create a file securely that is only writeable by the current user:
+#
+#     atomic-create-file /path/to/file u=rw
+alias atomic-create-file="_atomic_create_file"
+function _atomic_create_file() {
+	local path="$1"
+	local umask="${2:-`umask`}"
+	(
+		set -o noclobber
+		umask "$umask"
+		{ > "$path" ; } &> /dev/null
+	)
+}
+
+# Export / import some session environment variables.
+# Useful for importing SSH_AUTH_SOCKET, X11 display variables, etc
+# in to long running tmux sessions after SSHing back in to a server.
+#
+# Usage:
+#
+#     $ ssh my-server
+#     $ export-session-vars
+#     $ tmuxs some-session
+#     $ import-session-vars
+_SESSION_FILE="$HOME/.session.env"
+alias export-session-vars="_export_session_vars"
+function _export_session_vars() {
+	local var_names=( "${!SSH_@}" DISPLAY )
+	local var_name
+
+	rm -f "$_SESSION_FILE"
+	_atomic_create_file "$_SESSION_FILE" "u=rw,g=,o=" || {
+		echo "Could not securely create session file '$_SESSION_FILE'!" >&2
+		return 1
+	}
+
+	echo "# Session environment variables" > $_SESSION_FILE
+	for var_name in "${var_names[@]}" ; do
+		echo "${!var_name@A}" >> $_SESSION_FILE
+	done
+}
+
+# Dual of export-session-vars above
+alias import-session-vars='source "$_SESSION_FILE"'
+
+
+# If this is a login shell and TMOUT is set,
+# `exec` a new login shell with TMOUT unset.
+function _tmout_bust() {
+	# If this is a login shell (i.e. we've just SSH'd in),
+	# and TMOUT is non-zero, and the parent process is sshd,
+	# attempt to start a new bash shell with TMOUT disabled.
+	local _sentinel="TMOUT_SENTINEL"
+	if shopt -q login_shell ; then
+		# Check if TMOUT is non-zero and the parent process is sshd
+		if [[
+			# Check TMOUT is set and non-zero
+			-v "TMOUT" && "$TMOUT" != 0
+			# Check we're not in a recursive loop
+			&& ! -v "${_sentinel}"
+			# Check if the parent process is sshd
+			&& "$( ps -o comm= -p "${PPID}" )" == "sshd"
+		]] ; then
+			# Disable TMOUT rubbish
+			exec env TMOUT=0 "$_sentinel=1" bash -l
+		fi
+	fi
+	unset "$_sentinel"
+}
