@@ -7,7 +7,9 @@ if [ -z "$PS1" ] ; then return 0 ; fi
 export VIRTUAL_ENV_DISABLE_PROMPT=true
 
 function __hostname() {
-	if [[ -n "$HOSTNAME" ]] ; then
+	if [[ -n "$HOST_ALIAS" ]] ; then
+		echo "$HOST_ALIAS"
+	elif [[ -n "$HOSTNAME" ]] ; then
 		echo "$HOSTNAME"
 	elif [[ -e "/proc/sys/kernel/hostname" ]] ; then
 		cat "/proc/sys/kernel/hostname"
@@ -47,14 +49,14 @@ function _prompt_level() {
 	1|minimal)
 		level=1
 		local user="$( _prompt_color '32' '\u' )"
-		local host="@$( _prompt_color '35' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' '\h' )"
+		local host="@$( _prompt_color '35' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' "$( __hostname )" )"
 		local path=":$( _prompt_color '33' '\w' )"
 		PS1="[$user$host$path] \\$ "
 		;;
 	2|normal)
 		level=2
 		local user="$( _prompt_color '38;5;40' '\u' )"
-		local host="@$( _prompt_color '38;5;246' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' '\h' )"
+		local host="@$( _prompt_color '38;5;246' "${PROMPT_ORIGIN:0:-1}" )$( _prompt_color '38;5;13' "$( __hostname )" )"
 		local path=":$( _prompt_color '38;5;202' '\w' )"
 		local venv_content="⚒$( _prompt_color "38;5;51" '${VENV_DIR##*/}' )"
 		local venv='$( if [[ -n "$VENV_DIR" ]] ; then echo "'"${venv_content}"'" ; fi )'
