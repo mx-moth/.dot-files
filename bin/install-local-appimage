@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+appimage_path="$1"
+appimage_name="$( basename "$appimage_path" )"
+if [[ $# -ge 2 ]] ; then
+	appimage_cmd="$2"
+else
+	read -e \
+		-p "Name for appimage command? " \
+		-i "$( basename "${appimage_name,,}" .appimage )" \
+		appimage_cmd
+fi
+
+dest="$HOME/.local/share/appimages/$appimage_name"
+link="$HOME/.local/bin/$appimage_cmd"
+
+if [[ -h "$link" ]] ; then
+	echo "Removing existing symbolic link $link"
+	rm "$link"
+elif [[ -e "$link" ]] ; then
+	echo "$link already exists! Aborting..." >&2
+	exit 1
+fi
+
+mkdir -p "$( dirname "$dest" )"
+
+printf "Installing %q to %q\n" "$appimage_path" "$dest"
+cp "$appimage_path" "$dest"
+chmod +x "$dest"
+
+printf "Adding %q to \$PATH\n" "$appimage_cmd"
+ln -sT "$dest" "$link"
