@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+"""
+Prettify an XML document. Usage:
+
+	$ curl https://example.com/api/user/1.xml | pretty-xml
+"""
+
+import sys
+import xml.dom.minidom as x
+
+print(x.parse(sys.stdin).toprettyxml())

@@ -36,15 +36,6 @@ alias syslog="sudo tail -f /var/log/syslog"
 # eg `curl https://example.com/api/user/1.json | pretty-json`
 alias pretty-json="python3 -mjson.tool"
 
-# Prettify an XML chunk
-# eg `curl https://example.com/api/user/1.xml | pretty-xml`
-alias pretty-xml="_pretty_xml"
-function _pretty_xml() {
-	local readonly imports="import sys; import xml.dom.minidom as x"
-	local readonly script="print(x.parse(sys.stdin).toprettyxml())"
-	python3 -c "$imports; $script"
-}
-
 # Does a command exist
 alias command?="command -pv &>/dev/null"
 
@@ -103,60 +94,12 @@ function nullinate() {
 }
 
 
-# List the heirarchy of directories leading to the named file/directory
-# If no argument is supplied, `pwd` is used. Example:
-#
-#     $ ls-parents /usr/local/bin
-#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
-#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr
-#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr/local
-#     drwxr-xr-x  2 root root 4096 Apr 23  2012 /usr/local/bin
-#     $ cd
-#     $ ls-parents
-#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
-#     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
-#     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
-alias ls-parents="_ls_parents"
-function _ls_parents() {
-	local single="$( [[ $# -ge 2 ]] ; echo $? )"
-	local args
-	if [[ "$#" -eq 0 ]] ; then
-		single="true"
-		args=( "$( pwd )" )
-	else
-		single=$( [[ "$#" -eq 1 ]] && echo "true" || echo "false" )
-		args=( "$@" )
-	fi
-
-	local path
-	for arg in "${args[@]}" ; do
-		path="$arg"
-		local paths=( "$path" )
-
-		# Find all the parents, up to the root directory
-		while [[ "${path}" != '/' ]] ; do
-			path=$( dirname "$path" )
-			# prepend to the list, so items are listed from root to leaf
-			paths=( "$path" "${paths[@]}" )
-		done
-
-		if ! "$single" ; then
-			# Print out the directory being listed.
-			# Use `ls` so the path gets coloured and shell-escaped
-			ls -d "${arg%%/}"
-		fi
-
-		# List all the parents
-		ls --sort=none --directory -l "${paths[@]}"
-	done
-}
-
-
 # Launch a program in the background, ignoring stdin, stdout, stderr.
 # eg: `sequester noisy-gui-program`
 function sequester() {
 	nohup "$@" &>/dev/null &
 }
+complete -A command sequester
 
 
 # Combination of pgrep and ps. Basically does `ps $( pgrep pattren )` but
@@ -194,56 +137,6 @@ function mkcd() {
 	mkdir -p "$1" && cd "$1"
 }
 
-
-# Print out all the 256 console colours. Useful when designing colour schemes
-# for vim/bash/tmux/etc.
-function aa_256 () {
-	local base='10'
-
-	if [[ $# -gt 0 ]] ; then
-		base=$1
-	fi
-
-	local columns=8
-	if [[ $# -gt 1 ]] ; then
-		columns=$2
-	fi
-
-	local prefix=''
-	local format=''
-	case "$base" in
-		"oct") prefix="0" ; format="%o"  ;;
-		"dec") prefix="" ; format="%d" ;;
-		"hex") prefix="0x" ; format="%x"  ;;
-	esac
-
-	local padding=6
-
-	local rows=$(( 256 / $columns ))
-
-	local reset=$( tput op )
-	local fill=$( printf %$(( ( $COLUMNS / $columns ) - $padding ))s )
-
-	local colour=''
-	local num=''
-	local code=''
-	local row=''
-	local column=''
-
-	num_format="%s${format} "
-	padded_num_format="%${padding}s"
-	colour_block="${fill// /=}$reset"
-
-	for row in $( seq 0 "$rows" ) ; do
-		for column in $( seq 0 $(( columns - 1 )) ) ; do
-			colour=$(( $row + $column * $rows ))
-			num="$( printf "${num_format}" "${prefix}" "${colour}" )"
-			code="$( printf "${padded_num_format}" "${num}" )"
-			echo -en "$code$( tput setaf $colour; tput setab $colour )$colour_block"
-		done
-		echo ''
-	done
-}
 
 # Quickly print out a QR code to the terminal. Useful for sending a link to
 # your phone, etc
@@ -293,13 +186,6 @@ function hr () {
 	echo
 }
 
-# Turn off all screensavers, dpms, x-blanking, suspending, etc
-alias movie-time=_movie_time
-function _movie_time() {
-	xset s off
-	xset s noblank
-	xset -dpms
-}
 
 # Print the ips of all network interfaces
 function ips() {

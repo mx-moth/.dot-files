@@ -69,3 +69,6 @@ link_files "$here/config" "$HOME/.config" '' "${do_not_link[@]}"
 # Link ./share/* to ~/.local/share/*
 mkdir -p "$HOME/.local/share"
 link_files "$here/share" "$HOME/.local/share" '' "${do_not_link[@]}"
+
+mkdir -p "$HOME/.local/bin"
+link_files "$here/bin" "$HOME/.local/bin" '' "${do_not_link[@]}"

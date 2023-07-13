@@ -43,9 +43,6 @@
 [submodule "home/tmux.d/tmux-yank"]
 	path = home/tmux.d/tmux-yank
 	url = https://github.com/tmux-plugins/tmux-yank
-[submodule "config/nvim/bundle/ale"]
-	path = config/nvim/pack/plugins/start/ale
-	url = https://github.com/w0rp/ale
 [submodule "config/nvim/bundle/emoji-complete"]
 	path = config/nvim/pack/plugins/start/emoji-complete
 	url = https://github.com/nshtg/vim-emoji-complete

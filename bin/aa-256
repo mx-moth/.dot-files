@@ -1,0 +1,63 @@
+#!/bin/bash
+# Print out all the 256 console colours. Useful when designing colour schemes
+# for vim/bash/tmux/etc.
+#
+base='10'
+
+if [[ $# -gt 0 ]] ; then
+	base=$1
+fi
+
+columns=8
+if [[ $# -gt 1 ]] ; then
+	columns=$2
+fi
+
+prefix=''
+format=''
+case "$base" in
+	"oct") prefix="0" ; format="%o"  ;;
+	"dec") prefix="" ; format="%d" ;;
+	"hex") prefix="0x" ; format="%x"  ;;
+esac
+
+padding=6
+
+rows=$(( 256 / $columns ))
+
+reset=$( tput op )
+fill="$( printf %"$(( ( COLUMNS / columns ) - padding ))"s "" )"
+
+colour=''
+num=''
+code=''
+row=''
+column=''
+
+num_format="%s${format} "
+padded_num_format="%${padding}s"
+colour_block="${fill// /=}$reset"
+
+function print-colours() {
+	for colour in "$@" ; do
+		num="$( printf "${num_format}" "${prefix}" "${colour}" )"
+		code="$( printf "${padded_num_format}" "${num}" )"
+		echo -en "$code$( tput setaf $colour; tput setab $colour )$colour_block"
+	done
+	echo ''
+}
+
+print-colours {0..7}
+print-colours {8..15}
+echo ''
+for row in $( seq 0 35 ) ; do
+	start=$(( 16 + row * 6 ))
+	stop=$(( 16 + (row + 1) * 6 - 1 ))
+	print-colours $( seq $start $stop )
+done
+echo ''
+
+print-colours {232..237}
+print-colours {238..243}
+print-colours {244..249}
+print-colours {250..255}

@@ -1,0 +1,45 @@
+#!/bin/bash
+# List the heirarchy of directories leading to the named file/directory
+# If no argument is supplied, `pwd` is used. Example:
+#
+#     $ ls-parents /usr/local/bin
+#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
+#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr
+#     drwxr-xr-x 10 root root 4096 Apr 23  2012 /usr/local
+#     drwxr-xr-x  2 root root 4096 Apr 23  2012 /usr/local/bin
+#     $ cd
+#     $ ls-parents
+#     drwxr-xr-x 28 root root 4096 Jan  2 10:08 /
+#     drwxr-xr-x  4 root root 4096 Dec  3 12:05 /home
+#     drwxr-xr-x 38 tim  tim  4096 Jan  2 10:49 /home/tim
+
+single="$( [[ $# -ge 2 ]] ; echo $? )"
+
+if [[ "$#" -eq 0 ]] ; then
+	single="true"
+	args=( "$( pwd )" )
+else
+	single=$( [[ "$#" -eq 1 ]] && echo "true" || echo "false" )
+	args=( "$@" )
+fi
+
+for arg in "${args[@]}" ; do
+	path="$arg"
+	paths=( "$path" )
+
+	# Find all the parents, up to the root directory
+	while [[ "${path}" != '/' ]] ; do
+		path=$( dirname "$path" )
+		# prepend to the list, so items are listed from root to leaf
+		paths=( "$path" "${paths[@]}" )
+	done
+
+	if ! "$single" ; then
+		# Print out the directory being listed.
+		# Use `ls` so the path gets coloured and shell-escaped
+		ls -d "${arg%%/}"
+	fi
+
+	# List all the parents
+	ls --sort=none --directory -l "${paths[@]}"
+done
