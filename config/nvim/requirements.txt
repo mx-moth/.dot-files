@@ -4,58 +4,86 @@
 #
 #    pip-compile requirements.in
 #
+attrs==23.1.0
+    # via
+    #   cattrs
+    #   lsprotocol
+cattrs==23.1.2
+    # via lsprotocol
+docstring-to-markdown==0.12
+    # via python-lsp-server
 editorconfig==0.12.3
     # via -r requirements.in
-flake8==5.0.4
-    # via
-    #   -r requirements.in
-    #   pyproject-flake8
+exceptiongroup==1.1.1
+    # via cattrs
 greenlet==1.1.2
     # via pynvim
+importlib-metadata==6.7.0
+    # via typeguard
 isort==5.10.1
     # via pyls-isort
 jedi==0.18.1
     # via python-lsp-server
-mccabe==0.7.0
-    # via flake8
+lsprotocol==2023.0.0a2
+    # via
+    #   pygls
+    #   ruff-lsp
 msgpack==1.0.4
     # via pynvim
-packaging==21.3
+mypy==1.4.1
+    # via pylsp-mypy
+mypy-extensions==1.0.0
+    # via mypy
+packaging==23.1
     # via pytoolconfig
 parso==0.8.3
     # via jedi
+platformdirs==3.6.0
+    # via pytoolconfig
 pluggy==1.0.0
     # via python-lsp-server
-pycodestyle==2.9.1
-    # via flake8
-pyflakes==2.5.0
-    # via flake8
+pygls==1.0.2
+    # via ruff-lsp
 pyls-isort==0.2.2
+    # via -r requirements.in
+pylsp-mypy==0.6.7
     # via -r requirements.in
 pynvim==0.4.3
     # via -r requirements.in
-pyparsing==3.0.9
-    # via packaging
-pyproject-flake8==5.0.4.post1
-    # via -r requirements.in
 python-lsp-jsonrpc==1.0.0
     # via python-lsp-server
-python-lsp-server[rope]==1.5.0
+python-lsp-server[rope]==1.7.3
     # via
     #   -r requirements.in
     #   pyls-isort
-pytoolconfig==1.2.1
+    #   pylsp-mypy
+pytoolconfig[global]==1.2.5
     # via rope
-rope==1.2.0
+rope==1.8.0
     # via python-lsp-server
+ruff==0.0.275
+    # via ruff-lsp
+ruff-lsp==0.0.35
+    # via -r requirements.in
 tomli==2.0.1
     # via
-    #   pyproject-flake8
+    #   mypy
+    #   pylsp-mypy
     #   pytoolconfig
+typeguard==3.0.2
+    # via pygls
+typing-extensions==4.6.3
+    # via
+    #   cattrs
+    #   mypy
+    #   ruff-lsp
+    #   typeguard
 ujson==5.4.0
     # via
     #   python-lsp-jsonrpc
     #   python-lsp-server
+zipp==3.15.0
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

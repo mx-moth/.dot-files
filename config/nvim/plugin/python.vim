@@ -27,17 +27,3 @@ let g:jedi#show_call_signatures = 2
 let g:jedi#use_tabs_not_buffers = '1'
 let g:jedi#smart_auto_mappings = 0
 let g:jedi#force_py_version = 3
-
-" ALE config
-let g:ale_fixers = []
-for fixer in ['black', 'isort']
-	if executable(fixer)
-		call add(g:ale_fixers, fixer)
-	endif
-endfor
-
-" Use pflake8 if it is available. pflake8 draws settings from pyproject.toml
-if executable('pflake8')
-	let g:ale_python_flake8_executable = 'pflake8'
-	let g:ale_python_flake8_use_global = 1
-endif
