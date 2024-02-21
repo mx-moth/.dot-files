@@ -58,3 +58,6 @@
 [submodule "config/nvim/pack/plugins/start/vim-caddyfile"]
 	path = config/nvim/pack/plugins/start/vim-caddyfile
 	url = https://github.com/isobit/vim-caddyfile
+[submodule "config/nvim/pack/plugins/start/vim-jsx-pretty"]
+	path = config/nvim/pack/plugins/start/vim-jsx-pretty
+	url = git@github.com:MaxMEllon/vim-jsx-pretty.git
