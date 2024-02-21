@@ -205,3 +205,6 @@ highlight clear CursorLine
 call SetFgColour("CursorLineNr", 248)
 call SetFgColour("Conceal", active)
 call SetColour("MatchParen", {'fg': '33', 'bg': active})
+
+call SetColour("NormalFloat", {'fg': 'NONE', 'bg': 'NONE'})
+call SetColour("FloatBorder", {'fg': '17', 'bg': 'NONE'})
