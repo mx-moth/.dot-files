@@ -31,7 +31,7 @@ function _venv_up() {
 		local found=false
 
 		if [[ -v PYTHON_VENV_NAME && -d "$dir/$PYTHON_VENV_NAME" ]] ; then
-			echo "Using Python virtualenv: $dir/$PYTHON_VENV_NAME"
+			echo "Found Python virtualenv: $dir/$PYTHON_VENV_NAME"
 			activate+=( "$( printf 'source %q/%q/bin/activate' "$dir" "$PYTHON_VENV_NAME" )" )
 			found=true
 		fi
@@ -39,30 +39,32 @@ function _venv_up() {
 		# Yes there are bug reports about it, no they don't seem to care.
 		# This will never be an actual environment so lets ignore that case
 		if [[ -v CONDA_PREFIX_NAME && -d "$dir/$CONDA_PREFIX_NAME" && "$dir" != "$HOME" ]] ; then
-			echo "Using conda environment: $dir/$CONDA_PREFIX_NAME"
+			echo "Found Conda environment: $dir/$CONDA_PREFIX_NAME"
 			activate+=( "$( printf 'conda activate %q/%q' "$dir" "$CONDA_PREFIX_NAME" )" )
 			found=true
 		fi
 		if [[ -d "$dir/$NODE_VENV_NAME" ]] ; then
-			echo "Using node envionment: $dir/$NODE_VENV_NAME"
+			echo "Found node modules: $dir/$NODE_VENV_NAME"
 			path+=( "$dir/$NODE_VENV_NAME/.bin" )
 			found=true
 		fi
 		if [[ -v HASKELL_VENV_NAME && -d "$dir/$HASKELL_VENV_NAME" ]] ; then
-			echo "Using Haskell sandbox: $dir/$HASKELL_VENV_NAME"
+			echo "Found Haskell sandbox: $dir/$HASKELL_VENV_NAME"
 			path+=( "$dir/$HASKELL_VENV_NAME/bin" )
 			found=true
 		fi
 
 		if $found ; then
 			# In a subshell, activate all the environments and then launch bash again.
-			# This only works with virtual environments that modify environment variables.
+			echo ""
 			(
 				if [[ "${#path}" -gt 0 ]] ; then
-					export PATH="$(IFS=':' ; echo "${path[*]}"):$PATH" ;
+					echo "$ export PATH=$(IFS=':' ; echo "${path[*]}"):\$PATH"
+					export PATH="$(IFS=':' ; echo "${path[*]}"):$PATH"
 				fi
 				for cmd in "${activate[@]}" ; do
-					eval "$cmd" ;
+					echo "\$ $cmd"
+					eval "$cmd"
 				done
 				export VENV_DIR="$dir"
 				exec $SHELL
