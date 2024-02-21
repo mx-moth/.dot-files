@@ -1,6 +1,9 @@
 # Conda configuration and helpers
 # --------------------------------
 
+export CONDA_AUTO_ACTIVATE_BASE=false
+CONDA_PREFIX_NAME=".conda"
+
 # Look for possible conda install locations
 
 if command? conda ; then
@@ -28,8 +31,6 @@ if ! command? conda ; then
 fi
 
 unset CONDA_ROOT
-
-CONDA_PREFIX_NAME=".conda"
 
 
 alias mkvenv.conda=_mkvenv_conda
