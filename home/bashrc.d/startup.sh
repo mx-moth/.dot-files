@@ -3,7 +3,9 @@
 # such as printing things to the console.
 
 # Print a list of detached tmux sessions
-_check_for_tmux
+if [[ "$SHLVL" -eq 1 ]] ; then
+	_check_for_tmux
+fi
 
 # Source bash completions
 ++magic
