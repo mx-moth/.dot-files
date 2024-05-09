@@ -41,6 +41,7 @@ function! <sid>Grep(args)
 	setlocal grepformat=%f:%l:%c:%m
 	lexpr l:search
 	ll
+	call setloclist(0, [], "a", {"title": l:command})
 endfunction
 
 command! -nargs=+ -complete=file Grep call <sid>Grep(<q-args>)
