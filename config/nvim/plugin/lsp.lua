@@ -103,6 +103,21 @@ local on_attach = function(client, bufnr)
 end
 
 
+local exepathin = function(command, directory)
+	if string.sub(directory, -1) ~= '/' then
+		directory = directory .. '/'
+	end
+	path = vim.fn.exepath(command)
+	if path ~= nil and string.sub(path, 0, #directory) == directory then
+		return path
+	else
+		return nil
+	end
+end
+
+local venv = os.getenv('VENV_DIR')
+local in_virtual_env = venv ~= nil
+
 -- Defaults for pylsp
 -- This disables all linting by default,
 -- specific linters will be enabled if they are found in the virtual environment.
@@ -125,14 +140,8 @@ local pylsp_args = {
 	},
 }
 
-local virtual_env = os.getenv('VIRTUAL_ENV')
-local venv = os.getenv('VENV_DIR')
-local in_virtual_env = virtual_env ~= nil or venv ~= nill
-
 -- If we are not in a virtual environment, activate ruff linting.
--- If we are in a virtual environment,
--- check which tools are available and activate them as necessary.
-if not in_virtual_env or vim.fn.executable('ruff') == 1 then
+if not in_virtual_env and vim.fn.executable('ruff-lsp') == 1 then
 	require('lspconfig').ruff_lsp.setup({
 		on_attach = on_attach,
 		cmd = { vim.g.python3_bin .. "/ruff-lsp" },
@@ -144,33 +153,51 @@ if not in_virtual_env or vim.fn.executable('ruff') == 1 then
 	})
 end
 
+-- If we are in a virtual environment,
+-- check which tools are available and activate them as necessary.
 if in_virtual_env then
+	ruff_lsp = exepathin('ruff-lsp', venv)
+	if ruff_lsp ~= nil then
+		require('lspconfig').ruff_lsp.setup({
+			on_attach = on_attach,
+			cmd = { ruff_lsp },
+		})
+	end
+
 	pylsp_plugins = pylsp_args['settings']['pylsp']['plugins']
 
-	if vim.fn.executable('flake8') == 1 then
+	flake8 = exepathin('flake8', venv)
+	if flake8 ~= nil then
 		pylsp_args['configurationSources'] = { 'flake8' }
 		pylsp_plugins['flake8'] = {
 			enabled = true,
+			executable = flake8,
 		}
 	else
 		-- Maybe configure the above things?
 	end
 
-	if vim.fn.executable('isort') == 1 then
+	isort = exepathin('isort', venv)
+	if isort ~= nil then
 		pylsp_plugins['pyls_isort'] = {
 			enabled = true,
+			executable = isort,
 		}
 	end
 
-	if vim.fn.executable('mypy') == 1 then
+	mypy = exepathin('mypy', venv)
+	if isort ~= nil then
 		pylsp_plugins['pylsp_mypy'] = {
 			enabled = true,
+			executable = mypy,
 			dmypy = true,
 		}
 	end
 end
 
-require('lspconfig').pylsp.setup(pylsp_args)
+if #pylsp_args['settings']['pylsp']['plugins'] then
+	require('lspconfig').pylsp.setup(pylsp_args)
+end
 
 if in_virtual_env then
 	if vim.fn.executable('vscode-eslint-language-server') == 1 then
