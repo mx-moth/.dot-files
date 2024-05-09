@@ -171,3 +171,9 @@ if in_virtual_env then
 end
 
 require('lspconfig').pylsp.setup(pylsp_args)
+
+if in_virtual_env then
+	if vim.fn.executable('vscode-eslint-language-server') == 1 then
+		require'lspconfig'.eslint.setup{}
+	end
+end

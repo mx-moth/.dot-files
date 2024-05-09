@@ -61,3 +61,9 @@
 [submodule "config/nvim/pack/plugins/start/vim-jsx-pretty"]
 	path = config/nvim/pack/plugins/start/vim-jsx-pretty
 	url = git@github.com:MaxMEllon/vim-jsx-pretty.git
+[submodule "config/nvim/pack/plugins/start/null-ls"]
+	path = config/nvim/pack/plugins/start/null-ls
+	url = https://github.com/jose-elias-alvarez/null-ls.nvim.git
+[submodule "config/nvim/pack/plugins/start/eslint"]
+	path = config/nvim/pack/plugins/start/eslint
+	url = https://github.com/MunifTanjim/eslint.nvim.git
