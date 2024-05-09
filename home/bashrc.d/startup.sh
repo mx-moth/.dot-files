@@ -9,3 +9,7 @@ fi
 
 # Source bash completions
 ++magic
+
+if [[ -e "$HOME/.bashrc.startup" ]] ; then
+	source "$HOME/.bashrc.startup"
+fi
