@@ -24,8 +24,10 @@ alias serve="python3 -m http.server"
 # Source the system-wide bach completion scripts.
 # These take a second or two to run, so you have to enable them yourself.
 _enable_bash_completion() {
-	source /usr/share/bash-completion/bash_completion
-	source ~/.config/bash_completion
+	if [[ -e /usr/share/bash-completion/bash_completion ]] ; then
+		source /usr/share/bash-completion/bash_completion
+		source ~/.config/bash_completion
+	fi
 }
 alias ++magic="_enable_bash_completion"
 
