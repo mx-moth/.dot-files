@@ -1,0 +1,159 @@
+#!/bin/bash
+
+set -e -o errexit -o pipefail -o noclobber -o nounset
+shopt -s globstar nullglob
+
+readonly HERE="$( cd -- "$( realpath -eL . )" && pwd )"
+
+if ! command -v exiftool &>/dev/null ; then
+	echo "$0 requires 'exiftool', which is not installed" >&1
+	exit 1
+fi
+
+usage () {
+	echo "Usage:"
+	echo
+	echo "  $0 [--dest=<dir>] <zip> <zip2> <song1>..."
+	echo
+	echo "Unzip a Bandcamp music download (or a single song) and put it in the right place."
+	echo "Unzips to the current directory, use '--dest' to override the destination directory."
+}
+
+OPTIONS="hd:"
+LONGOPTS="help,dest:"
+
+! PARSED=$( getopt --options="$OPTIONS" --longoptions="$LONGOPTS" --name="$0" -- "$@" )
+if [[ "${PIPESTATUS[0]}" -ne 0 ]]; then
+	echo
+	usage 1>&2
+	exit 2
+fi
+eval set -- "$PARSED"
+
+
+dest="${HERE}"
+while true; do
+	case "$1" in
+		-h|--help)
+			usage
+			exit 0
+			;;
+		-d|--dest)
+			dest=$2
+			shift 2
+			;;
+		--)
+			shift
+			break
+			;;
+		*)
+			echo "Unknown option $1"
+			exit 3
+			;;
+	esac
+done
+
+if [[ $# -eq 0 ]] ; then
+	usage 1>&2
+	exit 1
+fi
+
+id3tag() {
+	local tag="$1"
+	local file="$2"
+	exiftool -s3 -$tag "${file}"
+	# ffprobe -loglevel error -show_entries \
+	# 	format_tags="$tag" \
+	# 	-of default=noprint_wrappers=1:nokey=1 \
+	# 	"$file"
+}
+
+as_filename() {
+	echo -n "$1" | tr "/\n" "-"
+}
+
+process_zip() {
+	local zip="$1"
+
+	echo "Unzipping '$zip' ..."
+
+	local zip_name=$( basename "$zip" .zip )
+	local unzip_to=$( mktemp --directory --tmpdir="$dest" "${zip_name}.XXXXXX" )
+	unzip -q -d "$unzip_to" "$zip"
+	process_directory "$unzip_to"
+	rm -rf "$unzip_to"
+}
+process_directory() {
+	local dir="$1"
+
+	echo "Processing '$dir' ..."
+
+	local songs=( "${dir%/}"/*.mp3 "${dir%/}"/*.m4a )
+	echo "${songs[@]}"
+
+	if [[ "${#songs}" -eq 0 ]] ; then
+		echo "No songs found in $zip"
+		return 1
+	fi
+
+	local song="${songs[0]}"
+	local artist="$( id3tag "artist" "$song" )"
+	local album="$( id3tag "album" "$song" )"
+
+	local year="$( id3tag "year" "$song" )"
+	year="${year:0:4}"
+	if [[ -n "$year" ]] ; then
+		album="[$year] $album"
+	fi
+
+	for song in "${songs[@]}" ; do
+		local track="$( printf "%02d" "$( id3tag "track" "$song" )" )"
+		local title=$( id3tag "title" "$song" )
+		# local new_name="$( basename "$song" | \
+		#     sed 's/^[^-]* - [^-]* - \([0-9]\+\) /\1 - /' )"
+		local new_name="${track} - ${title}.mp3"
+		mv "${song}" "${dir}/$( as_filename "${new_name}" )"
+	done
+
+	local initial="${artist:0:1}"
+	initial="${initial^^}"
+
+	local album_dir="${initial}/$( as_filename "${artist}" )/$( as_filename "${album}" )"
+	local full_album_dir="${dest}/${album_dir}"
+
+	echo "  -> $album_dir"
+
+	mkdir -p "$( dirname  "${full_album_dir}" )"
+	cp -RT "${dir}" "${full_album_dir}"
+}
+
+process_song() {
+	local song="$1"
+
+	echo "Processing '$song' ..."
+
+	local artist="$( id3tag "artist" "$song" )"
+	local initial="${artist:0:1}"
+	initial="${initial^^}"
+
+	local singles_dir="${initial}/$( as_filename "${artist}" )/Singles"
+	local full_singles_dir="${dest}/${singles_dir}"
+
+	echo "  -> $singles_dir"
+
+	mkdir -p "${full_singles_dir}"
+	cp "${song}" "${full_singles_dir}/"
+}
+
+for file in "$@" ; do
+	if [[ -d "$file" ]] ; then
+		process_directory "$file"
+	elif [[ -f "$file" && "$file" = *.zip ]] ; then
+		process_zip "$file"
+	elif [[ "$file" = *.mp3 ]] ; then
+		process_song "$file"
+	else
+		echo 'Unsupported file `'"${file}'" >&2
+		exit 1
+	fi
+done
