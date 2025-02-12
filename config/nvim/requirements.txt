@@ -4,14 +4,6 @@
 #
 #    pip-compile requirements.in
 #
-attrs==23.2.0
-    # via
-    #   cattrs
-    #   lsprotocol
-cattrs==23.2.3
-    # via
-    #   lsprotocol
-    #   pygls
 docstring-to-markdown==0.15
     # via python-lsp-server
 editorconfig==0.12.4
@@ -22,10 +14,6 @@ isort==5.13.2
     # via pyls-isort
 jedi==0.19.1
     # via python-lsp-server
-lsprotocol==2023.0.1
-    # via
-    #   pygls
-    #   ruff-lsp
 msgpack==1.0.8
     # via pynvim
 mypy==1.10.0
@@ -33,17 +21,13 @@ mypy==1.10.0
 mypy-extensions==1.0.0
     # via mypy
 packaging==24.0
-    # via
-    #   pytoolconfig
-    #   ruff-lsp
+    # via pytoolconfig
 parso==0.8.4
     # via jedi
 platformdirs==4.2.1
     # via pytoolconfig
 pluggy==1.5.0
     # via python-lsp-server
-pygls==1.3.1
-    # via ruff-lsp
 pyls-isort==0.2.2
     # via -r requirements.in
 pylsp-mypy==0.6.8
@@ -61,16 +45,12 @@ pytoolconfig[global]==1.3.1
     # via rope
 rope==1.13.0
     # via python-lsp-server
-ruff==0.4.4
-    # via ruff-lsp
-ruff-lsp==0.0.53
+ruff==0.9.6
     # via -r requirements.in
 tomli==2.0.1
     # via pylsp-mypy
 typing-extensions==4.11.0
-    # via
-    #   mypy
-    #   ruff-lsp
+    # via mypy
 ujson==5.10.0
     # via
     #   python-lsp-jsonrpc

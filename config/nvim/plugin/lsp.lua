@@ -141,10 +141,10 @@ local pylsp_args = {
 }
 
 -- If we are not in a virtual environment, activate ruff linting.
-if not in_virtual_env and vim.fn.executable('ruff-lsp') == 1 then
-	require('lspconfig').ruff_lsp.setup({
+if not in_virtual_env and vim.uv.fs_stat(vim.g.python3_bin .. "/ruff") then
+	require('lspconfig').ruff.setup({
 		on_attach = on_attach,
-		cmd = { vim.g.python3_bin .. "/ruff-lsp" },
+		cmd = { vim.g.python3_bin .. "/ruff", "server" },
 		init_options = {
 			settings = {
 				args = {},
@@ -156,12 +156,23 @@ end
 -- If we are in a virtual environment,
 -- check which tools are available and activate them as necessary.
 if in_virtual_env then
-	ruff_lsp = exepathin('ruff-lsp', venv)
-	if ruff_lsp ~= nil then
-		require('lspconfig').ruff_lsp.setup({
-			on_attach = on_attach,
-			cmd = { ruff_lsp },
-		})
+	ruff = exepathin('ruff', venv)
+	if ruff ~= nil then
+		ruff_version = vim.system({ruff, '--version'}, { text = true }):wait().stdout
+		if not vim.version.lt(ruff_version, '0.5.3') then
+			require('lspconfig').ruff.setup({
+				on_attach = on_attach,
+				cmd = { ruff, "server" }
+			})
+		else
+			ruff_lsp = exepathin('ruff-lsp', venv)
+			if ruff_lsp ~= nil then
+				require('lspconfig').ruff_lsp.setup({
+					on_attach = on_attach,
+					cmd = { ruff_lsp },
+				})
+			end
+		end
 	end
 
 	pylsp_plugins = pylsp_args['settings']['pylsp']['plugins']
