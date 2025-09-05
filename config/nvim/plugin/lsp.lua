@@ -1,5 +1,3 @@
-require('lspconfig')
-
 local api = vim.api
 local util = vim.lsp.util
 local callbacks = vim.lsp.callbacks
@@ -24,13 +22,16 @@ end
 
 local function goto_definition(split_cmd)
 	local util = vim.lsp.util
-	local log = require("vim.lsp.log")
 	local api = vim.api
 
 	-- note, this handler style is for neovim 0.5.1/0.6, if on 0.5, call with function(_, method, result)
-	local handler = function(_, result, ctx)
+	local handler = function(err, result, ctx)
+		if err ~= nil then
+			return nil, err
+		end
+
 		if result == nil or vim.tbl_isempty(result) then
-			local _ = log.info() and log.info(ctx.method, "No location found")
+			log.info(ctx.method, "No location found")
 			return nil
 		end
 
@@ -56,51 +57,50 @@ end
 
 vim.lsp.handlers["textDocument/definition"] = goto_definition('tabnew')
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local go_to_first = function(options)
-		if #(options.items) > 0 then
-			vim.cmd.tabnew(options.items[1].filename)
-			vim.fn['cursor'](options.items[1].lnum, options.items[1].col)
+vim.api.nvim_create_autocmd('LspAttach', {
+	group = vim.api.nvim_create_augroup('my-lsp', {}),
+	callback = function(ev)
+		local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+
+		-- Enable completion triggered by <c-x><c-o>
+		vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+		local bufopts = { noremap=true, silent=true, buffer=ev.buf }
+
+		local go_to_first = function(options)
+			if #(options.items) > 0 then
+				vim.cmd.tabnew(options.items[1].filename)
+				vim.fn['cursor'](options.items[1].lnum, options.items[1].col)
+			end
 		end
-	end
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>d', '', {
-		noremap = true,
-		silent = true,
-		callback = function()
+		vim.keymap.set('n', '<leader>d', function()
 			vim.lsp.buf.definition({on_list = go_to_first})
-		end
-	})
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>i', '<cmd>tab split | lua vim.lsp.buf.implementation()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-	-- vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+		end, bufopts)
+		-- vim.api.nvim_buf_set_keymap(ev.buf, 'n', '<leader>i', '<cmd>tab split | lua vim.lsp.buf.implementation()<CR>', opts)
+		-- vim.api.nvim_buf_set_keymap(ev.buf, 'n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+		-- vim.api.nvim_buf_set_keymap(ev.buf, 'n', '<leader><C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+		-- vim.api.nvim_buf_set_keymap(ev.buf, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 
-	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	local bufopts = { noremap=true, silent=true, buffer=bufnr }
-	vim.keymap.set('n', '<leader>D', vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, bufopts)
-	vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, bufopts)
-	vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help, bufopts)
-	vim.keymap.set('n', '<leader>i', vim.lsp.buf.implementation, bufopts)
+		-- Mappings.
+		-- See `:help vim.lsp.*` for documentation on any of the below functions
+		vim.keymap.set('n', '<leader>D', vim.lsp.buf.declaration, bufopts)
+		-- vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition, bufopts)
+		vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, bufopts)
+		vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help, bufopts)
+		vim.keymap.set('n', '<leader>i', vim.lsp.buf.implementation, bufopts)
 
-	vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-	vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-	vim.keymap.set('n', '<leader>wl', function()
-		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, bufopts)
+		vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+		vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+		vim.keymap.set('n', '<leader>wl', function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, bufopts)
 
-	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-end
+		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+		vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+	end,
+})
 
 
 local exepathin = function(command, directory)
@@ -142,7 +142,7 @@ local pylsp_args = {
 
 -- If we are not in a virtual environment, activate ruff linting.
 if not in_virtual_env and vim.uv.fs_stat(vim.g.python3_bin .. "/ruff") then
-	require('lspconfig').ruff.setup({
+	vim.lsp.config('ruff', {
 		on_attach = on_attach,
 		cmd = { vim.g.python3_bin .. "/ruff", "server" },
 		init_options = {
@@ -151,6 +151,7 @@ if not in_virtual_env and vim.uv.fs_stat(vim.g.python3_bin .. "/ruff") then
 			},
 		},
 	})
+	vim.lsp.enable('ruff')
 end
 
 -- If we are in a virtual environment,
@@ -158,21 +159,11 @@ end
 if in_virtual_env then
 	ruff = exepathin('ruff', venv)
 	if ruff ~= nil then
-		ruff_version = vim.system({ruff, '--version'}, { text = true }):wait().stdout
-		if not vim.version.lt(ruff_version, '0.5.3') then
-			require('lspconfig').ruff.setup({
-				on_attach = on_attach,
-				cmd = { ruff, "server" }
-			})
-		else
-			ruff_lsp = exepathin('ruff-lsp', venv)
-			if ruff_lsp ~= nil then
-				require('lspconfig').ruff_lsp.setup({
-					on_attach = on_attach,
-					cmd = { ruff_lsp },
-				})
-			end
-		end
+		vim.lsp.config('ruff', {
+			on_attach = on_attach,
+			cmd = { ruff, "server" }
+		})
+		vim.lsp.enable('ruff')
 	end
 
 	pylsp_plugins = pylsp_args['settings']['pylsp']['plugins']
@@ -206,12 +197,11 @@ if in_virtual_env then
 	end
 end
 
-if #pylsp_args['settings']['pylsp']['plugins'] then
-	require('lspconfig').pylsp.setup(pylsp_args)
-end
+vim.lsp.config('pylsp', pylsp_args)
+vim.lsp.enable('pylsp')
 
 if in_virtual_env then
 	if vim.fn.executable('vscode-eslint-language-server') == 1 then
-		require'lspconfig'.eslint.setup{}
+		vim.lsp.enable('eslint')
 	end
 end
