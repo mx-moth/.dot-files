@@ -22,7 +22,7 @@ jedi==0.19.2
     # via python-lsp-server
 librt==0.8.1
     # via mypy
-msgpack==1.1.2
+msgpack==1.2.1
     # via pynvim
 mypy==1.19.1
     # via pylsp-mypy
